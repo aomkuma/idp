@@ -1,0 +1,130 @@
+<div class="row form-group">
+	<div class="col">
+		<fieldset>
+			<label><h5>ตำแหน่งบริหาร</h5></label>
+		</fieldset>
+		
+		<div class="row">
+			<div class="col text-end">
+				<button type="button" class="btn btn-info btn-sm" (click)="updateFile(null)">เพิ่ม</button>
+			</div>
+		</div>
+
+		<div *ngIf="is_update">
+			<form  [formGroup]="form"  (ngSubmit)="onSubmit()">
+				<div class="row form-group">
+					<div class="col-3">
+						<div class="form-floating mb-3">
+						  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="hire_date" [ngClass]="{ 'is-invalid': submitted && f['hire_date'].errors }">
+						  <label for="floatingInput">วันที่เข้ารับตำแหน่ง *</label>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-floating mb-3">
+						  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="retire_date">
+						  <label for="floatingInput">วันที่พ้นตำแหน่ง</label>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-floating mb-3">
+						  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="position" [ngClass]="{ 'is-invalid': submitted && f['position'].errors }">
+						  <label for="floatingInput">ตำแหน่ง *</label>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-floating mb-3">
+						  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="position_name">
+						  <label for="floatingInput">ชื่อตำแหน่ง</label>
+						</div>
+					</div>
+				</div>
+				<!--
+					<div class="row">
+						<div class="col">
+							<div class="form-floating mb-3">
+							  <input 
+					            formControlName="file"
+					            id="file" 
+					            type="file" 
+					            class="form-control"
+					            (change)="onFileChange($event)">
+							  <label for="floatingInput">ไฟล์แนบ</label>
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="attach_file_data && attach_file_data.file_path != null">
+						<div class="col">
+							<div class="alert alert-info">
+								ไฟล์ปัจจุบัน : <a href="http://localhost/storage/{{attach_file_data.file_path}}" target="_blank">{{attach_file_data.file_name}}</a>
+							</div>
+						</div>
+					</div>
+				-->
+				<div class="row" *ngIf="error_message != null">
+					<div class="col">
+						<div class="alert alert-danger">
+							{{ error_message }}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<button type="submit" class="btn btn-success btn-sm">บันทึก</button>&nbsp;
+						<button type="button" class="btn btn-dark btn-sm" (click)="cancelUpdateFile()">ยกเลิก</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<table class="table">
+				  <thead class="thead-dark">
+				    <tr>
+				      <th scope="col">วันที่เข้ารับตำแหน่ง</th>
+				      <th scope="col">วันที่พ้นตำแหน่ง</th>
+				      <th scope="col">ตำแหน่ง</th>
+				      <th scope="col">ชื่อตำแหน่ง</th>
+				      <th scope="col" style="width: 20vh;">จัดการ</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<tr *ngIf="Files.length == 0">
+				  		<td colspan="5" class="text-center">
+				  			ยังไม่มีข้อมูล
+				  		</td>
+				  	</tr>
+				  	<tr *ngFor="let item of Files">
+				  		<td>{{ item.hire_date }}</td>
+				  		<td>{{ item.retire_date }}</td>
+				  		<td>{{ item.position }}</td>
+				  		<td>{{ item.position_name }}</td>
+				  		<td>
+				  			<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalData, item.id)">ลบ</button>&nbsp;
+				  			<button type="button" class="btn btn-warning btn-sm" (click)="updateFile(item)">แก้ไข</button>
+				  		</td>
+				  	</tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการลบข้อมูล</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+    	คุณต้องการลบข้อมูลตำแหน่งบริหารนี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ยืนยัน</button>
+  </div>
+</ng-template>

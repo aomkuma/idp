@@ -1,0 +1,56 @@
+<app-admin-menu></app-admin-menu>
+<app-admin-page-header [name]="'ข้อมูลบุคลากร'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<form>
+			  <div class="row">
+			    <div class="col">
+			      	<input type="text" class="form-control" placeholder="ชื่อ - สกุล">
+			    </div>
+			    <div class="col">
+			      	<input type="text" class="form-control" placeholder="ตำแหน่ง">
+			    </div>
+			    <div class="col">
+			      	<button type="button" class="btn btn-primary">ค้นหา</button>&nbsp;
+					<a type="button" class="btn btn-success" [routerLink]="['/admin-personnel-management/update']">เพิ่มบุคลากร</a>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">ชื่อ - สกุล</th>
+			      <th scope="col">ตำแหน่ง</th>
+			      <th scope="col">สายงาน</th>
+			      <th scope="col">คำแหน่งทางวิชาการ</th>
+			      <th scope="col">ต้นสังกัด</th>
+			      <th scope="col">ตำแหน่งบริหาร</th>
+			      <th scope="col">จัดการ</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr *ngFor="let item of list; let i = index">
+			      <td scope="row">{{ i + 1 }}</td>
+			      <td>{{ item.name }} {{ item.lastname }}</td>
+			      <td>{{ item.position }}</td>
+			      <td>{{ item.line_work }}</td>
+			      <td>{{ item.position_academic }}</td>
+			      <td>{{ item.agency }}</td>
+			      <td>{{ item.position_management }}</td>
+			      <td>
+			      	<a class="btn btn-info btn-sm" [routerLink]="['/admin-personnel-management/update', item.id]">แก้ไข</a>
+			      </td>
+			    </tr>
+			    
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>

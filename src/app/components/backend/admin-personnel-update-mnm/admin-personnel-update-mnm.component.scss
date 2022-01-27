@@ -1,0 +1,26 @@
+.progress{
+	width: 66.82px;
+	height: 66.82px;
+	border-radius:100%;
+	float:left;
+	font-size:1.2em;
+	padding:20px;
+	/* identical to box height */
+
+	text-align: center;
+}
+
+.active-progress{
+	color: #FFFFFF;
+	background: #0C92D3;
+}
+
+.line-top{
+	float:left;
+	width: 150px;
+	height: 0px;
+	left: 964px;
+	margin-top: 33px;
+
+	border: 2px dashed #C0C0C0;
+}

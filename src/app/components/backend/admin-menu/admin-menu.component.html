@@ -1,0 +1,43 @@
+<!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3>IDP</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        <li>
+            <a [routerLink]="['/admin-dashboard']">หน้าหลัก</a>
+        </li>
+        <li>
+            <a [routerLink]="['/fiscal-management']">ปีงบประมาณและรอบการประเมิน</a>
+        </li>
+        <li>
+            <a [routerLink]="['/admin-personnel-management']">ข้อมูลบุคลากร</a>
+        </li>
+        <li>
+            <a [routerLink]="['/discipline-management']">ขาด / ลา / มาสาย</a>
+        </li>
+        <li>
+            <a [routerLink]="['/admin-activity-management']">กิจกรรม / เข้าอบรม</a>
+        </li>
+        <li>
+            <a [routerLink]="['/admin-ads']">ข่าวประกาศ</a>
+        </li>
+        <li>
+            <a [routerLink]="['/admin-config']">เปิดปิดแสดงผลการประเมิน</a>
+        </li>
+        <li>
+            <a [routerLink]="['/admin-report']">รายงาน</a>
+        </li>
+
+        <li>
+            &nbsp;
+        </li>
+        <li class="li-backhome">
+            <a [routerLink]="['/dashboard']">กลับไปยังหน้าบ้าน</a>
+        </li>
+        <li class="li-logout">
+            <a  (click)="logout()">ออกจากระบบ</a>
+        </li>
+    </ul>
+</nav>

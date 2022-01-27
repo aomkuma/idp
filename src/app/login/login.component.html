@@ -1,0 +1,63 @@
+<div class="col-md-4 offset-4">
+  <div class="card card-container">
+    
+    <div class="row">
+      <div class="col-md-12">
+        <form
+          *ngIf="!isLoggedIn"
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate 
+          class="padding"
+        > <div class="form-group text-center">
+            <h3>ระบบประเมิน</h3>
+          </div>
+          <div class="form-group">
+
+            <label for="username">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              name="email"
+              [(ngModel)]="form.email"
+              required
+              #username="ngModel"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="form.password"
+              required
+              minlength="6"
+              #password="ngModel"
+            />
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="password.errors && f.submitted"
+            >
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">
+              Login
+            </button>
+          </div>
+          <div class="form-group">
+            
+          </div>
+        </form>
+
+        <div class="alert alert-success" *ngIf="isLoggedIn">
+          Logged in as {{ roles }}.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
