@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "DB Heavent";
+    src: local("DB Heavent"), url("./assets/fonts/DB_Heavent.ttf") format("truetype");
+}
+
+.card, .container, .container-fluid, .modal-dialog, nav {
+	font-family: "DB Heavent";
+    font-size:1.1em;
+}

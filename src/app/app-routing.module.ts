@@ -6,13 +6,20 @@ import { DashboardComponent } from './components/frontend/dashboard/dashboard.co
 import { AdminDashboardComponent } from './components/backend/admin-dashboard/admin-dashboard.component';
 import { AdminPersonnelListMnmComponent } from './components/backend/admin-personnel-list-mnm/admin-personnel-list-mnm.component';
 import { AdminPersonnelUpdateMnmComponent } from './components/backend/admin-personnel-update-mnm/admin-personnel-update-mnm.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { AdminEvaluateRoundMnmComponent } from './components/backend/admin-evaluate-round-mnm/admin-evaluate-round-mnm.component';
 
-const routes: Routes = [{ path: 'login', component: LoginComponent },
+const routes: Routes = [{ path: '', component: LoginComponent },
+                    { path: 'login', component: LoginComponent },
+                    { path: 'forgot-password', component: ForgotPasswordComponent },
+                    { path: 'change-password', component: ChangePasswordComponent },
                     { path: 'dashboard', component: DashboardComponent },
                     { path: 'admin-dashboard', component: AdminDashboardComponent },
                     { path: 'admin-personnel-management', component: AdminPersonnelListMnmComponent },
                     { path: 'admin-personnel-management/update', component: AdminPersonnelUpdateMnmComponent },
                     { path: 'admin-personnel-management/update/:id', component: AdminPersonnelUpdateMnmComponent },
+                    { path: 'admin-evaluate-round-management', component: AdminEvaluateRoundMnmComponent },
 
       ];
 

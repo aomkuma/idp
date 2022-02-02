@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { TokenStorageService } from './services/token-storage.service';
 
 @Component({
@@ -27,4 +28,5 @@ export class AppComponent {
     this.tokenStorageService.signOut();
     window.location.reload();
   }
+
 }

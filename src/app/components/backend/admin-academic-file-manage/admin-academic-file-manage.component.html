@@ -69,8 +69,8 @@
 				</div>
 				<div class="row">
 					<div class="col text-center">
-						<button type="submit" class="btn btn-success btn-sm">บันทึก</button>&nbsp;
-						<button type="button" class="btn btn-dark btn-sm" (click)="cancelUpdateFile()">ยกเลิก</button>
+						<button type="submit" class="btn btn-success btn-sm" [disabled]="submitted">บันทึก</button>&nbsp;
+						<button type="button" class="btn btn-dark btn-sm" (click)="cancelUpdateFile()" [disabled]="submitted">ยกเลิก</button>
 					</div>
 				</div>
 			</form>

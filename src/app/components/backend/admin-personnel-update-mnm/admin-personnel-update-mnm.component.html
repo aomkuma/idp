@@ -4,15 +4,15 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col">
-			<form  [formGroup]="form"  (ngSubmit)="onSubmit()">
+			<form [formGroup]="form"  (ngSubmit)="onSubmit()">
 				<div class="row form-group">
 					<div class="col-6 offset-3 text-center">&nbsp;&nbsp;&nbsp;
 						<div>
-							<div class="progress" [ngClass]="{ 'active-progress' : progress >= 1 }">&nbsp; 1</div>
+							<div class="progress" [ngClass]="{ 'active-progress' : progress >= 1 }">&nbsp;&nbsp;&nbsp; 1</div>
 							<div class="line-top"></div>
-							<div class="progress" [ngClass]="{ 'active-progress' : progress >= 2 }">&nbsp; 2</div>
+							<div class="progress" [ngClass]="{ 'active-progress' : progress >= 2 }">&nbsp;&nbsp;&nbsp; 2</div>
 							<div class="line-top"></div>
-							<div class="progress" [ngClass]="{ 'active-progress' : progress == 3 }">&nbsp; 3</div>
+							<div class="progress" [ngClass]="{ 'active-progress' : progress == 3 }">&nbsp;&nbsp;&nbsp; 3</div>
 						</div>
 					</div>
 				</div>
@@ -91,8 +91,8 @@
 										  <option value="ศาสตราจารย์พิเศษ">ศาสตราจารย์พิเศษ</option>
 										  <option value="ศาสตราจารย์อาคันตุกะ">ศาสตราจารย์อาคันตุกะ</option>
 										  <option value="รองศาสตราจารย์">รองศาสตราจารย์</option>
-										  <option value="รองศาสตราจารย์">ผู้ช่วยศาสตราจารย์</option>
-										  <option value="รองศาสตราจารย์">อาจารย์</option>
+										  <option value="ผู้ช่วยศาสตราจารย์">ผู้ช่วยศาสตราจารย์</option>
+										  <option value="อาจารย์">อาจารย์</option>
 										</select>
 									  <label for="floatingInput">ตำแหน่งทางวิชาการ *</label>
 									</div>
@@ -211,109 +211,117 @@
 					</div>
 				</div>
 
-			<div *ngIf="progress == 2">
-				<div class="row form-group">
-					<div class="col">
-						<fieldset>
-							<label><h5>ข้อมูลการติดต่อ</h5></label>
-						
-							<div class="row">
-								
-								<div class="col-6">
-									<div class="form-floating mb-3">
-									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work" [ngClass]="{ 'is-invalid': submitted && f['mobile_work'].errors }">
-									  <label for="floatingInput">เบอร์โทรศัพท์ *</label>
+				<div *ngIf="progress == 2">
+					<div class="row form-group">
+						<div class="col">
+							<fieldset>
+								<label><h5>ข้อมูลการติดต่อ</h5></label>
+							
+								<div class="row">
+									
+									<div class="col-6">
+										<div class="form-floating mb-3">
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work" [ngClass]="{ 'is-invalid': submitted && f['mobile_work'].errors }">
+										  <label for="floatingInput">เบอร์โทรศัพท์ *</label>
+										</div>
 									</div>
+
+									<div class="col-3">
+										<div class="form-floating mb-3">
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work_internal">
+										  <label for="floatingInput">เบอร์ติดต่อภายใน</label>
+										</div>
+									</div>
+									
 								</div>
 
-								<div class="col-3">
-									<div class="form-floating mb-3">
-									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work_internal">
-									  <label for="floatingInput">เบอร์ติดต่อภายใน</label>
+								<div class="row">
+									
+									<div class="col-6">
+										<div class="form-floating mb-3">
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f['mobile'].errors }">
+										  <label for="floatingInput">เบอร์โทรศัพท์มือถือ *</label>
+										</div>
 									</div>
-								</div>
-								
-							</div>
 
-							<div class="row">
-								
-								<div class="col-6">
-									<div class="form-floating mb-3">
-									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f['mobile'].errors }">
-									  <label for="floatingInput">เบอร์โทรศัพท์มือถือ *</label>
-									</div>
 								</div>
 
-							</div>
-
-							<div class="row">
-								
-								<div class="col-6">
-									<div class="form-floating mb-3">
-									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email_work">
-									  <label for="floatingInput">อีเมล์มหาวิทยาลัย</label>
+								<div class="row">
+									
+									<div class="col-6">
+										<div class="form-floating mb-3">
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email_work">
+										  <label for="floatingInput">อีเมล์มหาวิทยาลัย</label>
+										</div>
 									</div>
+
 								</div>
 
-							</div>
+								<div class="row">
+									
+									<div class="col-6">
+										<div class="form-floating mb-3">
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+										  <label for="floatingInput">อีเมล์ *</label>
+										</div>
+									</div>
 
-							<div class="row">
-								
-								<div class="col-6">
-									<div class="form-floating mb-3">
-									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
-									  <label for="floatingInput">อีเมล์ *</label>
+								</div>
+							</fieldset>
+							<hr>
+							<fieldset>
+								<label><h5>ไฟล์ประวัติบุคคล</h5></label>
+								<div class="row">
+									<div class="col">
+										<div class="form-floating mb-3">
+										  <input 
+								            formControlName="file"
+								            id="file" 
+								            type="file" 
+								            class="form-control"
+								            (change)="onFileChange($event)">
+										  <label for="floatingInput">ไฟล์แนบ</label>
+										</div>
 									</div>
 								</div>
+								<div class="row" *ngIf="attach_file_data && attach_file_data.file_path != null">
+									<div class="col">
+										<div class="alert alert-info">
+											ไฟล์ปัจจุบัน : <a href="http://localhost/storage/{{attach_file_data.file_path}}" target="_blank">{{attach_file_data.file_name}}</a>
+										</div>
+									</div>
+								</div>
+							</fieldset>
 
-							</div>
-						</fieldset>
-						<hr>
-						<fieldset>
-							<label><h5>ไฟล์ประวัติบุคคล</h5></label>
-							<div class="row">
+							<div class="row" *ngIf="error_message != null">
 								<div class="col">
-									<div class="form-floating mb-3">
-									  <input 
-							            formControlName="file"
-							            id="file" 
-							            type="file" 
-							            class="form-control"
-							            (change)="onFileChange($event)">
-									  <label for="floatingInput">ไฟล์แนบ</label>
+									<div class="alert alert-danger">
+										{{ error_message }}
 									</div>
 								</div>
 							</div>
-							<div class="row" *ngIf="attach_file_data && attach_file_data.file_path != null">
-								<div class="col">
-									<div class="alert alert-info">
-										ไฟล์ปัจจุบัน : <a href="http://localhost/storage/{{attach_file_data.file_path}}" target="_blank">{{attach_file_data.file_name}}</a>
-									</div>
+							<div class="row">
+								<div class="col text-center">
+									<button class="btn btn-secondary" (click)="nextStep(1)" [disabled]="submitted">ย้อนกลับ</button>
+									&nbsp;
+									<button class="btn btn-success" type="submit" [disabled]="submitted">บันทึกข้อมูล</button>
+									&nbsp;
+									<button type="button" class="btn btn-dark" (click)="nextStep(3)" [disabled]="submitted">ถัดไป</button>
 								</div>
-							</div>
-						</fieldset>
-
-						<div class="row">
-							<div class="col text-center">
-								<button class="btn btn-secondary" (click)="nextStep(1)">ย้อนกลับ</button>
-								&nbsp;
-								<button class="btn btn-success" type="submit">บันทึกข้อมูล</button>
-								&nbsp;
-								<button type="button" class="btn btn-dark" (click)="nextStep(3)">ถัดไป</button>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</form>
-	</div>
-	<div *ngIf="progress == 3">
-		<app-admin-education-file-manage personnel_id="{{id}}"></app-admin-education-file-manage>
-		<app-admin-work-info-file-manage personnel_id="{{id}}"></app-admin-work-info-file-manage>
-		<app-admin-academic-file-manage personnel_id="{{id}}"></app-admin-academic-file-manage>
-		<div class="row">
-			<div class="col text-center">
-				<button type="button" class="btn btn-secondary" (click)="nextStep(2)">ย้อนกลับ</button>
+			</form>
+		</div>
+		<div *ngIf="progress == 3">
+			<app-admin-education-file-manage personnel_id="{{id}}"></app-admin-education-file-manage>
+			<app-admin-work-info-file-manage personnel_id="{{id}}"></app-admin-work-info-file-manage>
+			<app-admin-academic-file-manage personnel_id="{{id}}"></app-admin-academic-file-manage>
+			<div class="row">
+				<div class="col text-center">
+					<button type="button" class="btn btn-secondary" (click)="nextStep(2)">ย้อนกลับ</button>
+				</div>
 			</div>
 		</div>
 	</div>

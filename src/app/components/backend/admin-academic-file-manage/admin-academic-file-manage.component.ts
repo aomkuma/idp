@@ -7,6 +7,7 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpServiceService } from '../../../services/http-service.service';
 import { UploadServiceService } from '../../../services/upload-service.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 @Component({
   selector: 'app-admin-academic-file-manage',
@@ -27,6 +28,7 @@ export class AdminAcademicFileManageComponent implements OnInit {
     file: new FormControl(''),
     fileSource: new FormControl('')
   });
+  user_data :any;
   Files = [];
   is_update = false;
   update_id : any = null;
@@ -39,10 +41,12 @@ export class AdminAcademicFileManageComponent implements OnInit {
               private modalService: NgbModal,
               private activatedRoute: ActivatedRoute, 
               private httpService: HttpServiceService,
-              private uploadService: UploadServiceService
+              private uploadService: UploadServiceService,
+              private tokenStorage: TokenStorageService
             ) { }
 
   ngOnInit(): void {
+    this.user_data = this.tokenStorage.getUser().user;
     this.getFileList();
   }
 
@@ -51,7 +55,7 @@ export class AdminAcademicFileManageComponent implements OnInit {
   }
 
   getFileList(){
-    this.httpService.callHTTPGet('attach-file/academic', this.personnel_id).subscribe(
+    this.httpService.callHTTPGet('attach-file/academic/', this.personnel_id).subscribe(
       event => {
         if (event instanceof HttpResponse) {
           this.Files = event['body']['file_list'];
@@ -126,6 +130,7 @@ export class AdminAcademicFileManageComponent implements OnInit {
     formData.append('retire_date', this.form.value.retire_date);
     formData.append('position', this.form.value.position);
     formData.append('position_name', this.form.value.position_name);
+    formData.append('action_by', this.user_data.email);
 
     console.log(this.form.value);
     this.uploadService.uploadFile('attach-file/academic', formData).subscribe(

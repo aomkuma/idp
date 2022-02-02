@@ -1,5 +1,5 @@
 <div class="col-md-4 offset-4">
-  <div class="card card-container">
+  <div class="card card-container margin-top">
     
     <div class="row">
       <div class="col-md-12">
@@ -11,7 +11,9 @@
           novalidate 
           class="padding"
         > <div class="form-group text-center">
-            <h3>ระบบประเมิน</h3>
+          <img src="./assets/images/logo-lg.png" alt="image" class="logo">
+          <br><br>
+            <h3>ระบบประเมิน IDP</h3>
           </div>
           <div class="form-group">
 
@@ -41,12 +43,24 @@
               role="alert"
               *ngIf="password.errors && f.submitted"
             >
+              กรุณาตรวจสอบข้อมูลชื่อผู้ใช้งานและรหัสผ่าน
+            </div>
+
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="errorMessage"
+            >
+              ไม่พบผู้ใช้งาน กรุณาตรวจสอบข้อมูลชื่อผู้ใช้งานและรหัสผ่าน
             </div>
           </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">
-              Login
-            </button>
+          <div class="form-group text-center"><br>
+            <button class="btn btn-primary btn-block" [disabled]="submitted">
+              ลงชื่อเข้าใช้งาน
+            </button>&nbsp;
+            <a class="btn btn-secondary btn-block" [routerLink]="['/forgot-password']">
+              ลิมรหัสผ่าน
+            </a>
           </div>
           <div class="form-group">
             

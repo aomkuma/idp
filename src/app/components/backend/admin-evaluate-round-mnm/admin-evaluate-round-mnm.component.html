@@ -1,0 +1,165 @@
+<app-admin-menu></app-admin-menu>
+<app-admin-page-header [name]="'ปีงบประมาณและรอบการประเมิน'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<form [formGroup]="form"  (ngSubmit)="onSubmit()">
+			  <div class="row">
+			    <div class="col">
+			      	<select class="form-control" formControlName="fiscal_year" placeholder="ปีงบประมาณ">
+			      		<option value="">ปีงบประมาณ</option>
+			      		<option *ngFor="let year of fiscal_year_ist" value="{{year.value}}">{{year.text}}</option>
+			      	</select>
+			    </div>
+			    <div class="col">
+			      	<select class="form-control" formControlName="round_of_year" placeholder="รอบที่">
+			      		<option value="">รอบที่</option>
+			      		<option value="1">1</option>
+			      		<option value="2">2</option>
+			      		<option value="3">3</option>
+					      <option value="4">4</option>
+			      	</select>
+			    </div>
+			    <div class="col">
+			      	<button type="submit" class="btn btn-primary">ค้นหา</button>&nbsp;
+					<a type="button" class="btn btn-success" (click)="triggerModalUpdate(modalData, null)">เพิ่มข้อมูล</a>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">ปีงบประมาณ</th>
+			      <th scope="col">รอบที่</th>
+			      <th scope="col">ช่วงเวลา</th>
+			      <th scope="col">วันที่เริ่มส่งข้อมูล</th>
+			      <th scope="col">วันที่ปิดรับข้อมูล</th>
+			      <th scope="col">จัดการ</th>
+			    </tr>
+			  </thead>
+			  <tbody *ngIf="submitted">
+			  	<tr>
+			  		<td colspan="7" class="text-center">
+			  			กำลังค้นหา...
+			  		</td>
+			  	</tr>
+			  </tbody>
+			  <tbody *ngIf="!submitted">
+			    <tr *ngFor="let item of list; let i = index">
+			      <td scope="row">{{ i + 1 }}</td>
+			      <td>{{ item.fiscal_year + 543 }}</td>
+			      <td>{{ item.round_of_year }}</td>
+			      <td>{{ item.start_date | date:'d MMMM y' }} - {{ item.end_date | date:'d MMMM y' }}</td>
+			      <td>{{ item.start_send_date | date:'d MMMM y' }}</td>
+			      <td>{{ item.end_send_date | date:'d MMMM y' }}</td>
+			      <td>
+			      	<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalDeleteData, item.id)">ลบ</button>&nbsp;
+				  	<a class="btn btn-warning btn-sm" (click)="triggerModalUpdate(modalData, item)">แก้ไข</a>
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<ngb-pagination class="d-flex justify-content-end" [collectionSize]="(total_data)" [(page)]="page"></ngb-pagination>
+	</div>
+</div>
+
+<ng-template #modalDeleteData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการลบข้อมูล</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+    	คุณต้องการลบข้อมูลปีงบประมาณและรอบการประเมินนี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ยืนยัน</button>
+  </div>
+</ng-template>
+
+<ng-template #modalData let-modal>
+	<form [formGroup]="update_form"  (ngSubmit)="onSubmitUpdate()">
+	  <div class="modal-header">
+	    <h4 class="modal-title" id="modal-basic-title">เพิ่มข้อมูลปีงบประมาณและรอบการประเมิน</h4>
+	  </div>
+	  <div class="modal-body">
+				  <div class="row">
+				    <div class="col">
+				    		<div class="form-floating mb-3">
+								  <select class="form-control" formControlName="fiscal_year" placeholder="ปีงบประมาณ" [ngClass]="{ 'is-invalid': fUpdate['fiscal_year'].errors }">
+					      		<option value="">ปีงบประมาณ</option>
+					      		<option *ngFor="let year of fiscal_year_update_list" value="{{year.value}}">{{year.text}}</option>
+					      	</select>
+								  <label for="floatingInput">ปีงบประมาณ</label>
+								</div>
+				    </div>
+				    <div class="col">
+				    		<div class="form-floating mb-3">
+								  <select class="form-control" formControlName="round_of_year" placeholder="รอบที่" [ngClass]="{ 'is-invalid': fUpdate['round_of_year'].errors }">
+					      		<option value="">กรุณาเลือก..</option>
+					      		<option value="1">1</option>
+					      		<option value="2">2</option>
+					      		<option value="3">3</option>
+					      		<option value="4">4</option>
+				      		</select>
+								  <label for="floatingInput">รอบที่</label>
+								</div>
+				    </div>
+				  </div>
+				  <div class="row">
+						<div class="col">
+							ช่วงเวลา
+						</div>
+					</div>
+				  <div class="row">
+						<div class="col">
+							<div class="form-floating mb-3">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="start_date" [ngClass]="{ 'is-invalid': fUpdate['start_date'].errors }">
+							  <label for="floatingInput">เริ่มต้น</label>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-floating mb-3">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="end_date" [ngClass]="{ 'is-invalid': fUpdate['end_send_date'].errors }">
+							  <label for="floatingInput">สิ้นสุด</label>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="form-floating mb-3">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="start_send_date" [ngClass]="{ 'is-invalid': fUpdate['start_send_date'].errors }">
+							  <label for="floatingInput">วันที่เริ่มส่งข้อมูล</label>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-floating mb-3">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="end_send_date" [ngClass]="{ 'is-invalid': fUpdate['end_send_date'].errors }">
+							  <label for="floatingInput">วันที่ปิดรับข้อมูล</label>
+							</div>
+						</div>
+					</div>
+					<div class="alert alert-danger" *ngIf="error_message != null">
+			      {{ error_message }}
+		    	</div>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')" [disabled]="submitted_update">ปิด</button>
+	    <button type="submit" class="btn btn-success" [disabled]="submitted_update">ยืนยัน</button>
+	  </div>
+  </form>
+</ng-template>

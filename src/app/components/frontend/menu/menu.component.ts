@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 import { TokenStorageService } from '../../../services/token-storage.service';
 
 @Component({
@@ -9,7 +11,9 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 export class MenuComponent implements OnInit {
 
   user_data : any;
-  constructor(private tokenStorage: TokenStorageService) { 
+  closeModal: string;
+
+  constructor(private modalService: NgbModal, private tokenStorage: TokenStorageService) { 
 
   }
 
@@ -20,7 +24,30 @@ export class MenuComponent implements OnInit {
 
   logout(): void {
     this.tokenStorage.signOut();
-    window.location.reload();
+    window.location.replace('login');
+  }
+
+  triggerModal(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+      this.closeModal = `Closed with: ${res}`;
+      console.log(res);
+      if(res == 'Confirm'){
+        this.logout();
+      }
+      
+    }, (res) => {
+      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+    });
+  }
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
 }

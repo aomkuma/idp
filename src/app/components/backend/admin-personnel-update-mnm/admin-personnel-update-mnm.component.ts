@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { HttpServiceService } from '../../../services/http-service.service';
 import { UploadServiceService } from '../../../services/upload-service.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 @Component({
   selector: 'app-admin-personnel-update-mnm',
@@ -14,6 +15,7 @@ import { UploadServiceService } from '../../../services/upload-service.service';
 export class AdminPersonnelUpdateMnmComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
+    id:  new FormControl(''),
     prefix: new FormControl('นาย'),
     name: new FormControl(''),
     lastname: new FormControl(''),
@@ -40,19 +42,22 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
     fileSource: new FormControl('')
     // acceptTerms: new FormControl(false),
   });
-
+  user_data :any;
   attach_file_data : any;
   id : any;
   progress = 1;
   submitted = false;
-  
+  error_message : any;
+
   constructor(private formBuilder: FormBuilder, 
               private activatedRoute: ActivatedRoute, 
               private httpService: HttpServiceService,
-              private uploadService: UploadServiceService
+              private uploadService: UploadServiceService,
+              private tokenStorage: TokenStorageService
               ) { }
 
   ngOnInit(): void {
+    this.user_data = this.tokenStorage.getUser().user;
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(this.id);
     if(this.id){
@@ -76,7 +81,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
   }
 
   getData(id){
-      this.httpService.callHTTPGet('users/get', id).subscribe(
+      this.httpService.callHTTPGet('user/get/', id).subscribe(
       event => {
         if (event instanceof HttpResponse) {
 
@@ -122,11 +127,13 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
   }
 
   onSubmit(){
-    this.submitted = true;
-
+    
     if (this.form.invalid) {
       return;
     }
+
+    this.submitted = true;
+    this.error_message = null;
 
     const formData: FormData = new FormData();
 
@@ -153,9 +160,10 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
     formData.append('email_work', this.form.value.email_work);
     formData.append('email', this.form.value.email);
     formData.append('file', this.form.get('fileSource').value);
+    formData.append('action_by', this.user_data.email);
 
     // this.httpService.callHTTPPost('users/update', this.form.value).subscribe(
-    this.uploadService.uploadFile('users/update', formData).subscribe(
+    this.uploadService.uploadFile('user/update', formData).subscribe(
       event => {
         if (event instanceof HttpResponse) {
           // localStorage.setItem('user_data', JSON.stringify(event));
@@ -169,7 +177,12 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
         
       },
       err => {
-        // this.progressInfos[idx].value = 0;
+        this.error_message = err.error.message;
+        // console.log(err.error.errors.files);
+        // if(err.error.errors){
+
+        //   this.error_message = err.error.errors.file[0];
+        // }
         this.submitted = false;
       });
     

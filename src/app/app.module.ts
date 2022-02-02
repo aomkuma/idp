@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { BaseUrlInterceptorInterceptor } from './interceptor/base-url-interceptor.interceptor';
 
 import { LoginComponent } from './login/login.component';
 
@@ -24,6 +26,10 @@ import { AdminEducationFileManageComponent } from './components/backend/admin-ed
 import { AdminWorkInfoFileManageComponent } from './components/backend/admin-work-info-file-manage/admin-work-info-file-manage.component';
 import { AdminAcademicFileManageComponent } from './components/backend/admin-academic-file-manage/admin-academic-file-manage.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { AdminEvaluateRoundMnmComponent } from './components/backend/admin-evaluate-round-mnm/admin-evaluate-round-mnm.component';
+import { DateBcdDirective } from './directives/date-bcd.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +47,11 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     AdminEducationFileManageComponent,
     AdminWorkInfoFileManageComponent,
     AdminAcademicFileManageComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ChangePasswordComponent,
+    ForgotPasswordComponent,
+    AdminEvaluateRoundMnmComponent,
+    DateBcdDirective
   ],
   imports: [
     BrowserModule,
@@ -51,7 +61,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     HttpClientModule,
     NgbModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,{provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,16 +4,16 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col">
-			<form>
+			<form [formGroup]="form"  (ngSubmit)="onSubmit()">
 			  <div class="row">
 			    <div class="col">
-			      	<input type="text" class="form-control" placeholder="ชื่อ - สกุล">
+			      	<input type="text" class="form-control" formControlName="name" placeholder="ชื่อ - สกุล">
 			    </div>
 			    <div class="col">
-			      	<input type="text" class="form-control" placeholder="ตำแหน่ง">
+			      	<input type="text" class="form-control" formControlName="position" placeholder="ตำแหน่ง">
 			    </div>
 			    <div class="col">
-			      	<button type="button" class="btn btn-primary">ค้นหา</button>&nbsp;
+			      	<button type="submit" class="btn btn-primary">ค้นหา</button>&nbsp;
 					<a type="button" class="btn btn-success" [routerLink]="['/admin-personnel-management/update']">เพิ่มบุคลากร</a>
 			    </div>
 			  </div>
@@ -35,7 +35,14 @@
 			      <th scope="col">จัดการ</th>
 			    </tr>
 			  </thead>
-			  <tbody>
+			  <tbody *ngIf="submitted">
+			  	<tr>
+			  		<td colspan="8" class="text-center">
+			  			กำลังค้นหา...
+			  		</td>
+			  	</tr>
+			  </tbody>
+			  <tbody *ngIf="!submitted">
 			    <tr *ngFor="let item of list; let i = index">
 			      <td scope="row">{{ i + 1 }}</td>
 			      <td>{{ item.name }} {{ item.lastname }}</td>
@@ -45,7 +52,8 @@
 			      <td>{{ item.agency }}</td>
 			      <td>{{ item.position_management }}</td>
 			      <td>
-			      	<a class="btn btn-info btn-sm" [routerLink]="['/admin-personnel-management/update', item.id]">แก้ไข</a>
+			      	<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalData, item.id)">ลบ</button>&nbsp;
+				  	<a class="btn btn-info btn-sm" [routerLink]="['/admin-personnel-management/update', item.id]">แก้ไข</a>
 			      </td>
 			    </tr>
 			    
@@ -53,4 +61,26 @@
 			</table>
 		</div>
 	</div>
+
+	<div class="row">
+		<ngb-pagination class="d-flex justify-content-end" [collectionSize]="(total_data * 10)" [(page)]="page"></ngb-pagination>
+	</div>
 </div>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการลบข้อมูล</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+    	คุณต้องการลบบุคลากรรายนี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ยืนยัน</button>
+  </div>
+</ng-template>

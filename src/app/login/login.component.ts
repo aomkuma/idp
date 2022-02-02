@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   };
   isLoggedIn = false;
   isLoginFailed = false;
+  submitted = false;
   errorMessage = '';
   roles: string[] = [];
 
@@ -32,21 +33,28 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+
+    this.errorMessage = '';
+
     const { email, password } = this.form;
 
+    this.submitted = true;
     this.authService.login(email, password).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveToken(data.access_token);
         this.tokenStorage.saveUser(data);
 
+        this.submitted = false;
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
         this.reloadPage();
       },
       err => {
-        this.errorMessage = err.error.message;
+        console.log(err.error.error);
+        this.errorMessage = err.error.error;
         this.isLoginFailed = true;
+        this.submitted = false;
       }
     );
   }

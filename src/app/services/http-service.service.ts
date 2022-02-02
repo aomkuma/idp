@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent, HttpResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const API = 'http://localhost/api/';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpServiceService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
 
   callHTTPPost(url, params){
     console.log(localStorage.getItem('token_type'));
@@ -18,7 +18,7 @@ export class HttpServiceService {
       'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     })   
   
-   const req = new HttpRequest('POST', API + url, params, {
+   const req = new HttpRequest('POST', url, params, {
             // reportProgress: true,
             'responseType': 'json',
             'headers' : headers
@@ -28,12 +28,13 @@ export class HttpServiceService {
   }
 
   callHTTPGet(url, params){
+    console.log(this.tokenStorage.getToken());
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
+      'Authorization': 'bearer ' + this.tokenStorage.getToken()//localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     })   
   
-   const req = new HttpRequest('GET', API + url + '/' + params, {
+   const req = new HttpRequest('GET', url + params, {
             // reportProgress: true,
             'responseType': 'json',
             'headers' : headers
@@ -48,7 +49,7 @@ export class HttpServiceService {
       'Authorization': localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
     })   
   
-   const req = new HttpRequest('delete', API + url + params, {
+   const req = new HttpRequest('delete', url + params, {
             // reportProgress: true,
             'responseType': 'json',
             'headers' : headers

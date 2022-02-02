@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const API = 'http://localhost/api/';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +11,7 @@ export class UploadServiceService {
 
   uploadFile(url : string, formData : FormData): Observable<HttpEvent<any>> {
 
-    const req = new HttpRequest('POST', API + url, formData, {
+    const req = new HttpRequest('POST', url, formData, {
       reportProgress: true,
       responseType: 'json'
     });

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
         <a href="#" class="navbar-brand">
-            <img src="/assets/images/idp-logo.png" alt="image" class="logo">
+            <img src="./assets/images/idp-logo.png" alt="image" class="logo">
         </a>
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -24,11 +24,12 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ user_data.name }}
+                        {{ user_data.name }} {{ user_data.lastname }}
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li class="nav-item"><a [routerLink]="['/change-password']" class="nav-item nav-link text-dark">เปลี่ยนรหัสผ่าน</a></li>
                         <li class="nav-item" *ngIf="user_data.is_admin"><a [routerLink]="['/admin-dashboard']" class="nav-item nav-link text-dark">ไปยังระบบหลังบ้าน</a></li>
-                        <li class="nav-item"><a href="#" class="nav-item nav-link text-dark" (click)="logout()">ออกจากระบบ</a></li>
+                        <li class="nav-item"><a class="nav-item nav-link text-dark" (click)="triggerModal(modalData)">ออกจากระบบ</a></li>
                       </ul>
                     </li>
                 </ul>
@@ -36,3 +37,21 @@
         </div>
     </div>
 </nav>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการออกจากระบบ</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      คุณต้องการออกจากระบบตอนนี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ออกจากระบบ</button>
+  </div>
+</ng-template>
