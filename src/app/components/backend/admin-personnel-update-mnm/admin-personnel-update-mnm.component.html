@@ -182,7 +182,8 @@
 								<div class="col">
 									<div class="form-floating mb-3">
 									  <select class="form-select" aria-label="Default select example" formControlName="work_unit">
-										  <option value="สาขาวิชาการตลาด">สาขาวิชาการตลาด</option>
+										  <option value=""></option>
+										  <option *ngFor="let work_unit of work_unit_list" value="{{work_unit.value}}">{{work_unit.name}}</option>
 										</select>
 									  <label for="floatingInput">หน่วยงานที่ปฎิบัติงาน</label>
 									</div>
@@ -304,7 +305,8 @@
 								<div class="col text-center">
 									<button class="btn btn-secondary" (click)="nextStep(1)" [disabled]="submitted">ย้อนกลับ</button>
 									&nbsp;
-									<button class="btn btn-success" type="submit" [disabled]="submitted">บันทึกข้อมูล</button>
+									<button class="btn btn-success" type="submit" *ngIf="!submitted">บันทึกข้อมูล</button>
+									<button type="button" class="btn btn-success" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
 									&nbsp;
 									<button type="button" class="btn btn-dark" (click)="nextStep(3)" [disabled]="submitted">ถัดไป</button>
 								</div>

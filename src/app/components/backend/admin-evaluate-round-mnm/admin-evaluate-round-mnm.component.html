@@ -100,7 +100,7 @@
 				  <div class="row">
 				    <div class="col">
 				    		<div class="form-floating mb-3">
-								  <select class="form-control" formControlName="fiscal_year" placeholder="ปีงบประมาณ" [ngClass]="{ 'is-invalid': fUpdate['fiscal_year'].errors }">
+								  <select class="form-control" formControlName="fiscal_year" placeholder="ปีงบประมาณ" [ngClass]="{ 'is-invalid': fUpdate['fiscal_year'].errors }" [disabled]="submitted_update">
 					      		<option value="">ปีงบประมาณ</option>
 					      		<option *ngFor="let year of fiscal_year_update_list" value="{{year.value}}">{{year.text}}</option>
 					      	</select>
@@ -109,7 +109,7 @@
 				    </div>
 				    <div class="col">
 				    		<div class="form-floating mb-3">
-								  <select class="form-control" formControlName="round_of_year" placeholder="รอบที่" [ngClass]="{ 'is-invalid': fUpdate['round_of_year'].errors }">
+								  <select class="form-control" formControlName="round_of_year" placeholder="รอบที่" [ngClass]="{ 'is-invalid': fUpdate['round_of_year'].errors }" [disabled]="submitted_update">
 					      		<option value="">กรุณาเลือก..</option>
 					      		<option value="1">1</option>
 					      		<option value="2">2</option>
@@ -128,13 +128,13 @@
 				  <div class="row">
 						<div class="col">
 							<div class="form-floating mb-3">
-							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="start_date" [ngClass]="{ 'is-invalid': fUpdate['start_date'].errors }">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="start_date" [ngClass]="{ 'is-invalid': fUpdate['start_date'].errors }" [disabled]="submitted_update">
 							  <label for="floatingInput">เริ่มต้น</label>
 							</div>
 						</div>
 						<div class="col">
 							<div class="form-floating mb-3">
-							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="end_date" [ngClass]="{ 'is-invalid': fUpdate['end_send_date'].errors }">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="end_date" [ngClass]="{ 'is-invalid': fUpdate['end_send_date'].errors }" [disabled]="submitted_update">
 							  <label for="floatingInput">สิ้นสุด</label>
 							</div>
 						</div>
@@ -142,13 +142,13 @@
 					<div class="row">
 						<div class="col">
 							<div class="form-floating mb-3">
-							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="start_send_date" [ngClass]="{ 'is-invalid': fUpdate['start_send_date'].errors }">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="start_send_date" [ngClass]="{ 'is-invalid': fUpdate['start_send_date'].errors }" [disabled]="submitted_update">
 							  <label for="floatingInput">วันที่เริ่มส่งข้อมูล</label>
 							</div>
 						</div>
 						<div class="col">
 							<div class="form-floating mb-3">
-							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="end_send_date" [ngClass]="{ 'is-invalid': fUpdate['end_send_date'].errors }">
+							  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="end_send_date" [ngClass]="{ 'is-invalid': fUpdate['end_send_date'].errors }" [disabled]="submitted_update">
 							  <label for="floatingInput">วันที่ปิดรับข้อมูล</label>
 							</div>
 						</div>
@@ -159,7 +159,8 @@
 	  </div>
 	  <div class="modal-footer">
 	    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')" [disabled]="submitted_update">ปิด</button>
-	    <button type="submit" class="btn btn-success" [disabled]="submitted_update">ยืนยัน</button>
+	    <button type="submit" class="btn btn-success"*ngIf="!submitted_update">ยืนยัน</button>
+	    <button type="button" class="btn btn-success" *ngIf="submitted_update" [disabled]="submitted_update">กำลังบันทึก..</button>
 	  </div>
   </form>
 </ng-template>

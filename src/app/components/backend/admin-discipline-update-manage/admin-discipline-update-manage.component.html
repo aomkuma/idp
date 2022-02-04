@@ -1,0 +1,124 @@
+<app-admin-menu></app-admin-menu>
+<app-admin-page-header [name]="'จัดการข้อมูล ขาด / ลา / มาสาย'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<form [formGroup]="form"  (ngSubmit)="onSubmit()">
+			  <div class="row">
+			    <div class="col">
+			      	<select class="form-control" formControlName="personnel_work_unit" placeholder="สาขาวิชา">
+			      		<option value="">สาขาวิชา</option>
+			      		<option *ngFor="let work_unit of work_unit_list" value="{{work_unit.value}}">{{work_unit.name}}</option>
+			      	</select>
+			    </div>
+			    <div class="col">
+			      	<input type="date" class="form-control" id="floatingInput" placeholder="วันที่" formControlName="discipline_date" [ngClass]="{ 'is-invalid': f['discipline_date'].errors }" [disabled]="submitted">
+			    </div>
+			    <div class="col">
+			      	<button type="submit" class="btn btn-primary">ค้นหา</button>&nbsp;
+			      	<a [routerLink]="['/admin-discipline-management']" class="btn btn-secondary">ดูประวัติทั้งหมด</a>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">คำนำหน้าชื่อ</th>
+			      <th scope="col">ชื่อ</th>
+			      <th scope="col">สกุล</th>
+			      <th scope="col">สาขาวิชา</th>
+			      <th scope="col">ตำแหน่ง</th>
+			      <th scope="col">การปฎิบัติงาน</th>
+			      <th scope="col">รายละเอียด</th>
+			    </tr>
+			  </thead>
+			  <tbody *ngIf="submitted">
+			  	<tr>
+			  		<td colspan="8" class="text-center">
+			  			กำลังค้นหา...
+			  		</td>
+			  	</tr>
+			  </tbody>
+			  <tbody *ngIf="!submitted">
+			  	<tr *ngIf="list.length == 0">
+			  		<td colspan="8" class="text-center">
+				  		ไม่พบข้อมูลบุคลากรในสาขาวิชานี้
+				  	</td>
+			  	</tr>
+			    <tr *ngFor="let item of list; let i = index">
+			      <td scope="row">{{ i + 1 }}</td>
+			      <td>{{ item.prefix }}</td>
+			      <td>{{ item.name }}</td>
+			      <td>{{ item.lastname }}</td>
+			      <td>{{ item.work_unit }}</td>
+			      <td>{{ item.position }}</td>
+			      <td>
+			      	<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="item.discipline_status">
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'ปกติ' }">
+					      <input class="radio-absolute" ngbButton type="radio" [value]="'ปกติ'">ปกติ
+					    </label>
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'ขาด' }">
+					      <input class="radio-absolute" ngbButton type="radio" value="ขาด"> ขาด
+					    </label>
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'สาย' }">
+					      <input class="radio-absolute" ngbButton type="radio" [value]="'สาย'"> สาย
+					    </label>
+					  </div>
+			      </td>
+			      <td>
+			      	<input type="text" class="form-control" [(ngModel)]="item.remark">
+			      </td>
+			    </tr>
+			  </tbody>
+			  <tfoot *ngIf="list > 0">
+			  	<tr>
+			  		<td colspan="8" class="text-center">
+			  			<button class="btn btn-dark">ยกเลิก</button>&nbsp;
+			  			<button class="btn btn-success" (click)="save()">บันทึก</button>
+			  		</td>
+			  	</tr>
+			  </tfoot>
+			</table>
+		</div>
+	</div>
+	<div class="row" *ngIf="error_message != null">
+		<div class="col">
+			<div class="alert alert-danger">
+				{{ error_message }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการลบข้อมูล</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+    	คุณต้องการลบข้อมูลปีงบประมาณและรอบการประเมินนี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ยืนยัน</button>
+  </div>
+</ng-template>
+<ng-template #modalSuccessData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>บันทึกข้อมูลสำเร็จ !</h3>
+    <br><br>
+    <button type="button" class="btn btn-success" (click)="modal.close('Confirm')">ปิด</button>
+    <br>
+  </div>
+</ng-template>

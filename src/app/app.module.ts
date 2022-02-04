@@ -30,6 +30,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { AdminEvaluateRoundMnmComponent } from './components/backend/admin-evaluate-round-mnm/admin-evaluate-round-mnm.component';
 import { DateBcdDirective } from './directives/date-bcd.directive';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { AdminDisciplineManageComponent } from './components/backend/admin-discipline-manage/admin-discipline-manage.component';
+import { AdminDisciplineUpdateManageComponent } from './components/backend/admin-discipline-update-manage/admin-discipline-update-manage.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { DateBcdDirective } from './directives/date-bcd.directive';
     ChangePasswordComponent,
     ForgotPasswordComponent,
     AdminEvaluateRoundMnmComponent,
-    DateBcdDirective
+    DateBcdDirective,
+    SpinnerComponent,
+    AdminDisciplineManageComponent,
+    AdminDisciplineUpdateManageComponent
   ],
   imports: [
     BrowserModule,

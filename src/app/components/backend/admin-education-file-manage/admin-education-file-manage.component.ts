@@ -149,7 +149,6 @@ export class AdminEducationFileManageComponent implements OnInit {
       },
       err => {
         this.error_message = err.error.message;
-        console.log(err.error.errors.files);
         if(err.error.errors){
           this.error_message = err.error.errors.file[0];
         }

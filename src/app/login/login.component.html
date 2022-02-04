@@ -24,6 +24,7 @@
               name="email"
               [(ngModel)]="form.email"
               required
+              [disabled]="submitted" 
               #username="ngModel"
             />
           </div>
@@ -37,6 +38,7 @@
               required
               minlength="6"
               #password="ngModel"
+              [disabled]="submitted" 
             />
             <div
               class="alert alert-danger"

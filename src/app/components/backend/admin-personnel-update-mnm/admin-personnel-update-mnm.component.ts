@@ -42,6 +42,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
     fileSource: new FormControl('')
     // acceptTerms: new FormControl(false),
   });
+  work_unit_list : any = [];
   user_data :any;
   attach_file_data : any;
   id : any;
@@ -59,6 +60,17 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
   ngOnInit(): void {
     this.user_data = this.tokenStorage.getUser().user;
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.work_unit_list.push({'value' : 'คอมพิวเตอร์ธุรกิจ', 'name' : 'คอมพิวเตอร์ธุรกิจ'},
+                              {'value' : 'การตลาด', 'name' : 'การตลาด'},
+                              {'value' : 'การจัดการทรัพยากรมนุษย์', 'name' : 'การจัดการทรัพยากรมนุษย์'},
+                              {'value' : 'การจัดการทั่วไป', 'name' : 'การจัดการทั่วไป'},
+                              {'value' : 'การเงิน', 'name' : 'การเงิน'},
+                              {'value' : 'การบริหารธุรกิจระหว่างประเทศ', 'name' : 'การบริหารธุรกิจระหว่างประเทศ'},
+                              {'value' : 'การจัดการโลจิสติกส์และซัพพลายเชน', 'name' : 'การจัดการโลจิสติกส์และซัพพลายเชน'},
+                              {'value' : 'การบัญชี', 'name' : 'การบัญชี'},
+                              {'value' : 'เศรษฐศาสตร์ธุรกิจ', 'name' : 'เศรษฐศาสตร์ธุรกิจ'},
+                              {'value' : 'เศรษฐศาสตร์ระหว่างประเทศ', 'name' : 'เศรษฐศาสตร์ระหว่างประเทศ'},
+                            );
     console.log(this.id);
     if(this.id){
       this.progress = 3;
