@@ -1,0 +1,76 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+	<form  [formGroup]="myForm" (ngSubmit)="onSubmit()">
+		<div class="row">
+			<div class="col-6 offset-3">
+				<div class="pb-2 mt-4 mb-2 border-bottom text-center">
+				      <h4 class="font-weight-bold">แก้ไขไฟล์ประวัติส่วนบุคคล</h4>
+				</div>
+
+				<fieldset>
+					<legend><h5 class="font-weight-bold">ไฟล์ประวัติส่วนบุคคล</h5></legend>
+					<div class="row padding-bottom">
+						
+						<div class="col-6 offset-3">
+						  <label for="floatingInput" class="font-weight-bold">เพิ่มไฟล์</label>
+						  <input type="file" class="form-control" id="floatingInput" formControlName="file"
+				            id="file" 
+				            multiple
+				            class="form-control"
+				            (change)="onFileChange($event)">
+						</div>
+
+					</div>
+					<div class="row padding-bottom-sm" *ngFor="let item of personnel_files; let index = index;">
+						
+						<div class="col-6 offset-3">
+						  	<div class="clearfix badge badge-info">
+						  	  {{ item.name }}
+						  	  {{ item.file_name }}
+							  <button type="button" class="btn-close float-end" aria-label="Close" *ngIf="item.id" (click)="triggerModal(modalDeleteData, item.id)"></button>
+							  <button type="button" class="btn-close float-end" aria-label="Close" *ngIf="!item.id" (click)="removePersonnelFile(index)"></button>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row" *ngIf="error_message != null">
+						<div class="col">
+							<div class="alert alert-danger">
+								{{ error_message }}
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col text-center">
+							<a class="btn btn-light" [routerLink]="['/personnel-info']">ยกเลิก</a>
+							&nbsp;
+							<button class="btn btn-success" type="submit" *ngIf="!submitted">บันทึกข้อมูล</button>
+							<button type="button" class="btn btn-success" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
+							
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</form>
+</div>
+
+<ng-template #modalDeleteData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการลบข้อมูล</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+    	คุณต้องการลบไฟล์นี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ยืนยัน</button>
+  </div>
+</ng-template>

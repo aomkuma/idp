@@ -1,4 +1,4 @@
-<app-admin-menu></app-admin-menu>
+<app-admin-menu [menu]="'evaluate-round'"></app-admin-menu>
 <app-admin-page-header [name]="'ปีงบประมาณและรอบการประเมิน'"></app-admin-page-header>
 <hr>
 <div class="container-fluid">
@@ -22,8 +22,8 @@
 			      	</select>
 			    </div>
 			    <div class="col">
-			      	<button type="submit" class="btn btn-primary">ค้นหา</button>&nbsp;
-					<a type="button" class="btn btn-success" (click)="triggerModalUpdate(modalData, null)">เพิ่มข้อมูล</a>
+			      	<button type="submit" class="btn btn-light">ค้นหา</button>&nbsp;
+					<a type="button" class="btn btn-info" (click)="triggerModalUpdate(modalData, null)">+ เพิ่มข้อมูล</a>
 			    </div>
 			  </div>
 			</form>
@@ -34,13 +34,13 @@
 			<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
-			      <th scope="col">#</th>
-			      <th scope="col">ปีงบประมาณ</th>
-			      <th scope="col">รอบที่</th>
-			      <th scope="col">ช่วงเวลา</th>
-			      <th scope="col">วันที่เริ่มส่งข้อมูล</th>
-			      <th scope="col">วันที่ปิดรับข้อมูล</th>
-			      <th scope="col">จัดการ</th>
+			      <th scope="col" class="text-center">#</th>
+			      <th scope="col" class="text-center">ปีงบประมาณ</th>
+			      <th scope="col" class="text-center">รอบที่</th>
+			      <th scope="col" class="text-center">ช่วงเวลา</th>
+			      <th scope="col" class="text-center">วันที่เริ่มส่งข้อมูล</th>
+			      <th scope="col" class="text-center">วันที่ปิดรับข้อมูล</th>
+			      <th scope="col" class="text-center">จัดการ</th>
 			    </tr>
 			  </thead>
 			  <tbody *ngIf="submitted">
@@ -53,14 +53,19 @@
 			  <tbody *ngIf="!submitted">
 			    <tr *ngFor="let item of list; let i = index">
 			      <td scope="row">{{ i + 1 }}</td>
-			      <td>{{ item.fiscal_year + 543 }}</td>
-			      <td>{{ item.round_of_year }}</td>
-			      <td>{{ item.start_date | date:'d MMMM y' }} - {{ item.end_date | date:'d MMMM y' }}</td>
-			      <td>{{ item.start_send_date | date:'d MMMM y' }}</td>
-			      <td>{{ item.end_send_date | date:'d MMMM y' }}</td>
-			      <td>
-			      	<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalDeleteData, item.id)">ลบ</button>&nbsp;
-				  	<a class="btn btn-warning btn-sm" (click)="triggerModalUpdate(modalData, item)">แก้ไข</a>
+			      <td class="text-center">{{ item.fiscal_year + 543 }}</td>
+			      <td class="text-center">{{ item.round_of_year }}</td>
+			      <td class="text-center">{{ item.start_date | date:'d MMMM y' }} - {{ item.end_date | date:'d MMMM y' }}</td>
+			      <td class="text-center">{{ item.start_send_date | date:'d MMMM y' }}</td>
+			      <td class="text-center">{{ item.end_send_date | date:'d MMMM y' }}</td>
+			      <td class="text-center">
+			      	<!-- <button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalDeleteData, item.id)">ลบ</button> -->
+			      	<a type="button" (click)="triggerModal(modalDeleteData, item.id)">
+			      		<img src="./assets/images/delete-icon.png" class="icon-sm">
+			      	</a>&nbsp;
+				  	<a type="button" (click)="triggerModalUpdate(modalData, item)">
+				  		<img src="./assets/images/edit-icon.png" class="icon-sm">
+				  	</a>
 			      </td>
 			    </tr>
 			  </tbody>

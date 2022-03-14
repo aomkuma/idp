@@ -4,7 +4,95 @@
     src: local("DB Heavent"), url("./assets/fonts/DB_Heavent.ttf") format("truetype");
 }
 
+a {
+    cursor : pointer;
+}
+
 .card, .container, .container-fluid, .modal-dialog, nav {
 	font-family: "DB Heavent";
     font-size:1.1em;
+}
+
+.font-weight-bold{
+    font-weight: bold;
+}
+
+.badge {
+    padding: 5px;
+    border-radius:2px;
+}
+
+.badge-primary {
+    background : #0d6efd;
+}
+
+.badge-warning {
+    background : #ffc107;
+    color : #000000;
+}
+
+.badge-danger {
+    background : #bb2d3b;
+}
+
+.badge-info {
+    background : #D0EAEF;
+    color : #000000;
+}
+
+#ngb-live {
+    display:none;
+}
+
+.btn {
+    border-radius : 30px;
+    min-width:100px;
+}
+
+.btn-light {
+    border : 1px solid #000000;
+}
+
+.btn-info {
+    background : #0C92D3;
+    color : #FFFFFF;    
+}
+
+.label {
+    color : #3193D5;
+    font-size : 1.2em;
+}
+
+.label-value {
+    color : #000000;
+    font-size : 1.2em;
+}
+
+.label-default {
+    color : #000000;
+    font-size : 1.2em;
+}
+
+.label-default {
+    color : #000000;
+    font-size : 1.2em;
+}
+
+.padding-bottom {
+    margin-bottom : 20px;
+}
+
+.padding-bottom-sm {
+    margin-bottom : 10px;   
+}
+
+.alert-pad{
+    padding:5px;
+    border-radius : 30px;
+    padding-left : 20px;
+    padding-right : 20px;
+}
+
+.icon-sm {
+    height: 30px;
 }

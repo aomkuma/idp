@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost/api/',
-  fileUrl : 'http://localhost/storage',
+  apiUrl: 'http://localhost/idp-service/public/api/',
+  fileUrl : 'http://localhost/idp-service/public/storage',
 };
 
 /*

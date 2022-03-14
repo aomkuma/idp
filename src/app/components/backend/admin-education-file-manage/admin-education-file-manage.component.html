@@ -82,11 +82,11 @@
 					<table class="table">
 					  <thead class="thead-dark">
 					    <tr>
-					      <th scope="col">คุณวุฒิ</th>
-					      <th scope="col">สาขาวิชาที่จบ</th>
-					      <th scope="col">ปีที่จบ</th>
-					      <th scope="col">สถาบันการศึกษา</th>
-					      <th scope="col" style="width: 20vh;">จัดการ</th>
+					      <th scope="col" class="text-center">คุณวุฒิ</th>
+					      <th scope="col" class="text-center">สาขาวิชาที่จบ</th>
+					      <th scope="col" class="text-center">ปีที่จบ</th>
+					      <th scope="col" class="text-center">สถาบันการศึกษา</th>
+					      <th scope="col" class="text-center" style="width: 20vh;">จัดการ</th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -98,9 +98,9 @@
 					  	<tr *ngFor="let item of Files">
 					  		<td>{{ item.qualification }}</td>
 					  		<td>{{ item.graduated }}</td>
-					  		<td>{{ item.graduated_year }}</td>
+					  		<td class="text-center">{{ item.graduated_year }}</td>
 					  		<td>{{ item.academy }}</td>
-					  		<td>
+					  		<td class="text-center">
 					  			<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalData, item.id)">ลบ</button>&nbsp;
 					  			<button type="button" class="btn btn-warning btn-sm" (click)="updateFile(item)">แก้ไข</button>
 					  		</td>

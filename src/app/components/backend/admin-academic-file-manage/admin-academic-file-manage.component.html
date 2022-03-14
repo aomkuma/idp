@@ -55,7 +55,7 @@
 					<div class="row" *ngIf="attach_file_data && attach_file_data.file_path != null">
 						<div class="col">
 							<div class="alert alert-info">
-								ไฟล์ปัจจุบัน : <a href="http://localhost/storage/{{attach_file_data.file_path}}" target="_blank">{{attach_file_data.file_name}}</a>
+								ไฟล์ปัจจุบัน : <a href="{{storage_url}}/{{attach_file_data.file_path}}" target="_blank">{{attach_file_data.file_name}}</a>
 							</div>
 						</div>
 					</div>
@@ -82,11 +82,11 @@
 				<table class="table">
 				  <thead class="thead-dark">
 				    <tr>
-				      <th scope="col">วันที่เข้ารับตำแหน่ง</th>
-				      <th scope="col">วันที่พ้นตำแหน่ง</th>
-				      <th scope="col">ตำแหน่ง</th>
-				      <th scope="col">ชื่อตำแหน่ง</th>
-				      <th scope="col" style="width: 20vh;">จัดการ</th>
+				      <th scope="col" class="text-center">วันที่เข้ารับตำแหน่ง</th>
+				      <th scope="col" class="text-center">วันที่พ้นตำแหน่ง</th>
+				      <th scope="col" class="text-center">ตำแหน่ง</th>
+				      <th scope="col" class="text-center">ชื่อตำแหน่ง</th>
+				      <th scope="col" class="text-center" style="width: 20vh;">จัดการ</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -96,11 +96,11 @@
 				  		</td>
 				  	</tr>
 				  	<tr *ngFor="let item of Files">
-				  		<td>{{ item.hire_date }}</td>
-				  		<td>{{ item.retire_date }}</td>
+				  		<td class="text-center">{{ item.hire_date }}</td>
+				  		<td class="text-center">{{ item.retire_date }}</td>
 				  		<td>{{ item.position }}</td>
 				  		<td>{{ item.position_name }}</td>
-				  		<td>
+				  		<td class="text-center">
 				  			<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalData, item.id)">ลบ</button>&nbsp;
 				  			<button type="button" class="btn btn-warning btn-sm" (click)="updateFile(item)">แก้ไข</button>
 				  		</td>

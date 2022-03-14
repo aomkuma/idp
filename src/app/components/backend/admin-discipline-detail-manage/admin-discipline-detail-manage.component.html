@@ -1,0 +1,93 @@
+<app-admin-menu [menu]="'discipline'"></app-admin-menu>
+<app-admin-page-header [name]="'แก้ไขข้อมูล ขาด/ลา/มาสาย'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<form [formGroup]="form"  (ngSubmit)="onSubmit()">
+			  <div class="row">
+			  	<div class="col-6">
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="personnel_prefix">
+					  <label for="floatingInput">คำนำหน้า</label>
+					</div>
+				</div>
+			  </div>
+			  <div class="row">
+			  	<div class="col-6">
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="personnel_name">
+					  <label for="floatingInput">ชื่อ</label>
+					</div>
+				</div>
+				<div class="col-6">
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="personnel_lastname">
+					  <label for="floatingInput">สกุล</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			  	<div class="col-6">
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="personnel_work_unit">
+					  <label for="floatingInput">สาขาวิชา</label>
+					</div>
+				</div>
+				<div class="col-6">
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="personnel_position">
+					  <label for="floatingInput">ตำแหน่ง</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			  	<div class="col-6">
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="discipline_date_str">
+					  <label for="floatingInput">วันที่</label>
+					</div>
+				</div>
+				<div class="col-6">
+				    <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="remark">
+					  <label for="floatingInput">หมายเหตุ</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label class="col-2 font-weight-bold">
+					การปฎิบัติงาน
+				</label>
+				<div class="col-2">
+					<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="discipline_status">
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': f['discipline_status'].value == 'ปกติ' }">
+					      <input class="radio-absolute" ngbButton type="radio" [value]="'ปกติ'">ปกติ
+					    </label>
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': f['discipline_status'].value == 'ขาด' }">
+					      <input class="radio-absolute" ngbButton type="radio" value="ขาด"> ขาด
+					    </label>
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': f['discipline_status'].value == 'สาย' }">
+					      <input class="radio-absolute" ngbButton type="radio" [value]="'สาย'"> สาย
+					    </label>
+					</div>
+				</div>
+				<label class="col-1 font-weight-bold text-center" *ngIf="f['discipline_status'].value == 'สาย'">
+					เวลา
+				</label>
+				<div class="col-2" *ngIf="f['discipline_status'].value == 'สาย'">
+					<ngb-timepicker formControlName="late_time" [spinners]="false"></ngb-timepicker>
+				</div>
+			</div>
+			
+			<hr>
+			<div class="row">
+				<div class="col text-center">
+					<button class="btn btn-dark" [disabled]="submitted" (click)="goBack()">ยกเลิก</button>&nbsp;
+		  			<button type="submit" class="btn btn-success" *ngIf="!submitted">บันทึก</button>
+		  			<button type="button" class="btn btn-success" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

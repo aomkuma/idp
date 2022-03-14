@@ -1,7 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-  	<div class="title-header">
+  <div class="clearfix container-fluid">
+  	<div class="col title-header">
   		{{ name }}
   	</div>
+    <div class="col text-end">
+          
+        <div class="dropdown">
+          <button class="btn btn-success" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            ไปยังระบบประเมินของตนเอง
+          </button>&nbsp;
+          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ user_data.name }} {{ user_data.lastname }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" [routerLink]="['/dashboard']">กลับไปยังระบบหน้าบ้าน</a></li>
+          </ul>
+        </div>
+      
+    </div>
   </div>
 </nav>

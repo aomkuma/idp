@@ -33,6 +33,15 @@ import { DateBcdDirective } from './directives/date-bcd.directive';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AdminDisciplineManageComponent } from './components/backend/admin-discipline-manage/admin-discipline-manage.component';
 import { AdminDisciplineUpdateManageComponent } from './components/backend/admin-discipline-update-manage/admin-discipline-update-manage.component';
+import { AdminDisciplineDetailManageComponent } from './components/backend/admin-discipline-detail-manage/admin-discipline-detail-manage.component';
+import { AdminActivityManageComponent } from './components/backend/admin-activity-manage/admin-activity-manage.component';
+import { AdminActivityUpdateManageComponent } from './components/backend/admin-activity-update-manage/admin-activity-update-manage.component';
+import { PersonnelInfoComponent } from './components/frontend/personnel-info/personnel-info.component';
+import { PersonnelFilesUpdateComponent } from './components/frontend/personnel-files-update/personnel-files-update.component';
+import { PersonnelContactUpdateComponent } from './components/frontend/personnel-contact-update/personnel-contact-update.component';
+import { AdminAdsManageComponent } from './components/backend/admin-ads-manage/admin-ads-manage.component';
+import { AdminAdsUpdateManageComponent } from './components/backend/admin-ads-update-manage/admin-ads-update-manage.component';
+import { EvaluateFormComponent } from './components/frontend/evaluate-form/evaluate-form.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +66,16 @@ import { AdminDisciplineUpdateManageComponent } from './components/backend/admin
     DateBcdDirective,
     SpinnerComponent,
     AdminDisciplineManageComponent,
-    AdminDisciplineUpdateManageComponent
+    AdminDisciplineUpdateManageComponent,
+    AdminDisciplineDetailManageComponent,
+    AdminActivityManageComponent,
+    AdminActivityUpdateManageComponent,
+    PersonnelInfoComponent,
+    PersonnelFilesUpdateComponent,
+    PersonnelContactUpdateComponent,
+    AdminAdsManageComponent,
+    AdminAdsUpdateManageComponent,
+    EvaluateFormComponent
   ],
   imports: [
     BrowserModule,

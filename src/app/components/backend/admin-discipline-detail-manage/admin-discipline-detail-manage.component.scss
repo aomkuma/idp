@@ -1,0 +1,9 @@
+.form-control:disabled, .form-control[readonly]{
+	background : #FFF;
+}
+
+.radio-absolute{
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}

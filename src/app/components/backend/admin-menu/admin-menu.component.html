@@ -6,31 +6,31 @@
 
     <ul class="list-unstyled components">
         <li>
-            <a [routerLink]="['/admin-dashboard']">หน้าหลัก</a>
+            <a [routerLink]="['/admin-dashboard']" [ngClass]="{'menu-selected' : menu == 'dashboard'}"><img src="./assets/images/home-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;หน้าหลัก {{ menu }}</a>
         </li>
         <li>
-            <a [routerLink]="['/admin-evaluate-round-management']">ปีงบประมาณและรอบการประเมิน</a>
+            <a [routerLink]="['/admin-evaluate-round-management']" [ngClass]="{'menu-selected' : menu == 'evaluate-round'}"><img src="./assets/images/official-documents-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;ปีงบประมาณและรอบการประเมิน</a>
         </li>
         <li>
-            <a [routerLink]="['/admin-personnel-management']">ข้อมูลบุคลากร</a>
+            <a [routerLink]="['/admin-personnel-management']" [ngClass]="{'menu-selected' : menu == 'personnel'}"><img src="./assets/images/profile-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;ข้อมูลบุคลากร</a>
         </li>
         <li>
-            <a [routerLink]="['/admin-discipline-management/update']">ขาด / ลา / มาสาย</a>
+            <a [routerLink]="['/admin-discipline-management/update']" [ngClass]="{'menu-selected' : menu == 'discipline'}"><img src="./assets/images/research-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;ขาด / ลา / มาสาย</a>
         </li>
         <li>
-            <a [routerLink]="['/admin-activity-management']">กิจกรรม / เข้าอบรม</a>
+            <a [routerLink]="['/admin-activity-management']" [ngClass]="{'menu-selected' : menu == 'activity'}"><img src="./assets/images/mission-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;กิจกรรม / เข้าอบรม</a>
         </li>
         <li>
-            <a [routerLink]="['/admin-ads']">ข่าวประกาศ</a>
+            <a [routerLink]="['/admin-ads-management']" [ngClass]="{'menu-selected' : menu == 'ads'}"><img src="./assets/images/loud-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;ข่าวประกาศ</a>
         </li>
         <li>
-            <a [routerLink]="['/admin-config']">เปิดปิดแสดงผลการประเมิน</a>
+            <a [routerLink]="['/admin-config']" [ngClass]="{'menu-selected' : menu == 'config'}"><img src="./assets/images/sticky-note-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;เปิดปิดแสดงผลการประเมิน</a>
         </li>
         <li>
-            <a [routerLink]="['/admin-report']">รายงาน</a>
+            <a [routerLink]="['/admin-report']" [ngClass]="{'menu-selected' : menu == 'report'}"><img src="./assets/images/report-icon.png" class="menu-icon">&nbsp;&nbsp;&nbsp;&nbsp;รายงาน</a>
         </li>
 
-        <li>
+        <!-- <li>
             &nbsp;
         </li>
         <li class="li-backhome">
@@ -38,6 +38,6 @@
         </li>
         <li class="li-logout">
             <a  (click)="logout()">ออกจากระบบ</a>
-        </li>
+        </li> -->
     </ul>
 </nav>

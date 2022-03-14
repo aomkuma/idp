@@ -1,2 +1,41 @@
-<app-admin-menu></app-admin-menu>
+<app-admin-menu [menu]="'dashboard'"></app-admin-menu>
 <app-admin-page-header [name]="'Dashboard'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-2">
+			<label class="font-weight-bold">ปีงบประมาณ</label>
+			<select class="form-control" [(ngModel)]="fiscal_year" placeholder="ปีงบประมาณ">
+	      		<option *ngFor="let year of fiscal_year_list" value="{{year.value}}">{{year.text}}</option>
+	      	</select>
+	      	<br>
+		</div>
+	</div>
+	<div class="row" *ngFor="let item of list">
+		<div class="col">
+			<h3>ปีงบประมาณ {{ item.fiscal_year + 543 }} รอบที่ {{ item.round_of_year }}</h3>
+			<div class="row">
+				<div class="col" *ngFor="let item of item['items']">
+					<div class="box">
+						<div class="row">
+							<div class="col">
+								&nbsp;
+							</div>
+						</div>
+						<div class="row">
+							<div class="col box-text">
+								{{ item.evaluate_status }}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<span class="box-text number-text">{{ item.total }}</span> รายการ
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>

@@ -94,8 +94,9 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    background: #0C92D3;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 #sidebar ul li.active>a,
@@ -178,4 +179,14 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+.menu-icon {
+    height:13px;
+}
+
+.menu-selected {
+    background: #0C92D3;
+    margin: 10px;
+    border-radius: 10px;
 }

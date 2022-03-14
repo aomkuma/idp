@@ -59,7 +59,6 @@ export class AdminDisciplineManageComponent implements OnInit {
     return this.form.controls;
   }
 
-
   onSubmit(){
     this.submitted = true;
     this.httpService.callHTTPPost('discipline', this.form.value).subscribe(
@@ -76,6 +75,28 @@ export class AdminDisciplineManageComponent implements OnInit {
       err => {
         this.submitted = false;
       });
+  }
+
+  triggerModal(content, data_id) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+      this.closeModal = `Closed with: ${res}`;
+      console.log(res);
+      if(res == 'Confirm'){
+        
+        console.log(data_id);
+
+        this.httpService.callHTTPDelete('discipline/destroy/', data_id).subscribe(
+          event => {
+            if (event instanceof HttpResponse) {
+              this.onSubmit();
+            }
+          }
+        );
+      }
+      
+    }, (res) => {
+      // this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+    });
   }
 
 }

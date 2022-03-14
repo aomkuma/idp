@@ -1,4 +1,4 @@
-<app-admin-menu></app-admin-menu>
+<app-admin-menu [menu]="'personnel'"></app-admin-menu>
 <app-admin-page-header [name]="'ข้อมูลบุคลากร'"></app-admin-page-header>
 <hr>
 <div class="container-fluid">
@@ -25,14 +25,14 @@
 			<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
-			      <th scope="col">#</th>
-			      <th scope="col">ชื่อ - สกุล</th>
-			      <th scope="col">ตำแหน่ง</th>
-			      <th scope="col">สายงาน</th>
-			      <th scope="col">คำแหน่งทางวิชาการ</th>
-			      <th scope="col">ต้นสังกัด</th>
-			      <th scope="col">ตำแหน่งบริหาร</th>
-			      <th scope="col">จัดการ</th>
+			      <th scope="col" class="text-center">#</th>
+			      <th scope="col" class="text-center">ชื่อ - สกุล</th>
+			      <th scope="col" class="text-center">ตำแหน่ง</th>
+			      <th scope="col" class="text-center">สายงาน</th>
+			      <th scope="col" class="text-center">คำแหน่งทางวิชาการ</th>
+			      <th scope="col" class="text-center">ต้นสังกัด</th>
+			      <th scope="col" class="text-center">ตำแหน่งบริหาร</th>
+			      <th scope="col" class="text-center">จัดการ</th>
 			    </tr>
 			  </thead>
 			  <tbody *ngIf="submitted">

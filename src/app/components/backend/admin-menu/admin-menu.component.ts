@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TokenStorageService } from '../../../services/token-storage.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 export class AdminMenuComponent implements OnInit {
 
   user_data : any;
+  @Input() menu: string = '';
+
   constructor(private tokenStorage: TokenStorageService) { 
 
   }

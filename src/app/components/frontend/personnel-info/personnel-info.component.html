@@ -1,0 +1,316 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-6 offset-3">
+			<form [formGroup]="form">
+				<div class="pb-2 mt-4 mb-2 border-bottom text-center">
+				      <h4>ข้อมูลบุคลากร</h4>
+				</div>
+
+				<fieldset>
+					<legend>ข้อมูลส่วนตัว</legend>
+					
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">ชื่อ - สกุล</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['name'].value }} {{ f['lastname'].value }}</label>
+									</div>
+								</div>
+						</div>
+
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">ประเภทบุคลากร</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['position'].value }}</label>
+									</div>
+								</div>
+						</div>
+
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">สายงาน</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['line_work'].value }}</label>
+									</div>
+								</div>
+						</div>
+					</div>
+
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">หน่วยงานต้นสังกัด</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['agency'].value }}</label>
+									</div>
+								</div>
+						</div>
+
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">ตำแหน่งทางวิชาการ</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['position_academic'].value }}</label>
+									</div>
+								</div>
+						</div>
+
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">ตำแหน่งบริหาร</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['position_academic'].value }}</label>
+									</div>
+								</div>
+						</div>
+					</div>
+
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">ผู้บังคับบัญชา</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+										  	<label class="label-value">
+											  	{{ f['supervisor_level_st'].value }} 
+											  	{{ f['supervisor_level_nd'].value?'/ ' + f['supervisor_level_nd'].value:'' }} 
+												{{ f['supervisor_level_rd'].value?'/ ' + f['supervisor_level_rd'].value:'' }} 
+												{{ f['supervisor_level_th'].value?'/ ' + f['supervisor_level_th'].value:'' }}
+											</label>
+										</div>
+								</div>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>ไฟล์ประวัติบุคคล</legend>
+					<div class="row padding-bottom">
+						<div class="col">
+							<div class="row"  *ngIf="!attach_files['personnel_files']">
+								<div class="col">
+								  <label class="alert alert-danger alert-pad">ยังไม่ได้แนบไฟล์</label>
+								</div>
+							</div>
+							<div class="row" *ngFor="let item of attach_files['personnel_files']">
+								<div class="col">
+								  <a href="{{ storage_url }}/{{ item.file_path }}" target="_blank"><label class="alert alert-info alert-pad">{{ item.file_name }}</label></a>
+								</div>
+							</div>
+						</div>
+						<div class="col text-end">
+							<a class="btn btn-warning more-shape" [routerLink]="['/personnel-info/update-files']">แก้ไขข้อมูล</a>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>วุฒิการศึกษา</legend>
+					<div class="row padding-bottom">
+						<div class="col-4" *ngFor="let education of attach_files['education_files']">
+								<div class="row">
+										<div class="col">
+									  <label class="label">{{ education.qualification }}</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ education.graduated }}</label>
+									</div>
+								</div>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>หน่วยงานที่ปฎิบัติงาน</legend>
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">หน่วยงาน</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['agency'].value }}</label>
+									</div>
+								</div>
+						</div>
+					</div>
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">รายละเอียด</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['agency_detail'].value }}</label>
+									</div>
+								</div>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>ข้อมูลการติดต่อ</legend>
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">เบอร์โทรศัพท์</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['mobile_work'].value }}</label>
+									</div>
+								</div>
+						</div>
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">เบอร์ติดต่อภายใน</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['mobile_work_internal'].value }}</label>
+									</div>
+								</div>
+						</div>
+						<div class="col text-end">
+							<a class="btn btn-warning more-shape" [routerLink]="['/personnel-info/update-contact']">แก้ไขข้อมูล</a>
+						</div>
+					</div>
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">อีเมล์มหาวิทยาลัย</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['email_work'].value }}</label>
+									</div>
+								</div>
+						</div>
+
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">อีเมล์ที่ติดต่อได้</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['email'].value }}</label>
+									</div>
+								</div>
+						</div>
+
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">เบอร์โทรศัพท์</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ f['mobile'].value }}</label>
+									</div>
+								</div>
+						</div>
+					</div>
+				</fieldset>
+				
+				<fieldset>
+					<legend>ข้อมูลการทำงาน</legend>
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">อายุการทำงาน</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">{{ calcWorkAge() }} ปี</label>
+									</div>
+								</div>
+						</div>
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">สถานะ</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">กำลังปฎิบัติงาน</label>
+									</div>
+								</div>
+						</div>
+						<div class="col">
+								<div class="row">
+										<div class="col">
+									  <label class="label">วันที่เกษียณ</label>
+									</div>
+								</div>
+								<div class="row">
+										<div class="col">
+									  <label class="label-value">1 ตุลาคม พ.ศ. {{ calcRetireDate() }}</label>
+									</div>
+								</div>
+						</div>
+					</div>
+					<div class="row padding-bottom">
+						<div class="col">
+								<div class="row" *ngFor="let work_info of attach_files['work_info_files']">
+										<div class="col-2">
+										  <label class="label">{{ work_info.hire_date | date:'Y' }} - {{ work_info.retire_date?(work_info.retire_date | date:'Y'):'ปัจจุบัน' }}</label>
+										</div>
+										<div class="col">
+										  <label class="label-value">{{ work_info.position }}</label>
+										</div>
+								</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

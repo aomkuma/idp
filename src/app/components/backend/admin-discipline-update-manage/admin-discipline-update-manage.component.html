@@ -1,4 +1,4 @@
-<app-admin-menu></app-admin-menu>
+<app-admin-menu [menu]="'discipline'"></app-admin-menu>
 <app-admin-page-header [name]="'จัดการข้อมูล ขาด / ลา / มาสาย'"></app-admin-page-header>
 <hr>
 <div class="container-fluid">
@@ -46,7 +46,7 @@
 			  	</tr>
 			  </tbody>
 			  <tbody *ngIf="!submitted">
-			  	<tr *ngIf="list.length == 0">
+			  	<tr *ngIf="list != null && list.length == 0">
 			  		<td colspan="8" class="text-center">
 				  		ไม่พบข้อมูลบุคลากรในสาขาวิชานี้
 				  	</td>
@@ -60,27 +60,28 @@
 			      <td>{{ item.position }}</td>
 			      <td>
 			      	<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="item.discipline_status">
-					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'ปกติ' }">
-					      <input class="radio-absolute" ngbButton type="radio" [value]="'ปกติ'">ปกติ
-					    </label>
-					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'ขาด' }">
-					      <input class="radio-absolute" ngbButton type="radio" value="ขาด"> ขาด
-					    </label>
-					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'สาย' }">
-					      <input class="radio-absolute" ngbButton type="radio" [value]="'สาย'"> สาย
-					    </label>
-					  </div>
+						    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'ปกติ' }">
+						      <input class="radio-absolute" ngbButton type="radio" [value]="'ปกติ'">ปกติ
+						    </label>
+						    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'ขาด' }">
+						      <input class="radio-absolute" ngbButton type="radio" value="ขาด"> ขาด
+						    </label>
+						    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': item.discipline_status == 'สาย' }">
+						      <input class="radio-absolute" ngbButton type="radio" [value]="'สาย'"> สาย
+						    </label>
+						  </div>
 			      </td>
 			      <td>
 			      	<input type="text" class="form-control" [(ngModel)]="item.remark">
 			      </td>
 			    </tr>
 			  </tbody>
-			  <tfoot *ngIf="list > 0">
+			  <tfoot *ngIf="list != null && list.length > 0">
 			  	<tr>
 			  		<td colspan="8" class="text-center">
-			  			<button class="btn btn-dark">ยกเลิก</button>&nbsp;
-			  			<button class="btn btn-success" (click)="save()">บันทึก</button>
+			  			<button class="btn btn-dark" [disabled]="submitted_update">ยกเลิก</button>&nbsp;
+			  			<button class="btn btn-success" (click)="save()" *ngIf="!submitted_update">บันทึก</button>
+			  			<button type="button" class="btn btn-success" *ngIf="submitted_update" [disabled]="submitted_update">กำลังบันทึก..</button>
 			  		</td>
 			  	</tr>
 			  </tfoot>
@@ -89,7 +90,7 @@
 	</div>
 	<div class="row" *ngIf="error_message != null">
 		<div class="col">
-			<div class="alert alert-danger">
+			<div class="alert alert-danger text-center">
 				{{ error_message }}
 			</div>
 		</div>

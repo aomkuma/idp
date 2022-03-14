@@ -1,0 +1,79 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-6 offset-3">
+			<form [formGroup]="form" (ngSubmit)="onSubmit()">
+				<div class="pb-2 mt-4 mb-2 border-bottom text-center">
+				      <h4 class="font-weight-bold">ข้อมูลบุคลากร</h4>
+				</div>
+
+				<fieldset>
+					<legend><h5 class="font-weight-bold">ข้อมูลการติดต่อ</h5></legend>
+				
+					<div class="row">
+						
+						<div class="col-6 offset-3">
+						  <label for="floatingInput" class="font-weight-bold">เบอร์โทรศัพท์ *</label>
+						  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work" [ngClass]="{ 'is-invalid': submitted && f['mobile_work'].errors }">
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-6 offset-3">
+							  <label for="floatingInput" class="font-weight-bold">เบอร์ติดต่อภายใน</label>
+							  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work_internal">
+						</div>
+						
+					</div>
+
+					<div class="row">
+						
+						<div class="col-6 offset-3">
+							  <label for="floatingInput" class="font-weight-bold">เบอร์โทรศัพท์มือถือ *</label>
+							  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f['mobile'].errors }">
+						</div>
+
+					</div>
+
+					<div class="row">
+						
+						<div class="col-6 offset-3">
+							  <label for="floatingInput" class="font-weight-bold">อีเมล์มหาวิทยาลัย</label>
+							  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email_work">
+						</div>
+
+					</div>
+
+					<div class="row">
+						
+						<div class="col-6 offset-3">
+							<label for="floatingInput" class="font-weight-bold">อีเมล์ *</label>
+							 <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+							  
+						</div>
+
+					</div>
+
+					<div class="row" *ngIf="error_message != null">
+						<div class="col">
+							<div class="alert alert-danger">
+								{{ error_message }}
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col text-center">
+							<a class="btn btn-light" [routerLink]="['/personnel-info']">ยกเลิก</a>
+							&nbsp;
+							<button class="btn btn-success" type="submit" *ngIf="!submitted">บันทึกข้อมูล</button>
+							<button type="button" class="btn btn-success" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
+							
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

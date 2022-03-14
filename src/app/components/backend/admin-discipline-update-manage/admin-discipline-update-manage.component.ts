@@ -25,6 +25,7 @@ export class AdminDisciplineUpdateManageComponent implements OnInit {
   });
   user_data :any;
   submitted = false;
+  submitted_update = false;
   error_message = null;
   closeModal : string;
   @ViewChild('modalSuccessData')  modalSuccessData: ElementRef;
@@ -51,7 +52,7 @@ export class AdminDisciplineUpdateManageComponent implements OnInit {
 
   }
 
-   get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
@@ -65,6 +66,7 @@ export class AdminDisciplineUpdateManageComponent implements OnInit {
 
           for (var i = 0; i < this.list.length; i++) {
             this.list[i].discipline_status = 'ปกติ';
+            this.list[i].remark = null;
           }
 
           this.submitted = false;
@@ -77,6 +79,7 @@ export class AdminDisciplineUpdateManageComponent implements OnInit {
   }
 
   save() {
+    this.submitted_update = true;
     this.error_message = null;
     if (this.form.invalid) {
       this.error_message = 'กรุณาตรวจสอบความรคบถ้วนและถูกต้องของข้อมูล';
@@ -84,7 +87,7 @@ export class AdminDisciplineUpdateManageComponent implements OnInit {
     }
 
     // return;
-    this.httpService.callHTTPPost('discipline/update/', {'discipline' : this.form.value, 'personnel_list' : this.list, 'action_by' : this.user_data.email}).subscribe(
+    this.httpService.callHTTPPost('discipline/update', {'discipline' : this.form.value, 'personnel_list' : this.list, 'action_by' : this.user_data.email}).subscribe(
       event => {
         if (event instanceof HttpResponse) {
           this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
@@ -96,8 +99,13 @@ export class AdminDisciplineUpdateManageComponent implements OnInit {
             
           }, (res) => {
             this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+            this.submitted_update = false;
           });
         }
+      },
+      err => {
+        this.error_message = err.error.message;
+        this.submitted_update = false;
       }
     );
   }

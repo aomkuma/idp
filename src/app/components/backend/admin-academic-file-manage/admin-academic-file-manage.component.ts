@@ -9,6 +9,8 @@ import { HttpServiceService } from '../../../services/http-service.service';
 import { UploadServiceService } from '../../../services/upload-service.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 
+import { environment } from '../../../../environments/environment';
+
 @Component({
   selector: 'app-admin-academic-file-manage',
   templateUrl: './admin-academic-file-manage.component.html',
@@ -18,6 +20,7 @@ export class AdminAcademicFileManageComponent implements OnInit {
 
   @Input() personnel_id: string = '';
   attach_file_data: any;
+  storage_url : any = environment.fileUrl;
 
   form: FormGroup = new FormGroup({
     id:  new FormControl(''),

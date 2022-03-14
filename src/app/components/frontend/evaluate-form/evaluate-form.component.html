@@ -1,0 +1,176 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-10 offset-1">
+			<div class="row">
+				<div class="pb-2 mt-4 mb-2 border-bottom text-center">
+				      <h4>ประเมินผลการปฏิบัติงาน</h4>
+				</div>
+			</div>
+			<div class="row pb-2 mt-4 mb-2 border-bottom">
+				<div class="col" *ngFor="let evaluate_type of evaluate_form; let index_1 = index;">
+					<div class="row">
+						<div class="col-3">
+							<img src="./assets/images/arrow-active.png" alt="image" class="logo" *ngIf="step_type == evaluate_type.id">
+							<img src="./assets/images/arrow-inactive.png" alt="image" class="logo" *ngIf="step_type !== evaluate_type.id">
+						</div>
+						<div class="col">
+							<span [ngClass]="">ส่วนที่ {{ index_1 + 1 }}</span><br>{{ evaluate_type.evaluate_type }}
+						</div>
+				</div>
+			</div>
+			<div class="row" *ngFor="let evaluate_type of evaluate_form; let index_1 = index;">
+				<div class="row" *ngFor="let subtype of evaluate_type.subtype; let index_2 = index;">
+					<div  *ngIf="step_subtype == subtype.page">
+						<div class="pb-2 mt-4 mb-2">
+							<h5>{{ index_2 + 1 }}. {{ subtype.evaluate_subtype }}</h5>
+						</div>
+						<form name="frm">
+						<div class="row pb-2 mt-4 mb-2 border-bottom" *ngFor="let question of subtype.questions; let index_3 = index;">
+							<div class="col-10 offset-1">
+								<div class="row">
+									<div class="col">
+										<div class="row">
+											<div class="col">
+												{{ index_2 + 1 }}.{{ index_3 + 1 }}. {{ question.question }}
+											</div>
+										</div>
+										<div class="row" *ngIf="!question.is_parent && question.is_remark">
+											<div class="col">
+												<textarea class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="col" *ngIf="!question.is_parent">
+										<div class="row">
+											<div class="col-3" *ngFor="let choice of question.choice_list.properties">
+												<input type="radio" name="user_answer{{question.id}}" [(ngModel)]="question.user_answer" value="{{ choice.choice }}" (click)="calcScore(evaluate_type, subtype, question, choice)"  [ngModelOptions]="{standalone: true}"> {{ choice.choice }}
+											</div>
+											<div class="col-3">
+												คะแนนที่ได้รับ : {{ question.gain_score }}
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-6">
+												<input type="file" class="form-control required-field" required="true" *ngIf="question.is_require == true">
+												<input type="file" class="form-control" *ngIf="question.is_require != true">
+											</div>
+											<div class="col-6">
+												{{ question.attach_file_desc }}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row pb-2 mt-4 mb-2" *ngFor="let sub_question of question.sub_questions; let index_4 = index;">
+								<div class="col-10 offset-1">
+									<div class="row">
+										<div class="col">
+											<div class="row">
+												<div class="col">
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index_2 + 1 }}.{{ index_3 + 1 }}.{{ index_4 + 1 }}. {{ sub_question.question }}
+												</div>
+											</div>
+											<div class="row" *ngIf="!sub_question.is_parent && sub_question.is_remark">
+												<div class="col">
+													<textarea class="form-control"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="col" *ngIf="!sub_question.is_parent">
+											<div class="row">
+												<div class="col-3" *ngFor="let sub_choice of sub_question.choice_list.properties">
+													<input type="radio" name="user_answer{{sub_question.id}}" [(ngModel)]="sub_question.user_answer" value="{{ sub_choice.choice }}" (click)="calcScore(evaluate_type, subtype, sub_question, sub_choice)" [ngModelOptions]="{standalone: true}"> {{ sub_choice.choice }}
+												</div>
+												<div class="col-3">
+													คะแนนที่ได้รับ : {{ sub_question.gain_score }}
+												</div>
+											</div>
+											<div class="row pb-2 mt-4 mb-2" *ngIf="sub_question.has_user_input">
+												<div class="col-6">
+													<label class="">สัดส่วนที่มีส่วนร่วม ร้อยละ</label>
+													<input type="number" [(ngModel)]="sub_question.user_input" class="form-control" (blur)="calcScore(evaluate_type, subtype, sub_question, sub_question.selected_choice)" [ngModelOptions]="{standalone: true}">
+												</div>
+												<div class="col-6">
+													<label class="">ค่าคะแนน</label>
+													<input type="number" [(ngModel)]="sub_question.gain_score" class="form-control" readonly="true" [ngModelOptions]="{standalone: true}">
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-6">
+													<input type="file" class="form-control">
+												</div>
+												<div class="col-6">
+													{{ sub_question.attach_file_desc }}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row pb-2 mt-4 mb-2" *ngFor="let sub_question_l3 of sub_question.sub_questions; let index_5 = index;">
+									<div class="col-10 offset-1">
+										<div class="row">
+											<div class="col">
+												<div class="row">
+													<div class="col">
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index_2 + 1 }}.{{ index_3 + 1 }}.{{ index_4 + 1 }}.{{ index_5 + 1 }}. {{ sub_question_l3.question }}
+													</div>
+												</div>
+												<div class="row" *ngIf="!sub_question_l3.is_parent && sub_question_l3.is_remark">
+													<div class="col">
+														<textarea class="form-control"></textarea>
+													</div>
+												</div>
+											</div>
+											<div class="col" *ngIf="!sub_question_l3.is_parent">
+												<div class="row">
+													<div class="col-3" *ngFor="let sub_choice_l3 of sub_question_l3.choice_list.properties">
+														<input type="radio" name="user_answer{{sub_question_l3.id}}" [(ngModel)]="sub_question_l3.user_answer" (click)="calcScore(evaluate_type, subtype, sub_question_l3, sub_choice_l3)" value="{{ sub_choice_l3.choice }}" [ngModelOptions]="{standalone: true}"> {{ sub_choice_l3.choice }}
+													</div>
+													<div class="col-3">
+													คะแนนที่ได้รับ : {{ sub_question_l3.gain_score }}
+												</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<input type="file" class="form-control">
+													</div>
+													<div class="col-6">
+														{{ sub_question_l3.attach_file_desc }}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row" *ngIf="question.formula">
+									<div class="col label">
+										คะแนนที่ได้ : {{ question.gain_sub_score }}
+									</div>
+									<div class="col label">
+										ระดับค่าเป้าหมาย :  {{ question.gain_level }}
+									</div>
+								</div>
+						</div>
+						<div class="row pb-2 mt-4 mb-2" *ngIf="subtype.is_next_page">
+							<div class="col font-weight-bold">
+								คะแนนเต็ม ร้อยละ {{ evaluate_type.score }}
+							</div>
+							<div class="col text-end font-weight-bold">
+								คะแนนที่ได้ ร้อยละ {{ evaluate_type.gain_score }} 
+							</div>
+						</div>
+						<div class="row pb-2 mt-4 mb-2 border-bottom" *ngIf="subtype.is_next_page">
+							<div class="col text-center">
+								<button class="btn btn-outline-dark" (click)="changeStep('prev')" *ngIf="step_subtype > 1">ย้อนกลับ</button>&nbsp;
+								<button class="btn btn-success" (click)="changeStep('next')" *ngIf="!is_lastpage">ถัดไป</button>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

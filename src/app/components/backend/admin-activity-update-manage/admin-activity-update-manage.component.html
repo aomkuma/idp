@@ -1,0 +1,190 @@
+<app-admin-menu [menu]="'activity'"></app-admin-menu>
+<app-admin-page-header [name]="'แก้ไขข้อมูล กิจกรรม/เข้าอบรม'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			
+		<div class="row" *ngIf="!data.id">
+			<div class="col-6">
+			    
+		    	<label for="floatingInput">ชื่อ</label>
+			  	<input type="text" class="form-control" id="floatingInput" placeholder="" [(ngModel)]="model" [ngbTypeahead]="search" (selectItem)="selectedItem($event)" [resultFormatter]="formatter" [inputFormatter]="formatter">
+			
+			</div>
+		</div>
+
+		<div class="row" *ngIf="data.id">
+			<div class="col-6">
+				<label for="floatingInput">ชื่อ</label>
+				<input type="text" class="form-control" id="floatingInput" placeholder="" [(ngModel)]="model" readonly>
+			
+			</div>
+		</div>
+
+		<form [formGroup]="form"  (ngSubmit)="onSubmit()">	
+			<div class="row">
+			  	<div class="col-6">
+					  <label for="floatingInput">หน่วยงาน</label>
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="personnel_work_unit" readonly="true">
+				</div>	
+			</div>
+			<div class="row">
+			  	<div class="col-6">
+					  <label for="floatingInput">ประเภท</label>
+					  <select class="form-control" formControlName="activity_type" placeholder="ประเภท" [ngClass]="{ 'is-invalid': f['activity_type'].errors }">
+				      		<option value="">กรุณาเลือก..</option>
+				      		<option value="กิจกรรม/การเข้าอบรมภายใน">กิจกรรม/การเข้าอบรมภายใน</option>
+				      		<option value="กิจกรรม/การเข้าอบรมภายนอก">กิจกรรม/การเข้าอบรมภายนอก</option>
+			      		</select>
+				</div>	
+			</div>
+			<div class="row">
+				<div class="col-1">
+				    ค่าใช้จ่าย
+				</div>	
+			  	<div class="col-2">
+				    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="cost_type">
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': f['cost_type'].value == 'N' }">
+					      <input class="radio-absolute" ngbButton type="radio" [value]="'N'"> ไม่ใช้เงิน
+					    </label>
+					    <label ngbButtonLabel class="btn-info" [ngClass]="{ 'btn-light': f['cost_type'].value == 'Y' }">
+					      <input class="radio-absolute" ngbButton type="radio" value="Y"> ใช้เงิน
+					    </label>
+					</div>
+				</div>
+			</div>
+			<div class="row" *ngIf="f['cost_type'].value == 'Y'">
+				<div class="col-6">
+				  	<label for="floatingInput">แหล่งที่มาของเงิน</label>
+		  			<input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="source_of_money">
+			  	</div>
+			</div>
+			<div class="row">
+			  	<div class="col-6">
+			  		<label for="floatingInput">หัวข้อ</label>
+					<input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="activity_name" [ngClass]="{ 'is-invalid': f['activity_name'].errors }">
+				</div>	
+			</div>
+			<div class="row">
+			  	<div class="col-6">
+					  <label for="floatingInput">หน่วยงาน</label>
+					  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="organize" [ngClass]="{ 'is-invalid': f['organize'].errors }">
+				</div>	
+			</div>
+			<div class="row">
+				<div class="col">
+				    วันที่เข้าร่วม
+				</div>	
+			</div>
+			<div class="row">
+			  	<div class="col-6">
+					  <label for="floatingInput">เริ่มต้น</label>
+					  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="participate_date_from" [ngClass]="{ 'is-invalid': f['participate_date_from'].errors }">
+				</div>	
+				<div class="col-6">
+					  <label for="floatingInput">ถึง</label>
+					  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="participate_date_to" [ngClass]="{ 'is-invalid': f['participate_date_to'].errors }">
+				</div>	
+			</div>
+			<fieldset>
+				<legend>ไฟล์แนบ</legend>
+				<div class="row">
+				  	<div class="col-6">
+				  		<label for="floatingInput">หนังสือเชิญ / กำหนดการ</label>
+						<input 
+					            formControlName="file1"
+					            id="file1" 
+					            type="file" 
+					            class="form-control"
+					            (change)="onFileChange1($event)">
+					</div>	
+					<div class="col" *ngIf="data.file_path_1 != ''">
+						<div class="alert alert-info">
+							ไฟล์ปัจจุบัน : <a href="{{storage_url}}/{{data.file_path_1}}" target="_blank">{{data.file_name_1}}</a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+				  	<div class="col-6">
+				  		<label for="floatingInput">ภาพเข้าร่วมกิจกรรม</label>
+						<input 
+					            formControlName="file2"
+					            id="file2" 
+					            type="file" 
+					            class="form-control"
+					            (change)="onFileChange2($event)">
+					</div>	
+					<div class="col" *ngIf="data.file_path_2 != ''">
+						<div class="alert alert-info">
+							ไฟล์ปัจจุบัน : <a href="{{storage_url}}/{{data.file_path_2}}" target="_blank">{{data.file_name_2}}</a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+				  	<div class="col-6">
+				  		<label for="floatingInput">ภาพจบกิจกรรม</label>
+						<input 
+					            formControlName="file3"
+					            id="file3" 
+					            type="file" 
+					            class="form-control"
+					            (change)="onFileChange3($event)">
+					</div>	
+					<div class="col" *ngIf="data.file_path_3 != ''">
+						<div class="alert alert-info">
+							ไฟล์ปัจจุบัน : <a href="{{storage_url}}/{{data.file_path_3}}" target="_blank">{{data.file_name_3}}</a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+				  	<div class="col-6">
+				  		<label for="floatingInput">ใบประกาศ</label>
+						<input 
+					            formControlName="file4"
+					            id="file4" 
+					            type="file" 
+					            class="form-control"
+					            (change)="onFileChange4($event)">
+					</div>
+					<div class="col" *ngIf="data.file_path_4 != ''">
+						<div class="alert alert-info">
+							ไฟล์ปัจจุบัน : <a href="{{storage_url}}/{{data.file_path_4}}" target="_blank">{{data.file_name_4}}</a>
+						</div>
+					</div>	
+				</div>
+				<div class="row">
+				  	<div class="col-6">
+				  		<label for="floatingInput">อื่นๆ</label>
+						<input 
+					            formControlName="file5"
+					            id="file5" 
+					            type="file" 
+					            class="form-control"
+					            (change)="onFileChange5($event)">
+					</div>	
+					<div class="col" *ngIf="data.file_path_5 != ''">
+						<div class="alert alert-info">
+							ไฟล์ปัจจุบัน : <a href="{{storage_url}}/{{data.file_path_5}}" target="_blank">{{data.file_name_5}}</a>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="row" *ngIf="error_message != null">
+				<div class="col">
+					<div class="alert alert-danger">
+						{{ error_message }}
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col text-center">
+					<button class="btn btn-dark" [disabled]="submitted" (click)="goBack()">ยกเลิก</button>&nbsp;
+		  			<button type="submit" class="btn btn-success" *ngIf="!submitted">บันทึก</button>
+		  			<button type="button" class="btn btn-success" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

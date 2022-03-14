@@ -7,39 +7,44 @@ import { HttpServiceService } from '../../../services/http-service.service';
 import { UploadServiceService } from '../../../services/upload-service.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 
+import { environment } from '../../../../environments/environment';
+
 @Component({
   selector: 'app-admin-personnel-update-mnm',
   templateUrl: './admin-personnel-update-mnm.component.html',
   styleUrls: ['./admin-personnel-update-mnm.component.scss']
 })
 export class AdminPersonnelUpdateMnmComponent implements OnInit {
-
+  
+  storage_url : any = environment.fileUrl;
   form: FormGroup = new FormGroup({
     id:  new FormControl(''),
-    prefix: new FormControl('นาย'),
-    name: new FormControl(''),
-    lastname: new FormControl(''),
-    position: new FormControl(''),
-    birth_date: new FormControl(''),
-    line_work: new FormControl(''),
-    position_academic: new FormControl(''),
+    prefix: new FormControl('นาย', Validators.required),
+    name: new FormControl('', Validators.required),
+    lastname: new FormControl('', Validators.required),
+    position: new FormControl('', Validators.required),
+    birth_date: new FormControl('', Validators.required),
+    line_work: new FormControl('', Validators.required),
+    position_academic: new FormControl('', Validators.required),
     promote_budget: new FormControl(''),
     start_date: new FormControl(''),
     personal_file: new FormControl(''),
-    supervisor_level_st: new FormControl(''),
+    supervisor_level_st: new FormControl('', Validators.required),
     supervisor_level_nd: new FormControl(''),
     supervisor_level_rd: new FormControl(''),
     supervisor_level_th: new FormControl(''),
-    agency: new FormControl(''),
+    agency: new FormControl('', Validators.required),
+    unit_name: new FormControl(''),
     work_unit: new FormControl(''),
     agency_detail: new FormControl(''),
     mobile_work: new FormControl(''),
     mobile_work_internal: new FormControl(''),
-    mobile: new FormControl(''),
+    mobile: new FormControl('', Validators.required),
     email_work: new FormControl(''),
-    email: new FormControl(''),
+    email: new FormControl('', Validators.required),
     file: new FormControl(''),
-    fileSource: new FormControl('')
+    fileSource: new FormControl(''),
+    personnel_type: new FormControl('', Validators.required)
     // acceptTerms: new FormControl(false),
   });
   work_unit_list : any = [];
@@ -107,6 +112,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
                 'line_work' : [event.body['Data']['line_work'], Validators.required],
                 'position_academic' : [event.body['Data']['position_academic'], Validators.required],
                 'promote_budget' : [event.body['Data']['promote_budget']],
+                'personnel_type' : [event.body['Data']['personnel_type']],
                 'start_date' : [event.body['Data']['start_date']],
                 'birth_date' : [event.body['Data']['birth_date']],
                 'supervisor_level_st' : [event.body['Data']['supervisor_level_st'], Validators.required],
@@ -114,6 +120,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
                 'supervisor_level_rd' : [event.body['Data']['supervisor_level_rd']],
                 'supervisor_level_th' : [event.body['Data']['supervisor_level_th']],
                 'agency' : [event.body['Data']['agency']],
+                'unit_name' : [event.body['Data']['unit_name']],
                 'work_unit' : [event.body['Data']['work_unit']],
                 'agency_detail' : [event.body['Data']['agency_detail']],
                 'mobile_work' : [event.body['Data']['mobile_work']],
@@ -141,6 +148,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
   onSubmit(){
     
     if (this.form.invalid) {
+      this.error_message = 'กรุณากรอกข้อมูลให้ครบตามที่กำหนด';
       return;
     }
 
@@ -157,6 +165,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
     formData.append('line_work', this.form.value.line_work);
     formData.append('position_academic', this.form.value.position_academic);
     formData.append('promote_budget', this.form.value.promote_budget);
+    formData.append('personnel_type', this.form.value.personnel_type);
     formData.append('start_date', this.form.value.start_date);
     formData.append('birth_date', this.form.value.birth_date);
     formData.append('supervisor_level_st', this.form.value.supervisor_level_st);
@@ -164,6 +173,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
     formData.append('supervisor_level_rd', this.form.value.supervisor_level_rd);
     formData.append('supervisor_level_th', this.form.value.supervisor_level_th);
     formData.append('agency', this.form.value.agency);
+    formData.append('unit_name', this.form.value.unit_name);
     formData.append('work_unit', this.form.value.work_unit);
     formData.append('agency_detail', this.form.value.agency_detail);
     formData.append('mobile_work', this.form.value.mobile_work);

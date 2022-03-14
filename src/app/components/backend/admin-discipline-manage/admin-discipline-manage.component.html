@@ -1,4 +1,4 @@
-<app-admin-menu></app-admin-menu>
+<app-admin-menu [menu]="'discipline'"></app-admin-menu>
 <app-admin-page-header [name]="'ข้อมูล ขาด / ลา / มาสาย'"></app-admin-page-header>
 <hr>
 <div class="container-fluid">
@@ -44,16 +44,16 @@
 			<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
-			      <th scope="col">#</th>
-			      <th scope="col">คำนำหน้าชื่อ</th>
-			      <th scope="col">ชื่อ</th>
-			      <th scope="col">สกุล</th>
-			      <th scope="col">สาขาวิชา</th>
-			      <th scope="col">ตำแหน่ง</th>
-			      <th scope="col">การปฎิบัติงาน</th>
-			      <th scope="col">วันที่</th>
-			      <th scope="col">รายละเอียด</th>
-			      <th scope="col">จัดการ</th>
+			      <th scope="col" class="text-center">#</th>
+			      <th scope="col" class="text-center">คำนำหน้าชื่อ</th>
+			      <th scope="col" class="text-center">ชื่อ</th>
+			      <th scope="col" class="text-center">สกุล</th>
+			      <th scope="col" class="text-center">สาขาวิชา</th>
+			      <th scope="col" class="text-center">ตำแหน่ง</th>
+			      <th scope="col" class="text-center">การปฎิบัติงาน</th>
+			      <th scope="col" class="text-center">วันที่</th>
+			      <th scope="col" class="text-center">รายละเอียด</th>
+			      <th scope="col" class="text-center">จัดการ</th>
 			    </tr>
 			  </thead>
 			  <tbody *ngIf="submitted">
@@ -76,18 +76,20 @@
 			      <td>{{ item.personnel_lastname }}</td>
 			      <td>{{ item.personnel_work_unit }}</td>
 			      <td>{{ item.personnel_position }}</td>
-			      <td>
-			      	{{ item.discipline_status }}
+			      <td class="text-center">
+			      	<span class="badge badge-primary" *ngIf="item.discipline_status == 'ปกติ'">{{ item.discipline_status }}</span>
+			      	<span class="badge badge-danger" *ngIf="item.discipline_status == 'ขาด'">{{ item.discipline_status }}</span>
+			      	<span class="badge badge-warning" *ngIf="item.discipline_status == 'สาย'">{{ item.discipline_status }}</span>
 			      </td>
-			      <td>
+			      <td class="text-center">
 			      	{{ item.discipline_date | date:'d MMMM y' }}
 			      </td>
 			      <td>
 			      	{{ item.remark }}
 			      </td>
-			      <td>
-			      	<button class="btn btn-danger btn-sm">ลบ</button>&nbsp;
-			      	<button class="btn btn-warning btn-sm">แก้ไข</button>
+			      <td class="text-center">
+			      	<button class="btn btn-danger btn-sm"  (click)="triggerModal(modalData, item.id)">ลบ</button>&nbsp;
+			      	<a class="btn btn-warning btn-sm" [routerLink]="['/admin-discipline-management/detail', item.id]">แก้ไข</a>
 			      </td>
 			    </tr>
 			  </tbody>
@@ -108,7 +110,7 @@
   </div>
   <div class="modal-body">
     <p>
-    	คุณต้องการลบข้อมูลปีงบประมาณและรอบการประเมินนี้ ใช่หรือไม่ ?
+    	คุณต้องการลบข้อมูลขาด ลา มาสายนี้ ใช่หรือไม่ ?
     </p>
   </div>
   <div class="modal-footer">

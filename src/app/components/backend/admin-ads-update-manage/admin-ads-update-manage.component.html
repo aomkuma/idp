@@ -1,0 +1,71 @@
+<app-admin-menu [menu]="'ads'"></app-admin-menu>
+<app-admin-page-header [name]="'ข่าวประกาศ'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<form [formGroup]="form"  (ngSubmit)="onSubmit()">
+				<div class="row">
+					<div class="col-3">
+				    	<label class="label-default">ประเภทประกาศ</label>
+					  	<select class="form-select" aria-label="Default select example" formControlName="ads_type">
+						  <option value="ประกาศทั่วไป">ประกาศทั่วไป</option>
+						  <option value="ประกาศไปยังบุคลากร">ประกาศไปยังบุคลากร</option>
+						</select>
+					</div>
+					<div class="col-3" *ngIf="f['ads_type'].value == 'ประกาศไปยังบุคลากร'">
+						<label class="label-default">ชื่อ</label>
+			  			<input type="text" class="form-control" id="floatingInput" placeholder="{{data.personnel_name}}" [(ngModel)]="model" [ngbTypeahead]="search" (selectItem)="selectedItem($event)" [resultFormatter]="formatter" [inputFormatter]="formatter" [ngModelOptions]="{standalone: true}">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+				    	<label class="label-default">เรื่อง</label>
+					  	<input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="ads_name" [ngClass]="{ 'is-invalid': f['ads_name'].errors }">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">
+				    	<label class="label-default">วันที่เริ่มประกาศ</label>
+					  	<input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="start_date" [ngClass]="{ 'is-invalid': f['start_date'].errors }">
+					</div>
+					<div class="col-3">
+				    	<label class="label-default">วันที่สิ้นสุดประกาศ</label>
+					  	<input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="end_date" [ngClass]="{ 'is-invalid': f['end_date'].errors }">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+				    	<label class="label-default">รายละเอียด</label>
+					  	<textarea class="form-control" formControlName="ads_detail"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+				    	<label class="label-default">ไฟล์ภาพประกาศ</label>
+					  	<input type="file" class="form-control"formControlName="file" id="file" class="form-control" (change)="onFileChange($event)">
+					</div>
+				</div>
+				<div class="row" *ngIf="data && data.file_path != null">
+					<div class="col-6">
+						<div class="alert alert-light">
+							ไฟล์ปัจจุบัน : <a href="{{ storage_url }}/{{data.file_path}}" target="_blank">{{data.file_name}}</a>
+						</div>
+					</div>
+				</div>
+				<div class="alert alert-danger" *ngIf="error_message != null">
+			      {{ error_message }}
+		    	</div>
+				<hr>
+				<div class="row">
+					<div class="col text-center">
+						<button class="btn btn-light" (click)="goBack()" [disabled]="submitted">นกเลิก</button>
+						&nbsp;
+						<button class="btn btn-success" type="submit" *ngIf="!submitted">บันทึกข้อมูล</button>
+						<button type="button" class="btn btn-success" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

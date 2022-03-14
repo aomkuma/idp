@@ -1,0 +1,87 @@
+<app-admin-menu [menu]="'activity'"></app-admin-menu>
+<app-admin-page-header [name]="'กิจกรรม/เข้าอบรม'"></app-admin-page-header>
+<hr>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<form [formGroup]="form" (ngSubmit)="loadList()">
+			  <div class="row">
+			    <div class="col">
+			      	<select class="form-control" formControlName="activity_type" placeholder="ประเภททั้งหมด">
+			      		<option value="">ประเภททั้งหมด</option>
+			      		<option value="กิจกกรรมภายใน">กิจกกรรมภายใน</option>
+			      		<option value="กิจกกรรมภายนอก">กิจกกรรมภายนอก</option>
+			      	</select>
+			    </div>
+			    <div class="col">
+			      	<input type="text" class="form-control" formControlName="name" placeholder="ชื่อ - สกุล">
+			    </div>
+			    <div class="col">
+			      	<button type="submit" class="btn btn-primary">ค้นหา</button>&nbsp;
+							<a type="button" class="btn btn-success" [routerLink]="['/admin-activity-management/update']">เพิ่มข้อมูล</a>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col" class="text-center">#</th>
+			      <th scope="col" class="text-center">วันที่เข้าร่วม</th>
+			      <th scope="col" class="text-center">ประเภท</th>
+			      <th scope="col" class="text-center">ชื่อ - สกุล</th>
+			      <th scope="col" class="text-center">หน่วยงาน</th>
+			      <th scope="col" class="text-center">ชื่อกิจกรรม/เข้าอบรม</th>
+			      <th scope="col" class="text-center">จัดการ</th>
+			    </tr>
+			  </thead>
+			  <tbody *ngIf="submitted">
+			  	<tr>
+			  		<td colspan="7" class="text-center">
+			  			กำลังค้นหา...
+			  		</td>
+			  	</tr>
+			  </tbody>
+			  <tbody *ngIf="!submitted">
+			    <tr *ngFor="let item of list; let i = index">
+			      <td scope="row">{{ i + 1 }}</td>
+			      <td class="text-center">{{ item.participate_date_from | date:'d MMMM y' }} - {{ item.participate_date_to | date:'d MMMM y' }}</td>
+			      <td class="text-center">{{ item.activity_type }}</td>
+			      <td class="text-center">{{ item.personnel_name }} {{ item.personnel_lastname }}</td>
+			      <td class="text-center">{{ item.personnel_work_unit }}</td>
+			      <td class="text-center">{{ item.activity_name }}</td>
+			      <td class="text-center">
+			      	<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalDeleteData, item.id)">ลบ</button>&nbsp;
+				  	<a class="btn btn-warning btn-sm" [routerLink]="['/admin-activity-management/update', item.id]">แก้ไข</a>
+			      </td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<ngb-pagination class="d-flex justify-content-end" [collectionSize]="(total_data)" [(page)]="page"></ngb-pagination>
+	</div>
+</div>
+
+<ng-template #modalDeleteData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการลบข้อมูล</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+    	คุณต้องการลบข้อมูลกิจกรรม/ฝึกอบรมนี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ยืนยัน</button>
+  </div>
+</ng-template>
