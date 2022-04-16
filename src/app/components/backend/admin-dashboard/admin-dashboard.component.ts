@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { HttpClient, HttpRequest, HttpEvent, HttpResponse, HttpEventType } from '@angular/common/http';
 import { AbstractControl, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -24,6 +25,8 @@ export class AdminDashboardComponent implements OnInit {
   submitted = false;
 
   constructor(private httpService: HttpServiceService,
+              private activatedRoute: ActivatedRoute,
+              private router : Router, 
               private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
@@ -54,6 +57,11 @@ export class AdminDashboardComponent implements OnInit {
       err => {
         this.submitted = false;
       });
+  }
+
+  goHrDashboard(round_id, status) {
+    this.router.navigate(['/hr-dashboard', round_id, status]);
+    // this.router.navigate(['/hr-dashboard']);
   }
 
 }

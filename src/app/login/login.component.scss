@@ -3,5 +3,39 @@
 }
 
 .margin-top{
-	margin-top: 20vh;
+	margin-top: 10vh;
+}
+
+.card {
+	border : none;
+}
+
+.form-control {
+	background : #112342;
+	color: #FFF;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #FFFFFF;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #FFFFFF;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #FFFFFF;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #FFFFFF;
+}
+
+.btn {
+	width: 100%;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }

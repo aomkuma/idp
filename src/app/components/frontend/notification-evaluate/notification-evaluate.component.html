@@ -1,0 +1,19 @@
+<div class="row r-header">
+	<div class="col text-start label-value">
+		รายการแจ้งเตือนแบบประเมิน
+	</div>
+	<div class="col text-end label">
+		<a [routerLink]="['/supervisor-evaluate-person-list']">ดูรายชื่อทั้งหมด</a>
+	</div>
+</div>
+<div class="row" *ngFor="let item of evaluate_status_list">
+	<div class="col">
+		{{ item.evaluate_status }}
+	</div>
+	<div class="col text-center">
+		{{ item.total }} รายการ
+	</div>
+	<div class="col text-end">
+		<a [routerLink]="['/supervisor-evaluate-person-list', item.status]">ดูรายชื่อทั้งหมด</a>
+	</div>
+</div>

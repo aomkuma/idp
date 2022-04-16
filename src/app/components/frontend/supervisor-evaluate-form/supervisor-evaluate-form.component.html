@@ -1,0 +1,426 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="row">
+				<div class="pb-2 mt-4 mb-2 text-center">
+				      <h4>ประเมินผลการปฏิบัติงาน</h4>
+				      <h4>ปี {{ evaluate_round.fiscal_year + 543 }} &nbsp;&nbsp;<span class="badge badge-primary">รอบที่ 1</span> &nbsp;&nbsp;<span class="badge badge-info">รอบที่ 2</span></h4>
+				</div>
+			</div>
+			<div class="row pb-2 mt-4 mb-2 ">
+				<div class="col-6">
+					<div class="row">
+						<div class="col">
+							<div class="row">
+								<div class="col label">
+									เงินเดือนก่อนปรับ
+								</div>
+							</div>
+							<div class="row">
+								<div class="col label-value">
+									{{ salary_data.old_salary | number }}
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="row">
+								<div class="col label">
+									% การปรับเงินเดือน
+								</div>
+							</div>
+							<div class="row">
+								<div class="col label-value">
+									{{ salary_data.percent | number }}
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="row">
+								<div class="col label">
+									เงินเดือนหลังปรับ
+								</div>
+							</div>
+							<div class="row">
+								<div class="col label-value">
+									{{ salary_data.salary | number }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="pb-2 mt-4 mb-2 border-bottom">
+				      <h4>สถานะ</h4>
+				</div>
+			</div>
+			<div class="row pb-2 mt-4 mb-2 ">
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							บันทึกข้อมูลตนเอง
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_form_id == undefined || evaluate_form_id == null">รอสร้างแบบประเมิน</span>
+							<span *ngIf="evaluate_data.evaluate_status == -2">กำลังทำแบบประเมิน</span>
+							<span *ngIf="evaluate_data.evaluate_status >= -1">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							งานบุคคลตรวจสอบ
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_data.evaluate_status < -1">-</span>
+							<span *ngIf="evaluate_data.evaluate_status == -1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data.evaluate_status >= 0">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							หัวหน้าสาขา
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_data.evaluate_status < 1">-</span>
+							<span *ngIf="evaluate_data.evaluate_status == 1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data.evaluate_status >= 2">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							รองคณบดีและคณบดี
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_data.evaluate_status < 2">-</span>
+							<span *ngIf="evaluate_data.evaluate_status == 2">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data.evaluate_status >= 3">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="pb-2 mt-4 mb-2 border-bottom">
+				      <h4>หัวข้อการประเมิน IDP</h4>
+				</div>
+			</div>
+			<div class="row pb-2 mt-4 mb-2 ">
+				<div class="col-6" *ngFor="let item of idp_list.data">
+					<div class="row">
+						<div class="col-6 label-value">{{ item.name }}</div>
+						<div class="col-6 label">{{ item.activities.length }} / {{ item.max_activity }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="row pb-2 mt-4 mb-2 border-bottom">
+				<div class="col" *ngFor="let evaluate_type of evaluate_form; let index_1 = index;">
+					<div class="row">
+						<div class="col-3">
+							<img src="./assets/images/arrow-active.png" alt="image" class="logo" *ngIf="step_type == evaluate_type.id">
+							<img src="./assets/images/arrow-inactive.png" alt="image" class="logo" *ngIf="step_type !== evaluate_type.id">
+						</div>
+						<div class="col">
+							<span [ngClass]="">ส่วนที่ {{ index_1 + 1 }}</span><br>{{ evaluate_type.evaluate_type }}
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngFor="let evaluate_type of evaluate_form; let index_1 = index;">
+					<div class="row" *ngFor="let subtype of evaluate_type.subtype; let index_2 = index;">
+						<div  *ngIf="step_subtype == subtype.page">
+							<div class="pb-2 mt-4 mb-2">
+								<h5>{{ index_2 + 1 }}. {{ subtype.evaluate_subtype }}</h5>
+							</div>
+							<form name="frm">
+							<div class="row">
+								<div class="col-2 offset-6">
+									กรรมการลำดับที่ 1
+								</div>
+								<div class="col-2 ">
+									กรรมการลำดับที่ 2
+								</div>
+								<div class="col-2 ">
+									กรรมการลำดับที่ 3
+								</div>
+							</div>
+							<div class="row pb-2 mt-4 mb-2 border-bottom" *ngFor="let question of subtype.questions; let index_3 = index;">
+								<div class="col-10 offset-1">
+									<div class="row">
+										<div class="col-3">
+											<div class="row">
+												<div class="col">
+													{{ index_2 + 1 }}.{{ index_3 + 1 }}. {{ question.question }}
+												</div>
+											</div>
+											<div class="row" *ngIf="!question.is_parent && question.is_remark">
+												<div class="col">
+													<textarea class="form-control"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="col-3" *ngIf="!question.is_parent">
+											<div class="row">
+												<div class="col-3 label">
+													{{ question.user_answer }}
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-12" *ngIf="question.user_answer_data && question.user_answer_data.file_name !== null">ไฟล์แนบ : 
+													<a href="{{ storage_url }}/{{question.user_answer_data.file_path}}" target="_blank">{{ question.user_answer_data.file_name }}</a>
+												</div>
+											</div>
+										</div>
+										<div class="col-2 border-right" *ngIf="!question.is_parent && question.user_answer_data">
+											<div class="row">
+												<div class="col text-center">
+													<input type="radio" name="first_supervisor_result{{question.id}}" [(ngModel)]="question.first_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_st != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(question)"> ผ่าน
+												</div>
+												<div class="col text-center">
+													<input type="radio" name="first_supervisor_result{{question.id}}" [(ngModel)]="question.first_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_st != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}"  (blur)="updateAnswer(question)"> ไม่ผ่าน
+												</div>
+											</div>
+										</div>
+										<div class="col-2 border-right" *ngIf="!question.is_parent && question.user_answer_data">
+											<div class="row">
+												<div class="col text-center">
+													<input type="radio" name="second_supervisor_result{{question.id}}" [(ngModel)]="question.second_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(question)"> ผ่าน
+												</div>
+												<div class="col text-center">
+													<input type="radio" name="second_supervisor_result{{question.id}}" [(ngModel)]="question.second_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(question)"> ไม่ผ่าน
+												</div>
+											</div>
+										</div>
+										<div class="col-2" *ngIf="!question.is_parent && question.user_answer_data">
+											<div class="row">
+												<div class="col text-center">
+													<input type="radio" name="third_supervisor_result{{question.id}}" [(ngModel)]="question.third_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(question)"> ผ่าน
+												</div>
+												<div class="col text-center">
+													<input type="radio" name="third_supervisor_result{{question.id}}" [(ngModel)]="question.third_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(question)"> ไม่ผ่าน
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row pb-2 mt-4 mb-2" *ngFor="let sub_question of question.sub_questions; let index_4 = index;">
+									<div class="col-10 offset-1">
+										<div class="row">
+											<div class="col-3">
+												<div class="row">
+													<div class="col">
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index_2 + 1 }}.{{ index_3 + 1 }}.{{ index_4 + 1 }}. {{ sub_question.question }}
+													</div>
+												</div>
+												<div class="row" *ngIf="!sub_question.is_parent && sub_question.is_remark">
+													<div class="col">
+														<textarea class="form-control"></textarea>
+													</div>
+												</div>
+											</div>
+											<div class="col-3" *ngIf="!sub_question.is_parent">
+												<div class="row">
+													<div class="col-3 label">
+														{{ sub_question.user_answer }}
+													</div>
+												</div>
+												<div class="row pb-2 mt-4 mb-2" *ngIf="sub_question.has_user_input">
+													<div class="col-6">
+														<label class="">สัดส่วนที่มีส่วนร่วม ร้อยละ</label>
+														<input type="number" [(ngModel)]="sub_question.user_input" class="form-control" (blur)="calcScore(evaluate_type, subtype, sub_question, sub_question.selected_choice)" [ngModelOptions]="{standalone: true}" readonly="true">
+													</div>
+													<div class="col-6">
+														<label class="">ค่าคะแนน</label>
+														<input type="number" [(ngModel)]="sub_question.gain_score" class="form-control" readonly="true" [ngModelOptions]="{standalone: true}">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-6">
+														<!-- <input type="file" class="form-control"> -->
+													</div>
+													
+												</div>
+											</div>
+											<div class="col-2 border-right" *ngIf="!sub_question.is_parent && sub_question.user_answer_data">
+												<div class="row">
+													<div class="col text-center">
+														<input type="radio" name="first_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.first_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_st != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ผ่าน
+													</div>
+													<div class="col text-center">
+														<input type="radio" name="first_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.first_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_st != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}"  (blur)="updateAnswer(sub_question)"> ไม่ผ่าน
+													</div>
+												</div>
+											</div>
+											<div class="col-2 border-right" *ngIf="!sub_question.is_parent && sub_question.user_answer_data">
+												<div class="row">
+													<div class="col text-center">
+														<input type="radio" name="second_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.second_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ผ่าน
+													</div>
+													<div class="col text-center">
+														<input type="radio" name="second_supervisor_result{{question.id}}" [(ngModel)]="sub_question.second_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ไม่ผ่าน
+													</div>
+												</div>
+											</div>
+											<div class="col-2" *ngIf="!sub_question.is_parent && sub_question.user_answer_data">
+												<div class="row">
+													<div class="col text-center">
+														<input type="radio" name="third_supervisor_result{{question.id}}" [(ngModel)]="sub_question.third_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ผ่าน
+													</div>
+													<div class="col text-center">
+														<input type="radio" name="third_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.third_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ไม่ผ่าน
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-12" *ngIf="sub_question.user_answer_data && sub_question.user_answer_data.file_name !== null">ไฟล์แนบ : 
+													<a href="{{ storage_url }}/{{sub_question.user_answer_data.file_path}}" target="_blank">{{ sub_question.user_answer_data.file_name }}</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row pb-2 mt-4 mb-2" *ngFor="let sub_question_l3 of sub_question.sub_questions; let index_5 = index;">
+										<div class="col-10 offset-1">
+											<div class="row">
+												<div class="col-3">
+													<div class="row">
+														<div class="col">
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index_2 + 1 }}.{{ index_3 + 1 }}.{{ index_4 + 1 }}.{{ index_5 + 1 }}. {{ sub_question_l3.question }}
+														</div>
+													</div>
+													<div class="row" *ngIf="!sub_question_l3.is_parent && sub_question_l3.is_remark">
+														<div class="col">
+															<textarea class="form-control"></textarea>
+														</div>
+													</div>
+												</div>
+												<div class="col-3" *ngIf="!sub_question_l3.is_parent">
+													<div class="row">
+														<div class="col-3 label">
+															{{ sub_question_l3.user_answer }}
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-12" *ngIf="sub_question_l3.user_answer_data && sub_question_l3.user_answer_data.file_name !== null">ไฟล์แนบ : 
+															<a href="{{ storage_url }}/{{sub_question_l3.user_answer_data.file_path}}" target="_blank">{{ sub_question_l3.user_answer_data.file_name }}</a>
+														</div>
+													</div>
+												</div>
+												<div class="col-2 border-right" *ngIf="!sub_question_l3.is_parent && sub_question_l3.user_answer_data">
+													<div class="row">
+														<div class="col text-center">
+															<input type="radio" name="first_supervisor_result{{sub_question_l3.id}}" [(ngModel)]="sub_question_l3.first_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_st != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question_l3)"> ผ่าน
+														</div>
+														<div class="col text-center">
+															<input type="radio" name="first_supervisor_result{{sub_question_l3.id}}" [(ngModel)]="sub_question_l3.first_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_st != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}"  (blur)="updateAnswer(sub_question_l3)"> ไม่ผ่าน
+														</div>
+													</div>
+												</div>
+												<div class="col-2 border-right" *ngIf="!sub_question_l3.is_parent && sub_question_l3.user_answer_data">
+													<div class="row">
+														<div class="col text-center">
+															<input type="radio" name="second_supervisor_result{{sub_question_l3.id}}" [(ngModel)]="sub_question_l3.second_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question_l3)"> ผ่าน
+														</div>
+														<div class="col text-center">
+															<input type="radio" name="second_supervisor_result{{question.id}}" [(ngModel)]="sub_question_l3.second_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question_l3)"> ไม่ผ่าน
+														</div>
+													</div>
+												</div>
+												<div class="col-2" *ngIf="!sub_question_l3.is_parent && sub_question_l3.user_answer_data">
+													<div class="row">
+														<div class="col text-center">
+															<input type="radio" name="third_supervisor_result{{question.id}}" [(ngModel)]="sub_question_l3.third_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question_l3)"> ผ่าน
+														</div>
+														<div class="col text-center">
+															<input type="radio" name="third_supervisor_result{{sub_question_l3.id}}" [(ngModel)]="sub_question_l3.third_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question_l3)"> ไม่ผ่าน
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" *ngIf="question.formula">
+										<div class="col label">
+											คะแนนที่ได้ : {{ question.gain_sub_score }}
+										</div>
+										<div class="col label">
+											ระดับค่าเป้าหมาย :  {{ question.gain_level }}
+										</div>
+									</div>
+							</div>
+							<div class="row pb-2 mt-4 mb-2 border-bottom" *ngIf="subtype.is_next_page">
+								<div class="col font-weight-bold">
+									คะแนนเต็ม ร้อยละ {{ evaluate_type.score }}
+								</div>
+								<div class="col text-end font-weight-bold">
+									คะแนนที่ได้ ร้อยละ {{ evaluate_type.gain_score }} 
+								</div>
+							</div>
+							<div class="row pb-2 mt-4 mb-2 border-bottom" *ngIf="is_lastpage">
+								<div class="col-12">
+									<div class="row">
+										<div class="col-12">
+											<input type="radio" name="hr_check_status_true" [value]="1" [(ngModel)]="evaluate_data.hr_check_status" [ngModelOptions]="{standalone: true}"> ครบถ้วน &nbsp; 
+											<input type="radio" name="hr_check_status_false" [value]="0" [(ngModel)]="evaluate_data.hr_check_status" [ngModelOptions]="{standalone: true}"> แจ้งแก้ไข
+										</div>
+									</div>
+									<div class="row pb-2 mt-4 mb-2" *ngIf="evaluate_data.hr_check_status == false">
+										<div class="col-6">
+											<label>รายละเอียด</label>
+											<textarea class="form-control" [(ngModel)]="evaluate_data.hr_comment" [ngModelOptions]="{standalone: true}"></textarea>
+										</div>
+									</div>
+									<div class="row pb-2 mt-4 mb-2" *ngIf="evaluate_data.hr_check_status == false">
+										<div class="col-3">
+											<label>กำหนดส่งข้อมูล</label>
+											<input type="date" class="form-control" [(ngModel)]="evaluate_data.hr_due_date" [ngModelOptions]="{standalone: true}">
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							<div class="row pb-2 mt-4 mb-2 border-bottom" *ngIf="subtype.is_next_page">
+								<div class="col text-center">
+									<button class="btn btn-outline-dark" (click)="changeStep('prev')" *ngIf="step_subtype > 1">ย้อนกลับ</button>&nbsp;
+									<!-- end user section -->
+									<!-- hr section -->
+									<button class="btn btn-primary" (click)="hrSave()" *ngIf="is_lastpage && !submitted">บันทึก</button>
+									<button class="btn btn-primary" *ngIf="submitted" disabled="true">กำลังบันทึก...</button>
+									<!-- end hr section -->
+									&nbsp;
+									<button class="btn btn-success" (click)="changeStep('next')" *ngIf="!is_lastpage">ถัดไป</button>
+								</div>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-template #modalSuccessData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>บันทึกข้อมูลสำเร็จ !</h3>
+    <br><br>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">กลับสู่หน้าหลัก</button>
+    <br>
+  </div>
+</ng-template>

@@ -1,0 +1,101 @@
+<div class="row form-group">
+	<div class="col">
+		<fieldset>
+			<label><h5>ข้อมูลเงินเดือน</h5></label>
+		</fieldset>
+		
+		<div class="row">
+			<div class="col text-end">
+				<button type="button" class="btn btn-info btn-sm" (click)="updateFile(null)">เพิ่ม</button>
+			</div>
+		</div>
+
+		<div *ngIf="is_update">
+			<form  [formGroup]="form"  (ngSubmit)="onSubmit()">
+				<div class="row pb-2">
+					<div class="col-4">
+						<label for="floatingInput">เงินเดือนปัจจุบัน *</label>
+						<input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="old_salary">
+						
+					</div>
+					<div class="col-4">
+						<label for="floatingInput">% การปรับเงินเดือน</label>
+						<input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="percent">
+						
+					</div>
+					<div class="col-4">
+						  <label for="floatingInput">เงินเดือนหลังปรับ</label>
+						  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="salary" [ngClass]="{ 'is-invalid': submitted && f['salary'].errors }">
+					</div>
+				</div>
+				<div class="row" *ngIf="error_message != null">
+					<div class="col">
+						<div class="alert alert-danger">
+							{{ error_message }}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<button type="button" class="btn btn-dark btn-sm" (click)="cancelUpdateFile()" [disabled]="submitted">ยกเลิก</button>&nbsp;
+						<button class="btn btn-success btn-sm" type="submit" *ngIf="!submitted">บันทึกข้อมูล</button>
+						<button type="button" class="btn btn-success btn-sm" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<table class="table">
+				  <thead class="thead-dark">
+				    <tr>
+				      <th scope="col" class="text-center">เงินเดือนก่อนหน้า</th>
+				      <th scope="col" class="text-center">% การปรับเงินเดือน</th>
+				      <th scope="col" class="text-center">เงินเดือนปัจจุบัน</th>
+				      <th scope="col" class="text-center" style="width: 20vh;">จัดการ</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	<tr *ngIf="DataList.length == 0">
+				  		<td colspan="4" class="text-center">
+				  			ยังไม่มีข้อมูล
+				  		</td>
+				  	</tr>
+				  	<tr *ngFor="let item of DataList">
+				  		<td class="text-center">{{ item.old_salary }}</td>
+				  		<td class="text-center">{{ item.percent }}</td>
+				  		<td class="text-center">{{ item.salary }}</td>
+				  		<td class="text-center">
+				  			<a type="button" (click)="triggerModal(modalData, item.id)">
+					      		<img src="./assets/images/delete-icon.png" class="icon-sm">
+					      	</a>&nbsp;
+						  	<a type="button" (click)="updateFile(item)">
+						  		<img src="./assets/images/edit-icon.png" class="icon-sm">
+						  	</a>
+				  		</td>
+				  	</tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">ยืนยันการลบข้อมูล</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+    	คุณต้องการลบข้อมูลเงินเดือนนี้ ใช่หรือไม่ ?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="modal.close('Close Button')">ยกเลิก</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Confirm')">ยืนยัน</button>
+  </div>
+</ng-template>

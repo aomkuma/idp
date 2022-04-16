@@ -13,13 +13,12 @@
         > <div class="form-group text-center">
           <img src="./assets/images/logo-lg.png" alt="image" class="logo">
           <br><br>
-            <h3>ระบบประเมิน IDP</h3>
+            <h1>ยินดีต้อนรับเข้าสู่</h1>
+            <h4>ระบบประเมินผลการปฏิบัติงาน</h4>
           </div>
-          <div class="form-group">
-
-            <label for="username">Email</label>
+          <div class="form-group pb-2">
             <input
-              type="text"
+              type="text" placeholder="Email"
               class="form-control"
               name="email"
               [(ngModel)]="form.email"
@@ -28,10 +27,9 @@
               #username="ngModel"
             />
           </div>
-          <div class="form-group">
-            <label for="password">Password</label>
+          <div class="form-group pb-2">
             <input
-              type="password"
+              type="password" placeholder="Password"
               class="form-control"
               name="password"
               [(ngModel)]="form.password"
@@ -40,10 +38,22 @@
               #password="ngModel"
               [disabled]="submitted" 
             />
+            <div class="row">
+              <div class="col">
+                <input type="checkbox" name="remember_me">
+                &nbsp;
+                จดจำการใช้งาน
+              </div>
+              <div class="col text-end">
+                <a [routerLink]="['/forgot-password']">
+                  ลิมรหัสผ่าน
+                </a>
+              </div>
+            </div>
             <div
               class="alert alert-danger"
               role="alert"
-              *ngIf="password.errors && f.submitted"
+              *ngIf="(f['email'] == null || f['password'] == null) && f.submitted"
             >
               กรุณาตรวจสอบข้อมูลชื่อผู้ใช้งานและรหัสผ่าน
             </div>
@@ -58,11 +68,9 @@
           </div>
           <div class="form-group text-center"><br>
             <button class="btn btn-primary btn-block more-shape" [disabled]="submitted">
-              ลงชื่อเข้าใช้งาน
+              เข้าสู่ระบบ
             </button>&nbsp;
-            <a class="btn btn-secondary btn-block more-shape" [routerLink]="['/forgot-password']">
-              ลิมรหัสผ่าน
-            </a>
+            
           </div>
           <div class="form-group">
             
@@ -77,3 +85,4 @@
   </div>
 </div>
 
+<div class="footer"><img src="./assets/images/footer.png"></div>

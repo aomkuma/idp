@@ -44,7 +44,8 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
     email: new FormControl('', Validators.required),
     file: new FormControl(''),
     fileSource: new FormControl(''),
-    personnel_type: new FormControl('', Validators.required)
+    personnel_type: new FormControl('', Validators.required),
+    supervisor_type: new FormControl(''),
     // acceptTerms: new FormControl(false),
   });
   work_unit_list : any = [];
@@ -113,6 +114,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
                 'position_academic' : [event.body['Data']['position_academic'], Validators.required],
                 'promote_budget' : [event.body['Data']['promote_budget']],
                 'personnel_type' : [event.body['Data']['personnel_type']],
+                'supervisor_type' : [event.body['Data']['supervisor_type']],
                 'start_date' : [event.body['Data']['start_date']],
                 'birth_date' : [event.body['Data']['birth_date']],
                 'supervisor_level_st' : [event.body['Data']['supervisor_level_st'], Validators.required],
@@ -166,6 +168,7 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
     formData.append('position_academic', this.form.value.position_academic);
     formData.append('promote_budget', this.form.value.promote_budget);
     formData.append('personnel_type', this.form.value.personnel_type);
+    formData.append('supervisor_type', this.form.value.supervisor_type);
     formData.append('start_date', this.form.value.start_date);
     formData.append('birth_date', this.form.value.birth_date);
     formData.append('supervisor_level_st', this.form.value.supervisor_level_st);

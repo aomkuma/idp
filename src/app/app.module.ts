@@ -42,6 +42,17 @@ import { PersonnelContactUpdateComponent } from './components/frontend/personnel
 import { AdminAdsManageComponent } from './components/backend/admin-ads-manage/admin-ads-manage.component';
 import { AdminAdsUpdateManageComponent } from './components/backend/admin-ads-update-manage/admin-ads-update-manage.component';
 import { EvaluateFormComponent } from './components/frontend/evaluate-form/evaluate-form.component';
+import { NotificationEvaluateComponent } from './components/frontend/notification-evaluate/notification-evaluate.component';
+import { SupervisorDashboardComponent } from './components/frontend/supervisor-dashboard/supervisor-dashboard.component';
+import { HrDashboardComponent } from './components/backend/hr-dashboard/hr-dashboard.component';
+import { AdminEvaluateFormComponent } from './components/backend/admin-evaluate-form/admin-evaluate-form.component';
+import { IdpActivityComponent } from './components/frontend/idp-activity/idp-activity.component';
+import { IdpActivityUpdateComponent } from './components/frontend/idp-activity-update/idp-activity-update.component';
+import { SalaryManageComponent } from './components/backend/salary-manage/salary-manage.component';
+import { SupervisorEvaluatePersonListComponent } from './components/frontend/supervisor-evaluate-person-list/supervisor-evaluate-person-list.component';
+import { SupervisorEvaluateFormComponent } from './components/frontend/supervisor-evaluate-form/supervisor-evaluate-form.component';
+import { SupervisorEvaluateFormsComponent } from './components/frontend/supervisor-evaluate-forms/supervisor-evaluate-forms.component';
+import { EvaluateFormSupervisorComponent } from './components/frontend/evaluate-form-supervisor/evaluate-form-supervisor.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +86,18 @@ import { EvaluateFormComponent } from './components/frontend/evaluate-form/evalu
     PersonnelContactUpdateComponent,
     AdminAdsManageComponent,
     AdminAdsUpdateManageComponent,
-    EvaluateFormComponent
+    EvaluateFormComponent,
+    NotificationEvaluateComponent,
+    SupervisorDashboardComponent,
+    HrDashboardComponent,
+    AdminEvaluateFormComponent,
+    IdpActivityComponent,
+    IdpActivityUpdateComponent,
+    SalaryManageComponent,
+    SupervisorEvaluatePersonListComponent,
+    SupervisorEvaluateFormComponent,
+    SupervisorEvaluateFormsComponent,
+    EvaluateFormSupervisorComponent
   ],
   imports: [
     BrowserModule,

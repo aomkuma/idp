@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent, HttpResponse, HttpEventType } from '@angular/common/http';
 import { AbstractControl, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,17 +15,24 @@ import { TokenStorageService } from '../../services/token-storage.service';
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent implements OnInit {
+
+  @ViewChild('modalSuccessData')  modalSuccessData: ElementRef;
   form: FormGroup = new FormGroup({
     user_id: new FormControl(''),
     old_password: new FormControl('', [Validators.required/*, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,30}')*/]),
-    new_password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,30}')]),
-    confirm_password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,30}')]),
+    // new_password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,30}')]),
+    // confirm_password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,30}')]),
+    new_password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z\d$@$!%*?&].{7,30}')]),
+    confirm_password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z\d$@$!%*?&].{7,30}')]),
   });
   submitted = false;
   error_message = null;
   user_data :any;
   closeModal : string;
   modalData : any;
+  show_old_password: boolean = false;
+  show_new_password: boolean = false;
+  show_confirm_password: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private modalService: NgbModal, 
@@ -42,11 +49,36 @@ export class ChangePasswordComponent implements OnInit {
     return this.form.controls;
   }
 
+  isVisibilityOld() {
+    if (this.show_old_password) {
+      this.show_old_password = false;
+    } else {
+      this.show_old_password = true;
+    }
+  }
+
+  isVisibilityNew() {
+    if (this.show_new_password) {
+      this.show_new_password = false;
+    } else {
+      this.show_new_password = true;
+    }
+  }
+
+  isVisibilityConfirm() {
+    if (this.show_confirm_password) {
+      this.show_confirm_password = false;
+    } else {
+      this.show_confirm_password = true;
+    }
+  }
+
   onSubmit(){
 
     this.error_message = null;
 
     if (this.form.invalid) {
+      this.error_message = 'รหัสผ่านใหม่ต้องมีขนาดอย่างน้อย 8 อักษร ประกอบไปด้วย A-Z,a-z,0-9';
       return;
     } else if(this.form.value.new_password != this.form.value.confirm_password) {
       this.error_message = 'รหัสผ่านใหม่กับยืนยันรหัสผ่านไม่ตรงกัน';
@@ -63,8 +95,18 @@ export class ChangePasswordComponent implements OnInit {
       event => {
         if (event instanceof HttpResponse) {
           this.submitted = false;
-          this.tokenStorage.signOut();
-          window.location.replace('login');
+          this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+            this.closeModal = `Closed with: ${res}`;
+            console.log(res);
+            if(res == 'Confirm'){
+              this.tokenStorage.signOut();
+              window.location.replace('login');
+              
+            }
+            
+          }, (res) => {
+            this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+          });
           // this.triggerModal('<div class="modal-header"><h4 class="modal-title" id="modal-basic-title">ผลการเปลี่ยนแปลงรหัสผ่าน</h4></div><div class="modal-body"><p>แก้ไขรหัสผ่านสำเร็จระบบจะทำการ Logout อัตโนมัติกรุณาเข้าสู่ระบบอีกครั้ง</p></div><div class="modal-footer"><button type="button" class="btn btn-danger" (click)="modal.close(\"Confirm\")">ออกจากระบบ</button></div>');
         }
       }, err => {

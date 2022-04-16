@@ -43,9 +43,10 @@ export class AdminAdsManageComponent implements OnInit {
     var condition = '';
     if (this.form.value.ads_type != '') {
       condition += '/' + this.form.value.ads_type;
-    } else {
-      condition += '/';
-    }
+    } 
+    // else {
+    //   condition += '/';
+    // }
     // if (this.form.value.name != '') {
     //   condition += '/' + this.form.value.name;
     // } else {

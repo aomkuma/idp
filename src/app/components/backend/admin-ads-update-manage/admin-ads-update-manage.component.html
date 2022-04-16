@@ -15,7 +15,8 @@
 					</div>
 					<div class="col-3" *ngIf="f['ads_type'].value == 'ประกาศไปยังบุคลากร'">
 						<label class="label-default">ชื่อ</label>
-			  			<input type="text" class="form-control" id="floatingInput" placeholder="{{data.personnel_name}}" [(ngModel)]="model" [ngbTypeahead]="search" (selectItem)="selectedItem($event)" [resultFormatter]="formatter" [inputFormatter]="formatter" [ngModelOptions]="{standalone: true}">
+			  			<input type="text" class="form-control"  *ngIf="data.personnel_name" id="floatingInput" placeholder="{{data.personnel_name}}" [(ngModel)]="model" [ngbTypeahead]="search" (selectItem)="selectedItem($event)" [resultFormatter]="formatter" [inputFormatter]="formatter" [ngModelOptions]="{standalone: true}">
+			  			<input type="text" class="form-control" id="floatingInput" [(ngModel)]="model" [ngbTypeahead]="search" (selectItem)="selectedItem($event)" [resultFormatter]="formatter" [inputFormatter]="formatter" [ngModelOptions]="{standalone: true}"  *ngIf="!data.personnel_name">
 					</div>
 				</div>
 				<div class="row">
@@ -59,7 +60,7 @@
 				<hr>
 				<div class="row">
 					<div class="col text-center">
-						<button class="btn btn-light" (click)="goBack()" [disabled]="submitted">นกเลิก</button>
+						<button class="btn btn-light" (click)="goBack()" [disabled]="submitted">ยกเลิก</button>
 						&nbsp;
 						<button class="btn btn-success" type="submit" *ngIf="!submitted">บันทึกข้อมูล</button>
 						<button type="button" class="btn btn-success" *ngIf="submitted" [disabled]="submitted">กำลังบันทึก..</button>
@@ -69,3 +70,12 @@
 		</div>
 	</div>
 </div>
+<ng-template #modalSuccessData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>บันทึกข้อมูลสำเร็จ !</h3>
+    <br><br>
+    <button type="button" class="btn btn-success" (click)="modal.close('Confirm')">กลับไปยังหน้ารายการ</button>
+    <br>
+  </div>
+</ng-template>

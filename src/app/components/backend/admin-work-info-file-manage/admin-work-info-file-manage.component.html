@@ -12,24 +12,18 @@
 
 		<div *ngIf="is_update">
 			<form  [formGroup]="form"  (ngSubmit)="onSubmit()">
-				<div class="row form-group">
+				<div class="row pb-2">
 					<div class="col-4">
-						<div class="form-floating mb-3">
-						  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="hire_date" [ngClass]="{ 'is-invalid': submitted && f['hire_date'].errors }">
 						  <label for="floatingInput">วันที่เข้ารับตำแหน่ง *</label>
-						</div>
+						  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="hire_date" [ngClass]="{ 'is-invalid': submitted && f['hire_date'].errors }">
 					</div>
 					<div class="col-4">
-						<div class="form-floating mb-3">
-						  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="retire_date">
 						  <label for="floatingInput">วันที่พ้นตำแหน่ง</label>
-						</div>
+						  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="retire_date">
 					</div>
 					<div class="col-4">
-						<div class="form-floating mb-3">
-						  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="position" [ngClass]="{ 'is-invalid': submitted && f['position'].errors }">
 						  <label for="floatingInput">ตำแหน่ง *</label>
-						</div>
+						  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="position" [ngClass]="{ 'is-invalid': submitted && f['position'].errors }">
 					</div>
 				</div>
 				<!--
@@ -93,8 +87,12 @@
 				  		<td class="text-center">{{ item.retire_date }}</td>
 				  		<td>{{ item.position }}</td>
 				  		<td class="text-center">
-				  			<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalData, item.id)">ลบ</button>&nbsp;
-				  			<button type="button" class="btn btn-warning btn-sm" (click)="updateFile(item)">แก้ไข</button>
+				  			<a type="button" (click)="triggerModal(modalData, item.id)">
+					      		<img src="./assets/images/delete-icon.png" class="icon-sm">
+					      	</a>&nbsp;
+						  	<a type="button" (click)="updateFile(item)">
+						  		<img src="./assets/images/edit-icon.png" class="icon-sm">
+						  	</a>
 				  		</td>
 				  	</tr>
 				  </tbody>

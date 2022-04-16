@@ -1,0 +1,91 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+	<div class="row mt-4">
+		<div class="col-10 offset-1">
+			<div class="row">
+				<div class="col">
+					<form [formGroup]="form" (ngSubmit)="loadList()">
+					  <div class="row">
+					    <div class="col">
+					      	<select class="form-control" formControlName="evaluate_status" placeholder="สถานะทั้งหมด">
+					      		<option value="">สถานะทั้งหมด</option>
+					      		<option value="0">บันทึกหัวข้อ IDP ยังไม่สมบูรณ์</option>
+					      		<option value="รอสร้างแบบประเมิน">รอสร้างแบบประเมิน</option>
+					      		<option value="รอกรอกข้อมูล">รอกรอกข้อมูล</option>
+					      		<option value="แก้ไขข้อมูล">แก้ไขข้อมูล</option>
+					      		<option value="รอตรวจสอบ">รอตรวจสอบ</option>
+					      		<option value="เสร็จสิ้น">เสร็จสิ้น</option>
+					      	</select>
+					    </div>
+					    <div class="col">
+					      	<input type="text" class="form-control" formControlName="name" placeholder="ชื่อ - สกุล">
+					    </div>
+					    <div class="col">
+					      	<button type="submit" class="btn btn-primary">ค้นหา</button>&nbsp;
+									<a type="button" class="btn btn-success" [routerLink]="['/admin-activity-management/update']">เพิ่มข้อมูล</a>
+					    </div>
+					  </div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<table class="table">
+					  <thead class="thead-dark">
+					    <tr>
+					      <th scope="col" class="text-center">#</th>
+					      <th scope="col" class="text-center">ชื่อ - สกุล</th>
+					      <th scope="col" class="text-center">ประเภทบุคลากร</th>
+					      <th scope="col" class="text-center">ตำแหน่ง</th>
+					      <th scope="col" class="text-center">สาขาวิชา</th>
+					      <th scope="col" class="text-center">ฝ่ายบุคคล</th>
+					      <th scope="col" class="text-center">กรรมการลำดับที่ 1</th>
+					      <th scope="col" class="text-center">กรรมการลำดับที่ 2</th>
+					      <th scope="col" class="text-center">กรรมการลำดับที่ 3</th>
+					      <th scope="col" class="text-center">กรรมการลำดับที่ 4</th>
+					      <th scope="col" class="text-center">ผู้แจ้งแก้ไข</th>
+					      <th scope="col" class="text-center">สถานะ</th>
+					      <th scope="col" class="text-center">รายละเอียด</th>
+					    </tr>
+					  </thead>
+					  <tbody *ngIf="submitted">
+					  	<tr>
+					  		<td colspan="13" class="text-center">
+					  			กำลังค้นหา...
+					  		</td>
+					  	</tr>
+					  </tbody>
+					  <tbody *ngIf="!submitted">
+					    <tr *ngFor="let item of list; let i = index">
+					      <td scope="row" class="text-center">{{ i + 1 }}</td>
+					      <td class="">{{ item.name }} {{ item.lastname }}</td>
+					      <td class="">{{ item.line_work }}</td>
+					      <td class="">{{ item.position_academic }}</td>
+					      <td class="">{{ item.agency }}</td>
+					      <td class="">{{ item.evaluate_status > 0?'เสร็จสิ้น':'' }}</td>
+					      <td class="">{{ item.evaluate_status > 1?'เสร็จสิ้น':'' }}</td>
+					      <td class="">{{ item.evaluate_status > 2?'เสร็จสิ้น':'' }}</td>
+					      <td class="">{{ item.evaluate_status > 3?'เสร็จสิ้น':'' }}</td>
+					      <td class="">{{ item.evaluate_status > 4?'เสร็จสิ้น':'' }}</td>
+					      <td class="">{{ item.evaluate_edit_notice }}</td>
+					      <td class="">{{ getStatusName(item.evaluate_status) }}</td>
+					      <td class="text-center">
+					      	<a class="btn btn-warning btn-sm" [routerLink]="['/supervisor-evaluate-form', item.id]">รายละเอียด</a>
+					      </td>
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="row">
+				<ngb-pagination class="d-flex justify-content-end" [collectionSize]="(total_data)" [(page)]="page"></ngb-pagination>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+		      	<a type="button" class="btn btn-info" [routerLink]="['/admin-dashboard']">ย้อนกลับ</a>
+		    </div>
+			</div>
+		</div>
+	</div>
+</div>

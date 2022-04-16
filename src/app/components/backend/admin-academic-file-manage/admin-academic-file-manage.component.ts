@@ -115,14 +115,13 @@ export class AdminAcademicFileManageComponent implements OnInit {
   }
 
   onSubmit(){
-
-    this.error_message = null;
-    this.submitted = true;
-
     if (this.form.invalid) {
       this.error_message = 'กรุณากรอกข้อมูลให้ครบตามที่กำหนด *';
       return;
     }
+
+    this.error_message = null;
+    this.submitted = true;
 
     const formData: FormData = new FormData();
 

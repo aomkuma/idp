@@ -16,11 +16,18 @@ import { AdminActivityManageComponent } from './components/backend/admin-activit
 import { AdminActivityUpdateManageComponent } from './components/backend/admin-activity-update-manage/admin-activity-update-manage.component';
 import { AdminAdsManageComponent } from './components/backend/admin-ads-manage/admin-ads-manage.component';
 import { AdminAdsUpdateManageComponent } from './components/backend/admin-ads-update-manage/admin-ads-update-manage.component';
+import { HrDashboardComponent } from './components/backend/hr-dashboard/hr-dashboard.component';
+import { AdminEvaluateFormComponent } from './components/backend/admin-evaluate-form/admin-evaluate-form.component';
 
 import { PersonnelInfoComponent } from './components/frontend/personnel-info/personnel-info.component';
 import { PersonnelFilesUpdateComponent } from './components/frontend/personnel-files-update/personnel-files-update.component';
 import { PersonnelContactUpdateComponent } from './components/frontend/personnel-contact-update/personnel-contact-update.component';
 import { EvaluateFormComponent } from './components/frontend/evaluate-form/evaluate-form.component';
+import { SupervisorDashboardComponent } from './components/frontend/supervisor-dashboard/supervisor-dashboard.component';
+import { IdpActivityComponent } from './components/frontend/idp-activity/idp-activity.component';
+import { IdpActivityUpdateComponent } from './components/frontend/idp-activity-update/idp-activity-update.component';
+import { SupervisorEvaluatePersonListComponent } from './components/frontend/supervisor-evaluate-person-list/supervisor-evaluate-person-list.component';
+import { SupervisorEvaluateFormComponent } from './components/frontend/supervisor-evaluate-form/supervisor-evaluate-form.component';
 
 const routes: Routes = [{ path: '', component: LoginComponent },
                     { path: 'login', component: LoginComponent },
@@ -42,11 +49,19 @@ const routes: Routes = [{ path: '', component: LoginComponent },
                     { path: 'admin-ads-management', component: AdminAdsManageComponent },
                     { path: 'admin-ads-management/update', component: AdminAdsUpdateManageComponent },
                     { path: 'admin-ads-management/update/:id', component: AdminAdsUpdateManageComponent },
+                    { path: 'hr-dashboard/:round_id/:status', component: HrDashboardComponent },
+                    { path: 'admin-evaluate-form/:user_id', component: AdminEvaluateFormComponent },
 
                     { path: 'personnel-info', component: PersonnelInfoComponent },
                     { path: 'personnel-info/update-files', component: PersonnelFilesUpdateComponent },
                     { path: 'personnel-info/update-contact', component: PersonnelContactUpdateComponent },
                     { path: 'evaluate-form', component: EvaluateFormComponent },
+                    { path: 'supervisor-dashboard', component: SupervisorDashboardComponent },
+                    { path: 'idp-activities/:user_id', component: IdpActivityComponent },
+                    { path: 'idp-activity/update/:idp_name', component: IdpActivityUpdateComponent },
+                    { path: 'idp-activity/update/:activity_id/:idp_name', component: IdpActivityUpdateComponent },
+                    { path: 'supervisor-evaluate-person-list/:status', component: SupervisorEvaluatePersonListComponent },
+                    { path: 'supervisor-evaluate-form/:user_id', component: SupervisorEvaluateFormComponent },
                   ];
 
 @NgModule({

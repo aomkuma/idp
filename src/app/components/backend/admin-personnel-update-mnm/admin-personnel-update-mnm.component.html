@@ -28,9 +28,9 @@
 							<fieldset>
 								<label><h5>ข้อมูลส่วนตัว</h5></label>
 							</fieldset>
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">คำนำหน้า</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="prefix">
 										  <option value="นาย">นาย</option>
 										  <option value="นาง">นาง</option>
@@ -39,32 +39,24 @@
 										  <option value="Miss.">Miss.</option>
 										  <option value="Mrs.">Mrs.</option>
 										</select>
-									  <label for="floatingInput">คำนำหน้า</label>
-									</div>
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
-									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="name" [ngClass]="{ 'is-invalid': f['name'].errors }">
 									  <label for="floatingInput">ชื่อ *</label>
-									</div>
+									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="name" [ngClass]="{ 'is-invalid': f['name'].errors }">
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
-									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="lastname" [ngClass]="{ 'is-invalid': f['lastname'].errors }">
 									  <label for="floatingInput">สกุล *</label>
-									</div>
+									  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="lastname" [ngClass]="{ 'is-invalid': f['lastname'].errors }">
 								</div>
 							</div>
 
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
-									<div class="form-floating mb-3">
-									  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="birth_date">
 									  <label for="floatingInput">วันเกิด</label>
-									</div>
+									  <input type="date" class="form-control" id="floatingInput" placeholder="" formControlName="birth_date">
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">ประเภทบุคลากร *</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="position"  [ngClass]="{ 'is-invalid': f['position'].errors }">
 										  <option value="พนักงานมหาวิทยาลัย">พนักงานมหาวิทยาลัย</option>
 										  <option value="ข้าราชการ">ข้าราชการ</option>
@@ -72,25 +64,21 @@
 										  <option value="ลูกจ้างประจำ">ลูกจ้างประจำ</option>
 										  <option value="พนักงานราชการ">พนักงานราชการ</option>
 										</select>
-									  <label for="floatingInput">ประเภทบุคลากร *</label>
-									</div>
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">สายงาน *</label>
 										<select class="form-select" aria-label="Default select example" formControlName="line_work"  [ngClass]="{ 'is-invalid': f['line_work'].errors }">
 										  <option value="วิชาการ">วิชาการ</option>
 										  <option value="สนับสนุน">สนับสนุน</option>
 										</select>
-									  <label for="floatingInput">สายงาน *</label>
-									</div>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
 									&nbsp;
 								</div>
 								<div class="col-5">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">ตำแหน่งทางวิชาการ *</label>
 										<select class="form-select" aria-label="Default select example" formControlName="position_academic"  [ngClass]="{ 'is-invalid': f['position_academic'].errors }">
 										  <option value="ศาสตราจารย์เกียรติคุณ (กิตติคุณ)">ศาสตราจารย์เกียรติคุณ (กิตติคุณ)</option>
 										  <option value="ศาสตราจารย์">ศาสตราจารย์</option>
@@ -100,26 +88,22 @@
 										  <option value="ผู้ช่วยศาสตราจารย์">ผู้ช่วยศาสตราจารย์</option>
 										  <option value="อาจารย์">อาจารย์</option>
 										</select>
-									  <label for="floatingInput">ตำแหน่งทางวิชาการ *</label>
-									</div>
 								</div>
 								<div class="col-5">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">งบประมาณในการเลื่อนขั้นเงินเดือน</label>
 										<select class="form-select" aria-label="Default select example" formControlName="promote_budget">
 										  <option value="งบประมาณแผ่นดิน">งบประมาณแผ่นดิน</option>
 										  <option value="รายได้มหาวิทยาลัย">รายได้มหาวิทยาลัย</option>
 										  <option value="อื่นๆ">อื่นๆ</option>
 										</select>
-									  <label for="floatingInput">งบประมาณในการเลื่อนขั้นเงินเดือน</label>
-									</div>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
 									&nbsp;
 								</div>
 								<div class="col-5">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">ชุดแบบประเมิน *</label>
 										<select class="form-select" aria-label="Default select example" formControlName="personnel_type"  [ngClass]="{ 'is-invalid': f['personnel_type'].errors }">
 										  <option value="อาจารย์ทั่วไป">อาจารย์ทั่วไป</option>
 										  <option value="อาจารย์ที่เน้นวิชา">อาจารย์ที่เน้นวิชา</option>
@@ -128,8 +112,16 @@
 										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
 										  <option value="ผู้ช่วยและรองคณบดี">ผู้ช่วยและรองคณบดี</option>
 										</select>
-									  <label for="floatingInput">ชุดแบบประเมิน *</label>
-									</div>
+								</div>
+								<div class="col-5">
+									  <label for="floatingInput">ตำแหน่งตามสายการบังคับบัญชา</label>
+										<select class="form-select" aria-label="Default select example" formControlName="supervisor_type">
+										  <!-- <option value="คณาจารย์">คณาจารย์</option> -->
+										  <option value="">ไม่มี</option>
+										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
+										  <option value="รองคณบดี">รองคณบดี</option>
+										  <option value="คณบดี">คณบดี</option>
+										</select>
 								</div>
 							</div>
 						</div>
@@ -140,47 +132,51 @@
 							<fieldset>
 								<label><h5>ผู้บังคับบัญชา</h5></label>
 							</fieldset>
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
 									&nbsp;
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
-									  <select class="form-select" aria-label="Default select example" formControlName="supervisor_level_st" [ngClass]="{ 'is-invalid': f['supervisor_level_st'].errors }">
-										  <option value="หัวหน้าสาขาวิชา">หัวหน้าสาขาวิชา</option>
-										</select>
 									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 1 *</label>
-									</div>
+									  <select class="form-select" aria-label="Default select example" formControlName="supervisor_level_st" [ngClass]="{ 'is-invalid': f['supervisor_level_st'].errors }">
+										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
+										  <option value="รองคณบดี">รองคณบดี</option>
+										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
+										  <option value="คณบดี">คณบดี</option>
+										</select>
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
-										<select class="form-select" aria-label="Default select example" formControlName="supervisor_level_nd">
-										  <option value="รองคณบดี">รองคณบดี</option>
-										</select>
 									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 2</label>
-									</div>
+										<select class="form-select" aria-label="Default select example" formControlName="supervisor_level_nd">
+										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
+										  <option value="รองคณบดี">รองคณบดี</option>
+										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
+										  <option value="คณบดี">คณบดี</option>
+										</select>
 								</div>
 							</div>
 
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
 									&nbsp;
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 3</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="supervisor_level_rd">
+										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
+										  <option value="รองคณบดี">รองคณบดี</option>
+										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
 										  <option value="คณบดี">คณบดี</option>
 										</select>
-									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 3</label>
-									</div>
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
-										<select class="form-select" aria-label="Default select example" formControlName="supervisor_level_th">
-										  <option value=""></option>
-										</select>
 									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 4</label>
-									</div>
+										<select class="form-select" aria-label="Default select example" formControlName="supervisor_level_th">
+										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
+										  <option value="รองคณบดี">รองคณบดี</option>
+										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
+										  <option value="คณบดี">คณบดี</option>
+										</select>
 								</div>
 							</div>
 						</div>
@@ -191,38 +187,33 @@
 							<fieldset>
 								<label><h5>หน่วยงาน</h5></label>
 							</fieldset>
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
 									&nbsp;
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
-									  <select class="form-select" aria-label="Default select example" formControlName="agency" [ngClass]="{ 'is-invalid': f['agency'].errors }">
-										  <option value="สาขาวิชาการตลาด">สาขาวิชาการตลาด</option>
-									  </select>
 									  <label for="floatingInput">หน่วยงานต้นสังกัด *</label>
-									</div>
+									  <select class="form-select" aria-label="Default select example" formControlName="agency" [ngClass]="{ 'is-invalid': f['agency'].errors }">
+										  <option value=""></option>
+										  <option *ngFor="let agency of work_unit_list" value="{{agency.value}}">{{agency.name}}</option>
+										</select>
 								</div>
 								<div class="col">
-									<div class="form-floating mb-3">
+									  <label for="floatingInput">หน่วยงานที่ปฎิบัติงาน</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="work_unit">
 										  <option value=""></option>
 										  <option *ngFor="let work_unit of work_unit_list" value="{{work_unit.value}}">{{work_unit.name}}</option>
 										</select>
-									  <label for="floatingInput">หน่วยงานที่ปฎิบัติงาน</label>
-									</div>
 								</div>
 							</div>
 
-							<div class="row">
+							<div class="row pb-2">
 								<div class="col-2">
 									&nbsp;
 								</div>
 								<div class="col-5">
-									<div class="form-floating mb-3">
-									  <textarea  class="form-control" formControlName="agency_detail" rows="4"></textarea>
 									  <label for="floatingInput">รายละเอียด</label>
-									</div>
+									  <textarea  class="form-control" formControlName="agency_detail" rows="4"></textarea>
 								</div>
 							</div>
 							<div class="alert alert-danger" *ngIf="error_message != null">
@@ -247,17 +238,13 @@
 								<div class="row">
 									
 									<div class="col-6">
-										<div class="form-floating mb-3">
-										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work" [ngClass]="{ 'is-invalid': submitted && f['mobile_work'].errors }">
 										  <label for="floatingInput">เบอร์โทรศัพท์ *</label>
-										</div>
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work" [ngClass]="{ 'is-invalid': submitted && f['mobile_work'].errors }">
 									</div>
 
 									<div class="col-3">
-										<div class="form-floating mb-3">
-										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work_internal">
 										  <label for="floatingInput">เบอร์ติดต่อภายใน</label>
-										</div>
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile_work_internal">
 									</div>
 									
 								</div>
@@ -265,10 +252,8 @@
 								<div class="row">
 									
 									<div class="col-6">
-										<div class="form-floating mb-3">
-										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile" [ngClass]="{ 'is-invalid': f['mobile'].errors }">
 										  <label for="floatingInput">เบอร์โทรศัพท์มือถือ *</label>
-										</div>
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="mobile" [ngClass]="{ 'is-invalid': f['mobile'].errors }">
 									</div>
 
 								</div>
@@ -276,21 +261,17 @@
 								<div class="row">
 									
 									<div class="col-6">
-										<div class="form-floating mb-3">
-										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email_work">
-										  <label for="floatingInput">อีเมล์มหาวิทยาลัย</label>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="row">
-									
-									<div class="col-6">
-										<div class="form-floating mb-3">
+										  <label for="floatingInput">อีเมล์มหาวิทยาลัย *</label>
 										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email" [ngClass]="{ 'is-invalid': f['email'].errors }">
+									</div>
+
+								</div>
+
+								<div class="row">
+									
+									<div class="col-6">
 										  <label for="floatingInput">อีเมล์ *</label>
-										</div>
+										  <input type="text" class="form-control" id="floatingInput" placeholder="" formControlName="email_work" [ngClass]="{ 'is-invalid': f['email_work'].errors }">
 									</div>
 
 								</div>
@@ -300,15 +281,13 @@
 								<label><h5>ไฟล์ประวัติบุคคล</h5></label>
 								<div class="row">
 									<div class="col">
-										<div class="form-floating mb-3">
+										  <label for="floatingInput">ไฟล์แนบ</label>
 										  <input 
 								            formControlName="file"
 								            id="file" 
 								            type="file" 
 								            class="form-control"
 								            (change)="onFileChange($event)">
-										  <label for="floatingInput">ไฟล์แนบ</label>
-										</div>
 									</div>
 								</div>
 								<div class="row" *ngIf="attach_file_data && attach_file_data.file_path != null">
@@ -346,6 +325,7 @@
 			<app-admin-education-file-manage personnel_id="{{id}}"></app-admin-education-file-manage>
 			<app-admin-work-info-file-manage personnel_id="{{id}}"></app-admin-work-info-file-manage>
 			<app-admin-academic-file-manage personnel_id="{{id}}"></app-admin-academic-file-manage>
+			<app-salary-manage personnel_id="{{id}}"></app-salary-manage>
 			<div class="row">
 				<div class="col text-center">
 					<button type="button" class="btn btn-secondary" (click)="nextStep(2)">ย้อนกลับ</button>

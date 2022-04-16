@@ -22,6 +22,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class AdminAdsUpdateManageComponent implements OnInit {
 
+  @ViewChild('modalSuccessData')  modalSuccessData: ElementRef;
   storage_url : any = environment.fileUrl;
   id : any;
   form: FormGroup = new FormGroup({
@@ -41,11 +42,12 @@ export class AdminAdsUpdateManageComponent implements OnInit {
   states : any;
   model: any;
   user_data :any;
-  data: any;
+  data: any = {'personnel_name' : null};
   submitted = false;
   error_message = null;
   
-  constructor(private activatedRoute: ActivatedRoute, 
+  constructor(private modalService: NgbModal,
+              private activatedRoute: ActivatedRoute, 
               private httpService: HttpServiceService,
               private tokenStorage: TokenStorageService,
               private uploadService: UploadServiceService,
@@ -118,7 +120,7 @@ export class AdminAdsUpdateManageComponent implements OnInit {
           this.form.get('end_date').setValue(formatDate(this.data.end_date, 'yyyy-MM-dd', 'en'));
           this.form.get('personnel_name').setValue(this.data.personnel_name);
           this.form.get('user_id').setValue(this.data.user_id);
-          this.model.value = this.data.personnel_name;
+          // this.model.value = this.data.personnel_name;
         }
       },
       err => {
@@ -164,6 +166,16 @@ export class AdminAdsUpdateManageComponent implements OnInit {
           this.form.get('personnel_name').setValue(this.data.personnel_name);
           this.form.get('user_id').setValue(this.data.user_id);
           this.submitted = false;
+          this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+            // this.closeModal = `Closed with: ${res}`;
+            // console.log(res);
+            if(res == 'Confirm'){
+              this.router.navigate(['/admin-ads-management']);
+            }
+            
+          }, (res) => {
+            
+          });
         }
         
       },

@@ -3,10 +3,136 @@
 	<div class="row">
 		<div class="col-10 offset-1">
 			<div class="row">
-				<div class="pb-2 mt-4 mb-2 border-bottom text-center">
+				<div class="pb-2 mt-4 mb-2 text-center">
 				      <h4>ประเมินผลการปฏิบัติงาน</h4>
+				      <h4>ปี {{ evaluate_round.fiscal_year + 543 }} &nbsp;&nbsp;<span class="badge badge-primary">รอบที่ 1</span> &nbsp;&nbsp;<span class="badge badge-info">รอบที่ 2</span></h4>
 				</div>
 			</div>
+			<div class="row pb-2 mt-4 mb-2 ">
+				<div class="col-6">
+					<div class="row">
+						<div class="col">
+							<div class="row">
+								<div class="col label">
+									เงินเดือนก่อนปรับ
+								</div>
+							</div>
+							<div class="row">
+								<div class="col label-value">
+									{{ salary_data.old_salary | number }}
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="row">
+								<div class="col label">
+									% การปรับเงินเดือน
+								</div>
+							</div>
+							<div class="row">
+								<div class="col label-value">
+									{{ salary_data.percent | number }}
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="row">
+								<div class="col label">
+									เงินเดือนหลังปรับ
+								</div>
+							</div>
+							<div class="row">
+								<div class="col label-value">
+									{{ salary_data.salary | number }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="pb-2 mt-4 mb-2 border-bottom">
+				      <h4>สถานะ</h4>
+				</div>
+			</div>
+			<div class="row pb-2 mt-4 mb-2 ">
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							บันทึกข้อมูลตนเอง
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_form_id == undefined || evaluate_form_id == null">รอสร้างแบบประเมิน</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -2">กำลังทำแบบประเมิน</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= -1">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							งานบุคคลตรวจสอบ
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < -1">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 0">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							หัวหน้าสาขา
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 1">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 2">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="row">
+						<div class="col label">
+							รองคณบดีและคณบดี
+						</div>
+					</div>
+					<div class="row">
+						<div class="col label-value">
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 2">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 2">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 3">เสร็จสิ้น</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="pb-2 mt-4 mb-2 border-bottom">
+				      <h4>หัวข้อการประเมิน IDP</h4>
+				</div>
+			</div>
+			<div class="row pb-2 mt-4 mb-2 ">
+				<div class="col-6" *ngFor="let item of idp_list.data">
+					<div class="row">
+						<div class="col-6 label-value">{{ item.name }}</div>
+						<div class="col-6 label">{{ item.activities.length }} / {{ item.max_activity }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-10 offset-1">
+			
 			<div class="row pb-2 mt-4 mb-2 border-bottom">
 				<div class="col" *ngFor="let evaluate_type of evaluate_form; let index_1 = index;">
 					<div class="row">
@@ -37,7 +163,7 @@
 										</div>
 										<div class="row" *ngIf="!question.is_parent && question.is_remark">
 											<div class="col">
-												<textarea class="form-control"></textarea>
+												<textarea class="form-control" [(ngModel)]="question.user_remark" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(question)"></textarea>
 											</div>
 										</div>
 									</div>
@@ -50,13 +176,16 @@
 												คะแนนที่ได้รับ : {{ question.gain_score }}
 											</div>
 										</div>
-										<div class="row">
+										<div class="row" *ngIf="question.user_answer">
 											<div class="col-6">
-												<input type="file" class="form-control required-field" required="true" *ngIf="question.is_require == true">
-												<input type="file" class="form-control" *ngIf="question.is_require != true">
+												<input type="file" class="form-control required-field" required="true" *ngIf="question.is_require == true" [(ngModel)]="question.user_file" [ngModelOptions]="{standalone: true}" observeFiles >
+												<input type="file" class="form-control" *ngIf="question.is_require != true" [(ngModel)]="question.user_file" [ngModelOptions]="{standalone: true}" observeFiles (change)="onFileChange($event, question)">
 											</div>
-											<div class="col-6">
+											<div class="col-6" *ngIf="!question.user_answer_data">
 												{{ question.attach_file_desc }}
+											</div>
+											<div class="col-6" *ngIf="question.user_answer_data && question.user_answer_data.file_name !== null">
+												<a href="{{ storage_url }}/{{question.user_answer_data.file_path}}" target="_blank">{{ question.user_answer_data.file_name }}</a>
 											</div>
 										</div>
 									</div>
@@ -96,12 +225,16 @@
 													<input type="number" [(ngModel)]="sub_question.gain_score" class="form-control" readonly="true" [ngModelOptions]="{standalone: true}">
 												</div>
 											</div>
-											<div class="row">
+											<div class="row" *ngIf="sub_question.user_answer">
 												<div class="col-6">
-													<input type="file" class="form-control">
+													<input type="file" class="form-control required-field" required="true" *ngIf="sub_question.is_require == true" [(ngModel)]="sub_question.user_file" [ngModelOptions]="{standalone: true}" observeFiles >
+													<input type="file" class="form-control" *ngIf="sub_question.is_require != true" [(ngModel)]="sub_question.user_file" [ngModelOptions]="{standalone: true}" observeFiles (change)="onFileChange($event, sub_question)">
 												</div>
-												<div class="col-6">
+												<div class="col-6" *ngIf="!sub_question.user_answer_data">
 													{{ sub_question.attach_file_desc }}
+												</div>
+												<div class="col-6" *ngIf="sub_question.user_answer_data && sub_question.user_answer_data.file_name !== null">
+													<a href="{{ storage_url }}/{{sub_question.user_answer_data.file_path}}" target="_blank">{{ sub_question.user_answer_data.file_name }}</a>
 												</div>
 											</div>
 										</div>
@@ -128,15 +261,19 @@
 														<input type="radio" name="user_answer{{sub_question_l3.id}}" [(ngModel)]="sub_question_l3.user_answer" (click)="calcScore(evaluate_type, subtype, sub_question_l3, sub_choice_l3)" value="{{ sub_choice_l3.choice }}" [ngModelOptions]="{standalone: true}"> {{ sub_choice_l3.choice }}
 													</div>
 													<div class="col-3">
-													คะแนนที่ได้รับ : {{ sub_question_l3.gain_score }}
-												</div>
-												</div>
-												<div class="row">
-													<div class="col-6">
-														<input type="file" class="form-control">
+														คะแนนที่ได้รับ : {{ sub_question_l3.gain_score }}
 													</div>
+												</div>
+												<div class="row" *ngIf="sub_question_l3.user_answer">
 													<div class="col-6">
+														<input type="file" class="form-control required-field" required="true" *ngIf="sub_question_l3.is_require == true" [(ngModel)]="sub_question_l3.user_file" [ngModelOptions]="{standalone: true}" observeFiles >
+														<input type="file" class="form-control" *ngIf="sub_question_l3.is_require != true" [(ngModel)]="sub_question_l3.user_file" [ngModelOptions]="{standalone: true}" observeFiles (change)="onFileChange($event, sub_question_l3)">
+													</div>
+													<div class="col-6" *ngIf="!sub_question_l3.user_answer_data">
 														{{ sub_question_l3.attach_file_desc }}
+													</div>
+													<div class="col-6" *ngIf="sub_question_l3.user_answer_data && sub_question_l3.user_answer_data.file_name !== null">
+														<a href="{{ storage_url }}/{{sub_question_l3.user_answer_data.file_path}}" target="_blank">{{ sub_question_l3.user_answer_data.file_name }}</a>
 													</div>
 												</div>
 											</div>
@@ -164,6 +301,10 @@
 						<div class="row pb-2 mt-4 mb-2 border-bottom" *ngIf="subtype.is_next_page">
 							<div class="col text-center">
 								<button class="btn btn-outline-dark" (click)="changeStep('prev')" *ngIf="step_subtype > 1">ย้อนกลับ</button>&nbsp;
+								<button class="btn btn-primary" (click)="saveDraft()" *ngIf="!is_lastpage && !submitted">บันทึกร่าง</button>
+								<button class="btn btn-primary" *ngIf="submitted" disabled="true">กำลังบันทึก...</button>
+								<button class="btn btn-primary" (click)="saveConfirm()" *ngIf="is_lastpage && !submitted">บันทึกข้อมูล</button>
+								&nbsp;
 								<button class="btn btn-success" (click)="changeStep('next')" *ngIf="!is_lastpage">ถัดไป</button>
 							</div>
 						</div>
@@ -174,3 +315,12 @@
 		</div>
 	</div>
 </div>
+<ng-template #modalSuccessData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>บันทึกข้อมูลสำเร็จ !</h3>
+    <br><br>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">กลับสู่หน้าหลัก</button>
+    <br>
+  </div>
+</ng-template>
