@@ -55,12 +55,12 @@ export class AdminPersonnelListMnmComponent implements OnInit {
     if (this.form.value.name != '') {
       condition += '/' + this.form.value.name;
     } else {
-      condition += '/';
+      condition += '/null';
     }
     if (this.form.value.position != '') {
       condition += '/' + this.form.value.position;
     } else {
-      condition += '/';
+      // condition += '/';
     }
 
     this.httpService.callHTTPGet('users', condition).subscribe(

@@ -139,6 +139,7 @@
 								<div class="col">
 									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 1 *</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="supervisor_level_st" [ngClass]="{ 'is-invalid': f['supervisor_level_st'].errors }">
+										  <option value="">กรุณาเลือก..</option>
 										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
 										  <option value="รองคณบดี">รองคณบดี</option>
 										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
@@ -148,6 +149,7 @@
 								<div class="col">
 									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 2</label>
 										<select class="form-select" aria-label="Default select example" formControlName="supervisor_level_nd">
+										  <option value="">กรุณาเลือก..</option>
 										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
 										  <option value="รองคณบดี">รองคณบดี</option>
 										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
@@ -163,6 +165,7 @@
 								<div class="col">
 									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 3</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="supervisor_level_rd">
+										  <option value="">กรุณาเลือก..</option>
 										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
 										  <option value="รองคณบดี">รองคณบดี</option>
 										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
@@ -172,6 +175,7 @@
 								<div class="col">
 									  <label for="floatingInput">ผู้บังคับบัญชา ลำดับที่ 4</label>
 										<select class="form-select" aria-label="Default select example" formControlName="supervisor_level_th">
+										  <option value="">กรุณาเลือก..</option>
 										  <option value="หัวหน้าสาขา">หัวหน้าสาขา</option>
 										  <option value="รองคณบดี">รองคณบดี</option>
 										  <option value="รองคณบดีและคณบดี">รองคณบดีและคณบดี</option>
@@ -194,14 +198,15 @@
 								<div class="col">
 									  <label for="floatingInput">หน่วยงานต้นสังกัด *</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="agency" [ngClass]="{ 'is-invalid': f['agency'].errors }">
-										  <option value=""></option>
-										  <option *ngFor="let agency of work_unit_list" value="{{agency.value}}">{{agency.name}}</option>
+										  <option value="คณะบริหารธุรกิจ">คณะบริหารธุรกิจ</option>
+										  <option value="อื่นๆ">อื่นๆ (โปรดระบุ)</option>
+										  <!-- <option *ngFor="let agency of work_unit_list" value="{{agency.value}}">{{agency.name}}</option> -->
 										</select>
 								</div>
 								<div class="col">
 									  <label for="floatingInput">หน่วยงานที่ปฎิบัติงาน</label>
 									  <select class="form-select" aria-label="Default select example" formControlName="work_unit">
-										  <option value=""></option>
+										  <option value="">กรุณาเลือก..</option>
 										  <option *ngFor="let work_unit of work_unit_list" value="{{work_unit.value}}">{{work_unit.name}}</option>
 										</select>
 								</div>
@@ -334,3 +339,21 @@
 		</div>
 	</div>
 </div>
+<ng-template #modalSuccessData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>บันทึกข้อมูลสำเร็จ !</h3>
+    <br><br>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">ปิด</button>
+    <br>
+  </div>
+</ng-template>
+<ng-template #modalErrorData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>{{ error_message }}</h3>
+    <br><br>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">ปิด</button>
+    <br>
+  </div>
+</ng-template>

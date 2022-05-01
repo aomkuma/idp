@@ -32,6 +32,7 @@
 			      <th scope="col" class="text-center">#</th>
 			      <th scope="col" class="text-center">วันที่เข้าร่วม</th>
 			      <th scope="col" class="text-center">ประเภท</th>
+					  <th scope="col" class="text-center">หัวข้อ IDP</th>
 			      <th scope="col" class="text-center">ชื่อ - สกุล</th>
 			      <th scope="col" class="text-center">หน่วยงาน</th>
 			      <th scope="col" class="text-center">ชื่อกิจกรรม/เข้าอบรม</th>
@@ -48,8 +49,9 @@
 			  <tbody *ngIf="!submitted">
 			    <tr *ngFor="let item of list; let i = index">
 			      <td scope="row">{{ i + 1 }}</td>
-			      <td class="text-center">{{ item.participate_date_from | date:'d MMMM y' }} - {{ item.participate_date_to | date:'d MMMM y' }}</td>
+			      <td class="text-center"><app-date-bcd [date]="item.participate_date_from"></app-date-bcd> - <app-date-bcd [date]="item.participate_date_to"></app-date-bcd></td>
 			      <td class="text-center">{{ item.activity_type }}</td>
+			      <td class="text-center">{{ item.idp_activity_type }}</td>
 			      <td class="text-center">{{ item.personnel_name }} {{ item.personnel_lastname }}</td>
 			      <td class="text-center">{{ item.personnel_work_unit }}</td>
 			      <td class="text-center">{{ item.activity_name }}</td>

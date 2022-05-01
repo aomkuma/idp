@@ -16,7 +16,7 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 })
 export class EvaluateBoxComponent implements OnInit {
 
-  EvaluateList : any = [];
+  EvaluateList : any = {'data' : []};
   user_data : any;
   evaluate_round : any;
 

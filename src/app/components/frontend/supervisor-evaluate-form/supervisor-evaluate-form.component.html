@@ -65,8 +65,14 @@
 					<div class="row">
 						<div class="col label-value">
 							<span *ngIf="evaluate_form_id == undefined || evaluate_form_id == null">รอสร้างแบบประเมิน</span>
-							<span *ngIf="evaluate_data.evaluate_status == -2">กำลังทำแบบประเมิน</span>
-							<span *ngIf="evaluate_data.evaluate_status >= -1">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -2">บันทึกร่างแบบประเมิน</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= -1 && evaluate_data.evaluate_status != 99">ส่งแบบประเมินสำเร็จ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99">แจ้งแก้ไข</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.hr_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.hr_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level1_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level1_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level2_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level2_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level3_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level3_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level4_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level4_comment }}</span>
 						</div>
 					</div>
 				</div>
@@ -78,9 +84,9 @@
 					</div>
 					<div class="row">
 						<div class="col label-value">
-							<span *ngIf="evaluate_data.evaluate_status < -1">-</span>
-							<span *ngIf="evaluate_data.evaluate_status == -1">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data.evaluate_status >= 0">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < -1">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 0 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -92,9 +98,9 @@
 					</div>
 					<div class="row">
 						<div class="col label-value">
-							<span *ngIf="evaluate_data.evaluate_status < 1">-</span>
-							<span *ngIf="evaluate_data.evaluate_status == 1">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data.evaluate_status >= 2">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 1">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status > 2 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -106,9 +112,9 @@
 					</div>
 					<div class="row">
 						<div class="col label-value">
-							<span *ngIf="evaluate_data.evaluate_status < 2">-</span>
-							<span *ngIf="evaluate_data.evaluate_status == 2">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data.evaluate_status >= 3">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 2">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 2">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status > 4 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -273,14 +279,14 @@
 														<input type="radio" name="second_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.second_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ผ่าน
 													</div>
 													<div class="col text-center">
-														<input type="radio" name="second_supervisor_result{{question.id}}" [(ngModel)]="sub_question.second_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ไม่ผ่าน
+														<input type="radio" name="second_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.second_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_nd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ไม่ผ่าน
 													</div>
 												</div>
 											</div>
 											<div class="col-2" *ngIf="!sub_question.is_parent && sub_question.user_answer_data">
 												<div class="row">
 													<div class="col text-center">
-														<input type="radio" name="third_supervisor_result{{question.id}}" [(ngModel)]="sub_question.third_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ผ่าน
+														<input type="radio" name="third_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.third_supervisor_result" [value]="1" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ผ่าน
 													</div>
 													<div class="col text-center">
 														<input type="radio" name="third_supervisor_result{{sub_question.id}}" [(ngModel)]="sub_question.third_supervisor_result" [value]="0" [disabled]="user_data.supervisor_level_rd != admin_data.supervisor_type" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(sub_question)"> ไม่ผ่าน

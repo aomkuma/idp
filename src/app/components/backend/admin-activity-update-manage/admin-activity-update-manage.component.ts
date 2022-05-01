@@ -22,6 +22,9 @@ import { environment } from '../../../../environments/environment';
 })
 export class AdminActivityUpdateManageComponent implements OnInit {
   
+  @ViewChild('modalSuccessData')  modalSuccessData: ElementRef;
+  closeModal : string;
+  
   storage_url : any = environment.fileUrl;
   id : any;
   form: FormGroup = new FormGroup({
@@ -32,7 +35,7 @@ export class AdminActivityUpdateManageComponent implements OnInit {
     personnel_work_unit: new FormControl(''),
     activity_type:  new FormControl('', Validators.required),
     cost_type:  new FormControl('N', Validators.required),
-    source_of_money: new FormControl('None'),
+    source_of_money: new FormControl(''),
     activity_name: new FormControl('', Validators.required),
     organize: new FormControl('', Validators.required),
     participate_date_from: new FormControl('', Validators.required),
@@ -63,7 +66,8 @@ export class AdminActivityUpdateManageComponent implements OnInit {
   submitted = false;
   error_message = null;
   
-  constructor(private activatedRoute: ActivatedRoute, 
+  constructor(private modalService: NgbModal,
+              private activatedRoute: ActivatedRoute, 
               private httpService: HttpServiceService,
               private tokenStorage: TokenStorageService,
               private uploadService: UploadServiceService,
@@ -243,8 +247,18 @@ export class AdminActivityUpdateManageComponent implements OnInit {
           this.form.get('organize').setValue(this.data.organize);
           this.form.get('participate_date_from').setValue(formatDate(this.data.participate_date_from, 'yyyy-MM-dd', 'en'));
           this.form.get('participate_date_to').setValue(formatDate(this.data.participate_date_to, 'yyyy-MM-dd', 'en'));
-          this.submitted = false;
+          this.submitted = true;
 
+          this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+            this.closeModal = `Closed with: ${res}`;
+            console.log(res);
+            if(res == 'Confirm'){
+              this.router.navigate(['/admin-activity-management']);
+            }
+            
+          }, (res) => {
+            
+          });
           // this.goBack();
         }
         

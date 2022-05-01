@@ -52,8 +52,8 @@
 			      	</span>
 			      </td>
 			      <td class="text-center">{{ item.ads_name }}</td>
-			      <td class="text-center">{{ item.start_date | date:'d MMMM y' }}</td>
-			      <td class="text-center">{{ item.end_date | date:'d MMMM y' }}</td>
+			      <td class="text-center"><app-date-bcd [date]="item.start_date"></app-date-bcd></td>
+			      <td class="text-center"><app-date-bcd [date]="item.end_date"></app-date-bcd></td>
 			      <td class="text-center">
 			      	<a type="button" (click)="triggerModal(modalDeleteData, item.id)">
 			      		<img src="./assets/images/delete-icon.png" class="icon-sm">

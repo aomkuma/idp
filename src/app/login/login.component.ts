@@ -10,6 +10,7 @@ import { TokenStorageService } from '../services/token-storage.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  show_password : boolean = false;
   form: any = {
     email: null,
     password: null
@@ -29,6 +30,14 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
       this.reloadPage();
+    }
+  }
+
+  isVisibilityPassword() {
+    if (this.show_password) {
+      this.show_password = false;
+    } else {
+      this.show_password = true;
     }
   }
 

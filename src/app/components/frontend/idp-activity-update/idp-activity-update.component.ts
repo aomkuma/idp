@@ -22,6 +22,9 @@ import { environment } from '../../../../environments/environment';
 })
 export class IdpActivityUpdateComponent implements OnInit {
 
+  @ViewChild('modalSuccessData')  modalSuccessData: ElementRef;
+  closeModal : string;
+  
   storage_url : any = environment.fileUrl;
   id : any;
   idp_name : any;
@@ -31,6 +34,7 @@ export class IdpActivityUpdateComponent implements OnInit {
     personnel_name: new FormControl(''),
     personnel_lastname: new FormControl(''),
     personnel_work_unit: new FormControl(''),
+    idp_activity_type:  new FormControl('', Validators.required),
     activity_type:  new FormControl('', Validators.required),
     activity_idp_name: new FormControl('', Validators.required),
     participate_date_from: new FormControl('', Validators.required),
@@ -62,7 +66,8 @@ export class IdpActivityUpdateComponent implements OnInit {
   submitted = false;
   error_message = null;
   
-  constructor(private activatedRoute: ActivatedRoute, 
+  constructor(private modalService: NgbModal,
+              private activatedRoute: ActivatedRoute, 
               private httpService: HttpServiceService,
               private tokenStorage: TokenStorageService,
               private uploadService: UploadServiceService,
@@ -71,7 +76,7 @@ export class IdpActivityUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.paramMap.get('activity_id');
     this.idp_name = this.activatedRoute.snapshot.paramMap.get('idp_name');
-    this.form.get('activity_type').setValue(this.idp_name);
+    this.form.get('idp_activity_type').setValue(this.idp_name);
     this.user_data = this.tokenStorage.getUser().user;
     this.getMasterIdpList();
     
@@ -163,6 +168,7 @@ export class IdpActivityUpdateComponent implements OnInit {
           this.form.get('personnel_lastname').setValue(this.data.personnel_lastname);
           this.form.get('personnel_work_unit').setValue(this.data.personnel_work_unit);
           this.form.get('activity_type').setValue(this.data.activity_type);
+          this.form.get('idp_activity_type').setValue(this.data.idp_activity_type);
           this.form.get('activity_idp_name').setValue(this.data.activity_idp_name);
           this.form.get('activity_category').setValue(this.data.activity_category);
           this.form.get('participate_date_from').setValue(formatDate(this.data.participate_date_from, 'yyyy-MM-dd', 'en'));
@@ -188,10 +194,11 @@ export class IdpActivityUpdateComponent implements OnInit {
 
     formData.append('id', this.form.value.id);
     formData.append('user_id', this.user_data.id);
-    formData.append('personnel_name', this.form.value.personnel_name);
-    formData.append('personnel_lastname', this.form.value.personnel_lastname);
-    formData.append('personnel_work_unit', this.form.value.personnel_work_unit);
+    formData.append('personnel_name', this.user_data.name);
+    formData.append('personnel_lastname', this.user_data.name);
+    formData.append('personnel_work_unit', this.user_data.work_unit);
     formData.append('activity_type', this.form.value.activity_type);
+    formData.append('idp_activity_type', this.form.value.idp_activity_type);
     formData.append('activity_idp_name', this.form.value.activity_idp_name);
     formData.append('participate_date_from', this.form.value.participate_date_from);
     formData.append('participate_date_to', this.form.value.participate_date_to);
@@ -217,12 +224,24 @@ export class IdpActivityUpdateComponent implements OnInit {
           this.form.get('personnel_lastname').setValue(this.data.personnel_lastname);
           this.form.get('personnel_work_unit').setValue(this.data.personnel_work_unit);
           this.form.get('activity_type').setValue(this.data.activity_type);
+          this.form.get('idp_activity_type').setValue(this.data.idp_activity_type);
           this.form.get('activity_idp_name').setValue(this.data.activity_idp_name);
           this.form.get('activity_category').setValue(this.data.activity_category);
           this.form.get('participate_date_from').setValue(formatDate(this.data.participate_date_from, 'yyyy-MM-dd', 'en'));
           this.form.get('participate_date_to').setValue(formatDate(this.data.participate_date_to, 'yyyy-MM-dd', 'en'));
           this.submitted = false;
 
+          this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+            this.closeModal = `Closed with: ${res}`;
+            console.log(res);
+            if(res == 'Confirm'){
+              // this.router.navigate(['/dashboard']);
+              this.router.navigate(['/dashboard']);
+            }
+            
+          }, (res) => {
+            
+          });
           // this.goBack();
         }
         

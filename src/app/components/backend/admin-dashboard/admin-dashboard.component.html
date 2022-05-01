@@ -11,7 +11,7 @@
 	      	<br>
 		</div>
 	</div>
-	<div class="row" *ngFor="let item of list">
+	<div class="row" *ngFor="let item of list" style="overflow: auto; max-height: 100vh;">
 		<div class="col">
 			<h3>ปีงบประมาณ {{ item.fiscal_year + 543 }} รอบที่ {{ item.round_of_year }}</h3>
 			<div class="row">

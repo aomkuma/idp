@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent, HttpResponse, HttpEventType } from '@angular/common/http';
 import { AbstractControl, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpServiceService } from '../../../services/http-service.service';
 import { UploadServiceService } from '../../../services/upload-service.service';
@@ -15,6 +16,10 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./admin-personnel-update-mnm.component.scss']
 })
 export class AdminPersonnelUpdateMnmComponent implements OnInit {
+  
+  @ViewChild('modalSuccessData')  modalSuccessData: ElementRef;
+  @ViewChild('modalErrorData')  modalErrorData: ElementRef;
+  closeModal : string;
   
   storage_url : any = environment.fileUrl;
   form: FormGroup = new FormGroup({
@@ -56,7 +61,8 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
   submitted = false;
   error_message : any;
 
-  constructor(private formBuilder: FormBuilder, 
+  constructor(private modalService: NgbModal,
+              private formBuilder: FormBuilder, 
               private activatedRoute: ActivatedRoute, 
               private httpService: HttpServiceService,
               private uploadService: UploadServiceService,
@@ -197,12 +203,33 @@ export class AdminPersonnelUpdateMnmComponent implements OnInit {
           this.attach_file_data = {'file_path' : event['body']['personal_file'], 'file_name' : event['body']['file_name']};
           
           this.submitted = false;
+          this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+            this.closeModal = `Closed with: ${res}`;
+            console.log(res);
+            if(res == 'Confirm'){
+              // this.router.navigate(['/dashboard']);
+            }
+            
+          }, (res) => {
+            
+          });
           // this.progress = 3;
         }
         
       },
       err => {
         this.error_message = err.error.message;
+        this.modalService.open(this.modalErrorData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+            this.closeModal = `Closed with: ${res}`;
+            console.log(res);
+            if(res == 'Confirm'){
+              // this.router.navigate(['/dashboard']);
+              this.error_message = null;
+            }
+            
+          }, (res) => {
+            
+          });
         // console.log(err.error.errors.files);
         // if(err.error.errors){
 

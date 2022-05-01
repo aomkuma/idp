@@ -86,9 +86,13 @@ export class SupervisorEvaluatePersonListComponent implements OnInit {
       case -1 : return 'กำลังทำแบบประเมิน'; break;
       case 0 : return 'รอตรวจสอบ'; break;
       case 1 : return 'รอตรวจสอบ'; break;
-      case 2 : return 'รอตรวจสอบ'; break;
+      case 2 : return 'รอประเมินพฤติกรรม'; break;
       case 3 : return 'รอตรวจสอบ'; break;
-      case 4 : return 'รอตรวจสอบ'; break;
+      case 4 : return 'รอประเมินพฤติกรรม'; break;
+      case 5 : return 'รอตรวจสอบ'; break;
+      case 6 : return 'รอประเมินพฤติกรรม'; break;
+      case 7 : return 'รอตรวจสอบ'; break;
+      case 8 : return 'รอประเมินพฤติกรรม'; break;
       case 99 : return 'แก้ไขข้อมูล'; break;
     }
   }

@@ -28,6 +28,8 @@ import { IdpActivityComponent } from './components/frontend/idp-activity/idp-act
 import { IdpActivityUpdateComponent } from './components/frontend/idp-activity-update/idp-activity-update.component';
 import { SupervisorEvaluatePersonListComponent } from './components/frontend/supervisor-evaluate-person-list/supervisor-evaluate-person-list.component';
 import { SupervisorEvaluateFormComponent } from './components/frontend/supervisor-evaluate-form/supervisor-evaluate-form.component';
+import { EvaluateFormSupervisorComponent } from './components/frontend/evaluate-form-supervisor/evaluate-form-supervisor.component';
+import { SalaryResultComponent } from './components/frontend/salary-result/salary-result.component';
 
 const routes: Routes = [{ path: '', component: LoginComponent },
                     { path: 'login', component: LoginComponent },
@@ -62,6 +64,9 @@ const routes: Routes = [{ path: '', component: LoginComponent },
                     { path: 'idp-activity/update/:activity_id/:idp_name', component: IdpActivityUpdateComponent },
                     { path: 'supervisor-evaluate-person-list/:status', component: SupervisorEvaluatePersonListComponent },
                     { path: 'supervisor-evaluate-form/:user_id', component: SupervisorEvaluateFormComponent },
+                    { path: 'evaluate-supervisor-form/:form_id/:status', component: EvaluateFormSupervisorComponent },
+                    { path: 'salary-result/:user_id/:form_id', component: SalaryResultComponent },
+                    
                   ];
 
 @NgModule({

@@ -55,9 +55,9 @@
 			      <td scope="row">{{ i + 1 }}</td>
 			      <td class="text-center">{{ item.fiscal_year + 543 }}</td>
 			      <td class="text-center">{{ item.round_of_year }}</td>
-			      <td class="text-center">{{ item.start_date | date:'d MMMM y' }} - {{ item.end_date | date:'d MMMM y' }}</td>
-			      <td class="text-center">{{ item.start_send_date | date:'d MMMM y' }}</td>
-			      <td class="text-center">{{ item.end_send_date | date:'d MMMM y' }}</td>
+			      <td class="text-center"><app-date-bcd [date]="item.start_date"></app-date-bcd> - <app-date-bcd [date]="item.end_date"></app-date-bcd></td>
+			      <td class="text-center"><app-date-bcd [date]="item.start_send_date"></app-date-bcd></td>
+			      <td class="text-center"><app-date-bcd [date]="item.end_send_date"></app-date-bcd></td>
 			      <td class="text-center">
 			      	<!-- <button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalDeleteData, item.id)">ลบ</button> -->
 			      	<a type="button" (click)="triggerModal(modalDeleteData, item.id)">

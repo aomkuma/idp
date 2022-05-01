@@ -1,0 +1,54 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-10 offset-1">
+			<div class="row pb-2 border-bottom">
+				<div class="pb-2 mt-4 mb-2 text-center">
+				      <h3>ประเมินการขึ้นเงินเดือน</h3>
+				      <h4>{{ user_data.prefix }} {{ user_data.name }} {{ user_data.lastname }} {{ admin_data.supervisor_type }}</h4>
+				</div>
+			</div>
+			<div class="row pb-2">
+				<div class="col">
+					<label class="label-value">เงินเดือนปัจจุบัน</label>
+					<input type="number" class="form-control" [(ngModel)]="salary_data.old_salary" readonly="true">
+				</div>
+				<div class="col">
+					<label class="label-value">% การปรับ</label>
+					<input type="number" class="form-control" [(ngModel)]="salary_data.percent" (keyup)="calcNewSalary()">
+				</div>
+				<div class="col">
+					<label class="label-value">เงินเดือนใหม่หลังปรับ</label>
+					<input type="number" class="form-control" [(ngModel)]="salary_data.salary" (keyup)="calcNewPercent()">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col text-center">
+					<a class="btn btn-outline-dark" [routerLink]="['/dashboard']">ยกเลิก</a>&nbsp;
+					<button class="btn btn-primary" (click)="saveData()" *ngIf="!submitted">บันทึก</button>
+					<button class="btn btn-primary" *ngIf="submitted" disabled="true">กำลังบันทึก...</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-template #modalConfirmData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>ต้องการบันทึกข้อมูลเงินเดือนแก่บุคลากรท่านนี้ ใช่หรือไม่ ?</h3>
+  	<h4>{{ salary_data.percent |number }} % คิดเป็นเจำนวนเงิน {{ salary_data.salary |number }} บาท</h4>
+    <br><br>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Cancel')">ยกเลิก</button>&nbsp;
+    <button type="button" class="btn btn-success" (click)="modal.close('Confirm')">ยืนยัน</button>
+    <br>
+  </div>
+</ng-template>
+<ng-template #modalSuccessData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>บันทึกข้อมูลเงินเดือนใหม่สำเร็จ !</h3>
+    <br><br>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">กลับสู่หน้าหลัก</button>
+    <br>
+  </div>
+</ng-template>

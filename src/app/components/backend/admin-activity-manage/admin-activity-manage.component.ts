@@ -45,12 +45,12 @@ export class AdminActivityManageComponent implements OnInit {
     if (this.form.value.activity_type != '') {
       condition += '/' + this.form.value.activity_type;
     } else {
-      condition += '/';
+      // condition += '/';
     }
     if (this.form.value.name != '') {
       condition += '/' + this.form.value.name;
     } else {
-      condition += '/';
+      // condition += '/';
     }
 
     this.httpService.callHTTPGet('activities', condition).subscribe(

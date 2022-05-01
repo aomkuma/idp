@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appDateBcd]'
@@ -6,15 +6,17 @@ import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 export class DateBcdDirective implements OnInit {
 
   @Input() date: any;
-
-  constructor(private element: ElementRef) { 
+  @Input() appDateBcd: any;
+  constructor(private element: ElementRef, 
+   private renderer: Renderer2) { 
 
   }
 
   ngOnInit() {
     // var d = new Date(this.date);
     // return
-    // this.element.html = d.getDate();
+    // this.appDateBcd = d.getDate();
+    // this.renderer.setText(this.element.nativeElement, d.getDate());
   }
 
 }

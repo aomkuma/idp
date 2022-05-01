@@ -28,16 +28,23 @@
             />
           </div>
           <div class="form-group pb-2">
-            <input
-              type="password" placeholder="Password"
-              class="form-control"
-              name="password"
-              [(ngModel)]="form.password"
-              required
-              minlength="6"
-              #password="ngModel"
-              [disabled]="submitted" 
-            />
+            <div class="input-group">
+              <input
+                [type]="show_password ? 'text' : 'password'"  
+                placeholder="Password"
+                class="form-control"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                minlength="6"
+                #password="ngModel"
+                [disabled]="submitted" 
+              />
+              <div class="input-group-append">
+                  <span class="input-group-text" (click)="isVisibilityPassword()"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                </div>
+            </div>
+            
             <div class="row">
               <div class="col">
                 <input type="checkbox" name="remember_me">

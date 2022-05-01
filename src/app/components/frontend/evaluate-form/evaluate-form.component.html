@@ -65,8 +65,14 @@
 					<div class="row">
 						<div class="col label-value">
 							<span *ngIf="evaluate_form_id == undefined || evaluate_form_id == null">รอสร้างแบบประเมิน</span>
-							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -2">กำลังทำแบบประเมิน</span>
-							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= -1">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -2">บันทึกร่างแบบประเมิน</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= -1 && evaluate_data.evaluate_status != 99">ส่งแบบประเมินสำเร็จ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99">แจ้งแก้ไข</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.hr_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.hr_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level1_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level1_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level2_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level2_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level3_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level3_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level4_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level4_comment }}</span>
 						</div>
 					</div>
 				</div>
@@ -80,7 +86,7 @@
 						<div class="col label-value">
 							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < -1">-</span>
 							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -1">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 0">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 0 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -94,7 +100,7 @@
 						<div class="col label-value">
 							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 1">-</span>
 							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 1">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 2">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status > 2 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -108,7 +114,7 @@
 						<div class="col label-value">
 							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 2">-</span>
 							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 2">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 3">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status > 4 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -161,7 +167,7 @@
 												{{ index_2 + 1 }}.{{ index_3 + 1 }}. {{ question.question }}
 											</div>
 										</div>
-										<div class="row" *ngIf="!question.is_parent && question.is_remark">
+										<div class="row" *ngIf="!question.is_parent && question.is_remark && question.user_answer">
 											<div class="col">
 												<textarea class="form-control" [(ngModel)]="question.user_remark" [ngModelOptions]="{standalone: true}" (blur)="updateAnswer(question)"></textarea>
 											</div>
@@ -301,9 +307,10 @@
 						<div class="row pb-2 mt-4 mb-2 border-bottom" *ngIf="subtype.is_next_page">
 							<div class="col text-center">
 								<button class="btn btn-outline-dark" (click)="changeStep('prev')" *ngIf="step_subtype > 1">ย้อนกลับ</button>&nbsp;
-								<button class="btn btn-primary" (click)="saveDraft()" *ngIf="!is_lastpage && !submitted">บันทึกร่าง</button>
+								<button class="btn btn-primary" (click)="saveDraft()" *ngIf="!is_lastpage && !submitted && (evaluate_data.evaluate_status == -1 || evaluate_data.evaluate_status == -2 || evaluate_data.evaluate_status == 99)">บันทึกร่าง</button>
 								<button class="btn btn-primary" *ngIf="submitted" disabled="true">กำลังบันทึก...</button>
-								<button class="btn btn-primary" (click)="saveConfirm()" *ngIf="is_lastpage && !submitted">บันทึกข้อมูล</button>
+								<button class="btn btn-primary" (click)="saveDraft()" *ngIf="is_lastpage && !submitted && (evaluate_data.evaluate_status == -1 || evaluate_data.evaluate_status == -2 || evaluate_data.evaluate_status == 99)">บันทึกข้อมูล</button>
+								<button class="btn btn-success" (click)="saveConfirm()" *ngIf="is_lastpage && !submitted && (evaluate_data.evaluate_status == -1 || evaluate_data.evaluate_status == -2 || evaluate_data.evaluate_status == 99)">ส่งแบบประเมิน</button>
 								&nbsp;
 								<button class="btn btn-success" (click)="changeStep('next')" *ngIf="!is_lastpage">ถัดไป</button>
 							</div>
@@ -318,9 +325,28 @@
 <ng-template #modalSuccessData let-modal>
   <div class="modal-body text-center">
     <br><br><br>
-  	<h3>บันทึกข้อมูลสำเร็จ !</h3>
+  	<h3>ส่งแบบประเมินสำเร็จ !</h3>
     <br><br>
     <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">กลับสู่หน้าหลัก</button>
+    <br>
+  </div>
+</ng-template>
+<ng-template #modalWarnSaveDraft let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>กรุณาบันทึกแบบประเมินก่อนการส่งแบบประเมิน</h3>
+    <br><br>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">ตกลง</button>
+    <br>
+  </div>
+</ng-template>
+<ng-template #modalConfirmSave let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>เมื่อยืนยันการส่งแบบประเมินเรียบร้อย จะไม่สามารถแก้ไขแบบประเมินได้</h3>
+    <br><br>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Cancel')">ยกเลิก</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">ยืนยันการส่งแบบประเมิน</button>
     <br>
   </div>
 </ng-template>

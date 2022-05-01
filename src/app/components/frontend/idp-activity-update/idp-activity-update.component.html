@@ -10,9 +10,19 @@
 				
 				<form [formGroup]="form"  (ngSubmit)="onSubmit()">
 					<div class="row">
+						<div class="col-6">
+							<label for="floatingInput">ประเภท</label>
+							  <select class="form-control" formControlName="activity_type" placeholder="ประเภท" [ngClass]="{ 'is-invalid': f['activity_type'].errors }">
+					      		<option value="">กรุณาเลือก..</option>
+					      		<option value="กิจกรรม/การเข้าอบรมภายใน">กิจกรรม/การเข้าอบรมภายใน</option>
+					      		<option value="กิจกรรม/การเข้าอบรมภายนอก">กิจกรรม/การเข้าอบรมภายนอก</option>
+				      		</select>
+						</div>
+					</div>
+					<div class="row">
 					  	<div class="col-6">
 					  		<label for="floatingInput">หัวข้อ</label>
-					  		<select class="form-control" formControlName="activity_type" placeholder="หัวข้อ" [ngClass]="{ 'is-invalid': f['activity_type'].errors }">
+					  		<select class="form-control" formControlName="idp_activity_type" placeholder="หัวข้อ" [ngClass]="{ 'is-invalid': f['idp_activity_type'].errors }">
 					      		<option value="">กรุณาเลือก..</option>
 					      		<option value="{{ item.name }}" *ngFor="let item of master_idp_list">{{ item.name }}</option>
 				      		</select>
@@ -143,3 +153,12 @@
 		</div>
 	</div>
 </div>
+<ng-template #modalSuccessData let-modal>
+  <div class="modal-body text-center">
+    <br><br><br>
+  	<h3>บันทึกข้อมูลสำเร็จ !</h3>
+    <br><br>
+    <button type="button" class="btn btn-primary" (click)="modal.close('Confirm')">กลับสู่หน้าหลัก</button>
+    <br>
+  </div>
+</ng-template>

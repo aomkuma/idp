@@ -63,14 +63,15 @@
 					      <td class="">{{ item.position_academic }}</td>
 					      <td class="">{{ item.agency }}</td>
 					      <td class="">{{ item.evaluate_status > 0?'เสร็จสิ้น':'' }}</td>
-					      <td class="">{{ item.evaluate_status > 1?'เสร็จสิ้น':'' }}</td>
 					      <td class="">{{ item.evaluate_status > 2?'เสร็จสิ้น':'' }}</td>
-					      <td class="">{{ item.evaluate_status > 3?'เสร็จสิ้น':'' }}</td>
 					      <td class="">{{ item.evaluate_status > 4?'เสร็จสิ้น':'' }}</td>
+					      <td class="">{{ item.evaluate_status > 6?'เสร็จสิ้น':'' }}</td>
+					      <td class="">{{ item.evaluate_status > 8?'เสร็จสิ้น':'' }}</td>
 					      <td class="">{{ item.evaluate_edit_notice }}</td>
 					      <td class="">{{ getStatusName(item.evaluate_status) }}</td>
 					      <td class="text-center">
-					      	<a class="btn btn-warning btn-sm" [routerLink]="['/supervisor-evaluate-form', item.id]">รายละเอียด</a>
+					      	<a class="btn btn-warning btn-sm" [routerLink]="['/supervisor-evaluate-form', item.user_id]" *ngIf="item.evaluate_status == 1 || item.evaluate_status == 3 || item.evaluate_status == 5 || item.evaluate_status == 6">รายละเอียด</a>
+					      	<a class="btn btn-warning btn-sm" [routerLink]="['/evaluate-supervisor-form', item.id, item.evaluate_status]" *ngIf="item.evaluate_status == 2 || item.evaluate_status == 4 || item.evaluate_status == 6 || item.evaluate_status == 8">รายละเอียด</a>
 					      </td>
 					    </tr>
 					  </tbody>
@@ -81,7 +82,7 @@
 			<div class="row">
 				<ngb-pagination class="d-flex justify-content-end" [collectionSize]="(total_data)" [(page)]="page"></ngb-pagination>
 			</div>
-			<div class="row">
+			<div class="row pb-2">
 				<div class="col text-center">
 		      	<a type="button" class="btn btn-info" [routerLink]="['/admin-dashboard']">ย้อนกลับ</a>
 		    </div>

@@ -85,11 +85,11 @@ export class AdminEvaluateRoundMnmComponent implements OnInit {
   onSubmit(){
     this.submitted = true;
 
-    var condition = '/';
+    var condition = '';
     if (this.form.value.fiscal_year != '') {
       condition += '/' + this.form.value.fiscal_year;
     } else {
-      // condition += '/';
+      condition += '/null';
     }
     if (this.form.value.round_of_year != '') {
       condition += '/' + this.form.value.round_of_year;

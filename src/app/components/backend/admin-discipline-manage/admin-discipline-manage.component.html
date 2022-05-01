@@ -24,7 +24,7 @@
 			      	</select>
 			    </div>
 			  </div>
-			  <div class="row">
+			  <div class="row mt-2">
 			  	<div class="col">
 			      	<input type="date" class="form-control" id="floatingInput" placeholder="วันที่" formControlName="discipline_date_from"  [disabled]="submitted">
 			    </div>
@@ -82,7 +82,7 @@
 			      	<span class="badge badge-warning" *ngIf="item.discipline_status == 'สาย'">{{ item.discipline_status }}</span>
 			      </td>
 			      <td class="text-center">
-			      	{{ item.discipline_date | date:'d MMMM y' }}
+			      	<app-date-bcd [date]="item.discipline_date"></app-date-bcd>
 			      </td>
 			      <td>
 			      	{{ item.remark }}

@@ -51,8 +51,9 @@ import { IdpActivityUpdateComponent } from './components/frontend/idp-activity-u
 import { SalaryManageComponent } from './components/backend/salary-manage/salary-manage.component';
 import { SupervisorEvaluatePersonListComponent } from './components/frontend/supervisor-evaluate-person-list/supervisor-evaluate-person-list.component';
 import { SupervisorEvaluateFormComponent } from './components/frontend/supervisor-evaluate-form/supervisor-evaluate-form.component';
-import { SupervisorEvaluateFormsComponent } from './components/frontend/supervisor-evaluate-forms/supervisor-evaluate-forms.component';
 import { EvaluateFormSupervisorComponent } from './components/frontend/evaluate-form-supervisor/evaluate-form-supervisor.component';
+import { SalaryResultComponent } from './components/frontend/salary-result/salary-result.component';
+import { DateBcdComponent } from './components/date-bcd/date-bcd.component';
 
 @NgModule({
   declarations: [
@@ -96,8 +97,9 @@ import { EvaluateFormSupervisorComponent } from './components/frontend/evaluate-
     SalaryManageComponent,
     SupervisorEvaluatePersonListComponent,
     SupervisorEvaluateFormComponent,
-    SupervisorEvaluateFormsComponent,
-    EvaluateFormSupervisorComponent
+    EvaluateFormSupervisorComponent,
+    SalaryResultComponent,
+    DateBcdComponent
   ],
   imports: [
     BrowserModule,

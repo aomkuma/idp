@@ -18,6 +18,8 @@ import { environment } from '../../../../environments/environment';
 export class EvaluateFormComponent implements OnInit {
 
   @ViewChild('modalSuccessData')  modalSuccessData: ElementRef;
+  @ViewChild('modalWarnSaveDraft')  modalWarnSaveDraft: ElementRef;
+  @ViewChild('modalConfirmSave')  modalConfirmSave: ElementRef;
   closeModal : string;
   
   storage_url : any = environment.fileUrl;
@@ -253,9 +255,10 @@ export class EvaluateFormComponent implements OnInit {
         // this.answer_list[i] = {'answer_id' : null, 'user_id' : this.user_data.id, 'evaluate_form_id' : this.evaluate_form_id, 'question_id' : question.id, 'answer' : choice.choice, 'score' : sum, 'is_change' : true, 'user_remark' : question.user_remark};
         if (question.user_answer_data) {
           this.answer_list[i].answer_id = question.user_answer_data.id;
-          this.answer_list[i].user_remark = question.user_remark;
-          this.answer_list[i].user_input = question.user_input;
+          
         }
+        this.answer_list[i].user_remark = question.user_remark;
+          this.answer_list[i].user_input = question.user_input;
         is_answered = true;
       }
     }
@@ -349,6 +352,7 @@ export class EvaluateFormComponent implements OnInit {
           this.evaluate_form_id = event.body['evaluate_form_id'];
           this.evaluate_round_id = event.body['evaluate_round_id']; 
           this.answer_list = event.body['answer_list'];         
+          this.evaluate_data = event.body['evaluate_data'];
           this.submitted = false;
           this.calcSumEvaluateFormScore();
           
@@ -365,56 +369,70 @@ export class EvaluateFormComponent implements OnInit {
 
   saveConfirm () {
 
-    this.submitted = true;
-    const formData: FormData = new FormData();
-    formData.append('user_id', this.user_data.id);
-    formData.append('personnel_type', this.user_data.personnel_type);
-    formData.append('evaluate_form_id', this.evaluate_form_id);
-    formData.append('evaluate_round_id', this.evaluate_round_id);
-    formData.append('evaluate_status', '1');
-
-    for (var i = 0; i < this.answer_list.length; i++) {
-      formData.append('is_change[]', this.answer_list[i].is_change);
-      formData.append('answer_id[]', this.answer_list[i].answer_id);
-      formData.append('question_id[]', this.answer_list[i].question_id);
-      formData.append('answer[]', this.answer_list[i].answer);
-      formData.append('score[]', this.answer_list[i].score);
-      formData.append('user_remark[]', this.answer_list[i].user_remark);
-      formData.append('user_input[]', this.answer_list[i].user_input);
-      formData.append('user_file[]', this.answer_list[i].user_file?this.answer_list[i].user_file:'');
-      formData.append('file_source[]', this.answer_list[i].file_source);
-    }
-
-    this.uploadService.uploadFile('evaluate-form/update/complete', formData).subscribe(
-      event => {
-        if (event instanceof HttpResponse) {
-          // console.log(event['body']['id']);
-          // this.evaluate_form = event.body['data'];
-          // this.evaluate_form_id = event.body['evaluate_form_id'];
-          // this.evaluate_round_id = event.body['evaluate_round_id']; 
-          // this.answer_list = event.body['answer_list'];         
-          // this.submitted = false;
-          // this.calcSumEvaluateFormScore();
-
-          this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
-            this.closeModal = `Closed with: ${res}`;
-            console.log(res);
-            if(res == 'Confirm'){
-              this.router.navigate(['/dashboard']);
-            }
-            
-          }, (res) => {
-            
-          });
+    if (!this.evaluate_form_id) {
+      this.modalService.open(this.modalWarnSaveDraft, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+        this.closeModal = `Closed with: ${res}`;
+        console.log(res);
+        if(res == 'Confirm'){
+          // this.router.navigate(['/dashboard']);
         }
         
-      },
-      err => {
-        this.error_message = err.error.message;
-        this.submitted = false;
-      }
-    );
-    
+      }, (res) => {
+        
+      });
+      return false;
+    } else {
+      this.modalService.open(this.modalConfirmSave, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+        this.closeModal = `Closed with: ${res}`;
+        console.log(res);
+        if(res == 'Confirm'){
+          this.submitted = true;
+          const formData: FormData = new FormData();
+          formData.append('user_id', this.user_data.id);
+          formData.append('personnel_type', this.user_data.personnel_type);
+          formData.append('evaluate_form_id', this.evaluate_form_id);
+          formData.append('evaluate_round_id', this.evaluate_round_id);
+          formData.append('evaluate_status', '1');
+
+          for (var i = 0; i < this.answer_list.length; i++) {
+            formData.append('is_change[]', this.answer_list[i].is_change);
+            formData.append('answer_id[]', this.answer_list[i].answer_id);
+            formData.append('question_id[]', this.answer_list[i].question_id);
+            formData.append('answer[]', this.answer_list[i].answer);
+            formData.append('score[]', this.answer_list[i].score);
+            formData.append('user_remark[]', this.answer_list[i].user_remark);
+            formData.append('user_input[]', this.answer_list[i].user_input);
+            formData.append('user_file[]', this.answer_list[i].user_file?this.answer_list[i].user_file:'');
+            formData.append('file_source[]', this.answer_list[i].file_source);
+          }
+
+          this.uploadService.uploadFile('evaluate-form/update/complete', formData).subscribe(
+            event => {
+              if (event instanceof HttpResponse) {
+                this.modalService.open(this.modalSuccessData, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+                  this.closeModal = `Closed with: ${res}`;
+                  console.log(res);
+                  if(res == 'Confirm'){
+                    this.router.navigate(['/dashboard']);
+                  }
+                  
+                }, (res) => {
+                  
+                });
+              }
+              
+            },
+            err => {
+              this.error_message = err.error.message;
+              this.submitted = false;
+            }
+          );
+        }
+        
+      }, (res) => {
+        
+      });
+    }
   }
 
 }

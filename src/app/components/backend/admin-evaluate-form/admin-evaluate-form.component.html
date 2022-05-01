@@ -67,8 +67,14 @@
 					<div class="row">
 						<div class="col label-value">
 							<span *ngIf="evaluate_form_id == undefined || evaluate_form_id == null">รอสร้างแบบประเมิน</span>
-							<span *ngIf="evaluate_data.evaluate_status == -2">กำลังทำแบบประเมิน</span>
-							<span *ngIf="evaluate_data.evaluate_status >= -1">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -2">บันทึกร่างแบบประเมิน</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= -1 && evaluate_data.evaluate_status != 99">ส่งแบบประเมินสำเร็จ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99">แจ้งแก้ไข</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.hr_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.hr_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level1_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level1_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level2_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level2_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level3_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level3_comment }}</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 99 && evaluate_data.header_level4_comment != null"><br>สิ่งที่ต้องแก้ไข : {{ evaluate_data.header_level4_comment }}</span>
 						</div>
 					</div>
 				</div>
@@ -80,9 +86,9 @@
 					</div>
 					<div class="row">
 						<div class="col label-value">
-							<span *ngIf="evaluate_data.evaluate_status < -1">-</span>
-							<span *ngIf="evaluate_data.evaluate_status == -1">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data.evaluate_status >= 0">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < -1">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == -1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status >= 0 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -94,9 +100,9 @@
 					</div>
 					<div class="row">
 						<div class="col label-value">
-							<span *ngIf="evaluate_data.evaluate_status < 1">-</span>
-							<span *ngIf="evaluate_data.evaluate_status == 1">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data.evaluate_status >= 2">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 1">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 1">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status > 2 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -108,9 +114,9 @@
 					</div>
 					<div class="row">
 						<div class="col label-value">
-							<span *ngIf="evaluate_data.evaluate_status < 2">-</span>
-							<span *ngIf="evaluate_data.evaluate_status == 2">รอตรวจสอบ</span>
-							<span *ngIf="evaluate_data.evaluate_status >= 3">เสร็จสิ้น</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status < 2">-</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status == 2">รอตรวจสอบ</span>
+							<span *ngIf="evaluate_data && evaluate_data.evaluate_status > 4 && evaluate_data.evaluate_status != 99">ตรวจสอบแบบประเมินสำเร็จ</span>
 						</div>
 					</div>
 				</div>
@@ -160,9 +166,9 @@
 													{{ index_2 + 1 }}.{{ index_3 + 1 }}. {{ question.question }}
 												</div>
 											</div>
-											<div class="row" *ngIf="!question.is_parent && question.is_remark">
+											<div class="row" *ngIf="!question.is_parent && question.is_remark && question.user_remark">
 												<div class="col">
-													<textarea class="form-control"></textarea>
+													<textarea class="form-control" disabled="true" [(ngModel)]="question.user_remark" [ngModelOptions]="{standalone: true}"></textarea>
 												</div>
 											</div>
 										</div>
@@ -193,11 +199,11 @@
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index_2 + 1 }}.{{ index_3 + 1 }}.{{ index_4 + 1 }}. {{ sub_question.question }}
 													</div>
 												</div>
-												<div class="row" *ngIf="!sub_question.is_parent && sub_question.is_remark">
-													<div class="col">
-														<textarea class="form-control"></textarea>
+												<div class="row" *ngIf="!sub_question.is_parent && sub_question.is_remark && sub_question.user_remark">
+														<div class="col">
+															<textarea class="form-control" disabled="true" [(ngModel)]="sub_question.user_remark" [ngModelOptions]="{standalone: true}"></textarea>
+														</div>
 													</div>
-												</div>
 											</div>
 											<div class="col" *ngIf="!sub_question.is_parent">
 												<div class="row">
@@ -238,9 +244,9 @@
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index_2 + 1 }}.{{ index_3 + 1 }}.{{ index_4 + 1 }}.{{ index_5 + 1 }}. {{ sub_question_l3.question }}
 														</div>
 													</div>
-													<div class="row" *ngIf="!sub_question_l3.is_parent && sub_question_l3.is_remark">
+													<div class="row" *ngIf="!sub_question_l3.is_parent && sub_question_l3.is_remark && sub_question_l3.user_remark">
 														<div class="col">
-															<textarea class="form-control"></textarea>
+															<textarea class="form-control" disabled="true" [(ngModel)]="sub_question_l3.user_remark" [ngModelOptions]="{standalone: true}"></textarea>
 														</div>
 													</div>
 												</div>

@@ -35,6 +35,7 @@
 					      <th scope="col" class="text-center">#</th>
 					      <th scope="col" class="text-center">วันที่เข้าร่วม</th>
 					      <th scope="col" class="text-center">ประเภท</th>
+					      <th scope="col" class="text-center">หัวข้อ IDP</th>
 					      <th scope="col" class="text-center">ชื่อกิจกรรม/เข้าอบรม</th>
 					      <th scope="col" class="text-center">จัดการ</th>
 					    </tr>
@@ -51,6 +52,7 @@
 					      <td scope="row">{{ i + 1 }}</td>
 					      <td class="text-center">{{ item.participate_date_from | date:'d MMMM y' }} - {{ item.participate_date_to | date:'d MMMM y' }}</td>
 					      <td class="text-center">{{ item.activity_type }}</td>
+					      <td class="text-center">{{ item.idp_activity_type }}</td>
 					      <td class="text-center">{{ item.activity_idp_name }}</td>
 					      <td class="text-center">
 					      	<button type="button" class="btn btn-danger btn-sm" (click)="triggerModal(modalDeleteData, item.id)">ลบ</button>&nbsp;

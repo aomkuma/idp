@@ -62,11 +62,11 @@
 			      <td class="">{{ item.line_work }}</td>
 			      <td class="">{{ item.position_academic }}</td>
 			      <td class="">{{ item.agency }}</td>
-			      <td class="">{{ item.evaluate_status >= 0 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
-			      <td class="">{{ item.evaluate_status >= 1 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
-			      <td class="">{{ item.evaluate_status >= 2 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
-			      <td class="">{{ item.evaluate_status >= 3 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
-			      <td class="">{{ item.evaluate_status >= 4 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
+			      <td class="">{{ item.evaluate_status > 0 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
+			      <td class="">{{ item.evaluate_status > 2 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
+			      <td class="">{{ item.evaluate_status > 4 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
+			      <td class="">{{ item.evaluate_status > 6 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
+			      <td class="">{{ item.evaluate_status > 8 && item.evaluate_status < 99?'เสร็จสิ้น':'' }}</td>
 			      <td class="">{{ item.evaluate_edit_notice }}</td>
 			      <td class="">{{ getStatusName(item.evaluate_status) }}</td>
 			      <td class="text-center">
